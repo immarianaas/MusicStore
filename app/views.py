@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from app.forms import *
 from django.contrib.auth import models
@@ -40,3 +41,12 @@ def create_account(request):
 
     form = CreateAccount()
     return render(request, 'create_account.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def account(request):
+    user_id = request.user.id
+    u = models.User.objects.get(pk=user_id)
+    print(u)
+    ac = Person.objects.get(user_id=u.id)
+    return render(request, 'account_details.html', {'u': u, 'ac':ac})

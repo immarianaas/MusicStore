@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Details</title>
+</head>
+<body>
+    <h3>{{ ac.name }}</h3>
+    <p>email: {{ u.username }} (TODO change this)</p>
+    <p>nib: {{ ac.nib }}</p>
+    <p>gender: {{ ac.get_gender_display }}</p>
+    <p>contact: {{ ac.contact }}</p>
+    <h4>address:</h4>
+    <p>street: {{ ac.address.street }}</p>
+    <p>door no.: {{ ac.address.door }}</p>
+    <p>city: {{ ac.address.city }}</p>
+    <p>code: {{ ac.address.code }}</p>
+
+</body>
+</html>
