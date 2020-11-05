@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from app.forms import *
 from django.contrib.auth import models
 
+
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'loggedin': request.user.is_authenticated})
 
 
 def create_account(request):
@@ -39,4 +40,3 @@ def create_account(request):
 
     form = CreateAccount()
     return render(request, 'create_account.html', {'form': form})
-

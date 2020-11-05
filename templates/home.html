@@ -6,5 +6,13 @@
 </head>
 <body>
     <h1>Music Store: Home Page</h1>
+
+    {% if not loggedin %}
+        <h2><a href="/create-account">Create new account!</a></h2>
+        <h2><a href="/login">Log in!</a></h2>
+    {% else %}
+        <h2><a href="/account">Go to account page!</a></h2>
+        <h2><a href="/logout">Log out! :c</a></h2>
+    {% endif %}
 </body>
 </html>
