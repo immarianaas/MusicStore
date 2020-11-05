@@ -6,7 +6,10 @@
 </head>
 <body>
     <!-- se calhar depois usa-se aquelas cenas dos extends e não sei quê... -->
-
-    
+    <form action="" method="post">
+        {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="create!">
+    </form>
 </body>
 </html>
