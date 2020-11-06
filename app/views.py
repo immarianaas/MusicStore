@@ -11,6 +11,8 @@ def home(request):
 
 
 def create_account(request):
+    form = CreateAccount()
+
     if request.method == 'POST':
         form = CreateAccount(request.POST)
         if form.is_valid():
@@ -39,7 +41,6 @@ def create_account(request):
             print(form.errors)
             print("form is apparently not valid")
 
-    form = CreateAccount()
     return render(request, 'create_account.html', {'form': form})
 
 
@@ -50,3 +51,28 @@ def account(request):
     print(u)
     ac = Person.objects.get(user_id=u.id)
     return render(request, 'account_details.html', {'u': u, 'ac':ac})
+
+# TODO meter isto nao so com login mas tambem com permissoes especiais
+@login_required(login_url='/login/')
+def add_manufacturer(request):
+    form = CreateManufacturers()
+
+    if request.method =='POST':
+        form = CreateManufacturers(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            country = form.cleaned_data['country']
+            logo = form.cleaned_data['logo']
+            manu = Manufacturer.objects.create(name=name, country=country, logo=logo)
+            manu.save()
+            return redirect('/account/')
+        else:
+            print("form is apparently not valid")
+            print(form.errors)
+
+    return render(request, 'create_manufacturer.html', {'form' : form})
+
+
+def see_manufacturers(request):
+    manus = Manufacturer.objects.all()
+    return render(request, 'all_manufacturers.html', {'manus' : manus})

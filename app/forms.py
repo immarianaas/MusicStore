@@ -23,4 +23,10 @@ class CreateAccount(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
+class CreateManufacturers(forms.Form):
+    name = forms.CharField(label='name', max_length=100)
+    country = forms.ChoiceField(label='country', choices=COUNTRIES)
+    logo = forms.URLField()
+
+
 

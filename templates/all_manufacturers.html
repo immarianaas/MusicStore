@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Manufacturers</title>
+</head>
+<body>
+    <h1>Manufacturers:</h1>
+    {% for m in manus %}
+        <h2>{{ m.name }}</h2>
+        <h4>country: {{ m.country }}</h4>
+        <h4>logo: <img src="{{ m.logo }}"></h4>
+    {% endfor %}
+</body>
+</html>
