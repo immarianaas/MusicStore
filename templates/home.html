@@ -3,12 +3,38 @@
 {% block content %}
     {% if not loggedin %}
         <h2><a href="/create-account">Create new account!</a></h2>
-        <h2><a href="/login">Log in!</a></h2>
-    {% else %}
-        <h2><a href="/account">Go to account page!</a></h2>
-        <h2><a href="/logout">Log out! (TODO)</a></h2>
     {% endif %}
 
-    <h2><a href="/add-manufacturer">Add manufacturer</a></h2>
-    <h2><a href="/manufacturers">See manufacturers</a></h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card-wrapper">
+                    <div class="card-box align-center">
+                        <span style="height: 50px; font-weight: bold"><i style="font-size: 5rem" class="fas fa-plus"></i></span>
+                        <h4 class="card-title align-center mbr-black mbr-fonts-style display-7">
+                            <a class="text-black" href="{% url 'add_manufacturer' %}"><strong>Add manufacturer</strong></a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card-wrapper">
+                    <div class="card-box align-center">
+                        <span style="height: 50px; font-weight: bold"><i style="font-size: 5rem" class="far fa-eye"></i></span>
+                        <h4 class="card-title align-center mbr-black mbr-fonts-style display-7">
+                            <a class="text-black" href="{% url 'add_manufacturer' %}"><strong>See manufacturer</strong></a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card-wrapper">
+                    <div class="card-box align-center">
+                        <span style="height: 50px; font-weight: bold"><i style="font-size: 5rem" class="fas fa-plus"></i></span>
+                        <h4 class="card-title align-center mbr-black mbr-fonts-style display-7">
+                            <strong>...</strong></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

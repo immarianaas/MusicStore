@@ -15,6 +15,8 @@
     <meta name="description" content="The best instruments at the best price.">
 
     <title>MusicStore</title>
+    <link rel="stylesheet" href="{% static '/app_css/app_css.css' %}">
+    <link rel="stylesheet" href="{% static '/fontawesome-free-5.15.1-web/css/all.css' %}">
     <link rel="stylesheet" href="{% static '/tether/tether.min.css' %}">
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap-grid.min.css' %}">
@@ -37,8 +39,9 @@
                         <img src="{% static '/images/logo-96x78.png' %}" alt="MS" style="height: 3rem;">
                     
                 </span>
-                <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-7"
-                                                     href="https://mobiri.se">Music Store<br></a></span>
+                <span class="navbar-caption-wrap">
+                    <a class="navbar-caption text-black display-7" href="{% url 'home' %}">Music Store<br></a>
+                </span>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,17 +54,25 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="https://mobiri.se">
+                    <li class="nav-item"><a class="nav-link link text-black display-4" href="">
                         About us</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="https://mobiri.se">
+                    <li class="nav-item"><a class="nav-link link text-black display-4" href="">
                         Buy</a></li>
                     <li class="nav-item"><a class="nav-link link text-black display-4"
-                                            href="https://mobiri.se">Contacts</a>
+                                            href="">Contacts</a>
                     </li>
+                    {% if loggedin %}
+                        <li class="nav-item"><a class="nav-link link text-black display-4"
+                                            href="{% url 'account' %}"><i style="font-size: 2rem;" class="fas fa-user"></i></a>
+                        </li>
+                    {% endif %}
                 </ul>
-                <div class="navbar-buttons mbr-section-btn"><a class="btn btn-primary display-4"
-                                                               href="https://mobiri.se">
-                    Login<br></a>
+                <div class="navbar-buttons mbr-section-btn">
+                    {% if not loggedin %}
+                        <a class="btn btn-primary display-4" href="{% url 'login' %}">Login<br></a>
+                    {% else %}
+                        <a class="btn btn-primary display-4" href="{% url 'logout' %}">Log out! (TODO)</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -72,14 +83,14 @@
     {% block content %}{% endblock %}
 </main>
 
-<section class="footer3 cid-s48P1Icc8J" once="footers" id="footer3-i">
+<section class="fixed-bottom cid-s48P1Icc8J" once="footers" id="footer3-i">
     <div class="container">
         <div class="media-container-row align-center mbr-white">
             <div class="row row-links">
                 <ul class="foot-menu">
-                    <li class="foot-menu-item mbr-fonts-style display-7"><a href="https://mobirise.com/help/"
+                    <li class="foot-menu-item mbr-fonts-style display-7"><a href=""
                                                                             class="text-success">Help Center</a></li>
-                    <li class="foot-menu-item mbr-fonts-style display-7"><a href="http://forums.mobirise.com/"
+                    <li class="foot-menu-item mbr-fonts-style display-7"><a href=""
                                                                             class="text-success">Music Store Forums</a>
                     </li>
                     <li class="foot-menu-item mbr-fonts-style display-7"><br></li>
@@ -88,22 +99,22 @@
             <div class="row social-row">
                 <div class="social-list align-right pb-2">
                     <div class="soc-item">
-                        <a href="https://twitter.com/mobirise" target="_blank">
+                        <a href="" target="_blank">
                             <span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social"></span>
                         </a>
                     </div>
                     <div class="soc-item">
-                        <a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
+                        <a href="" target="_blank">
                             <span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social"></span>
                         </a>
                     </div>
                     <div class="soc-item">
-                        <a href="https://www.youtube.com/c/mobirise" target="_blank">
+                        <a href="" target="_blank">
                             <span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social"></span>
                         </a>
                     </div>
                     <div class="soc-item">
-                        <a href="https://instagram.com/mobirise" target="_blank">
+                        <a href="" target="_blank">
                             <span class="mbr-iconfont mbr-iconfont-social socicon-instagram socicon"></span>
                         </a>
                     </div>
@@ -118,7 +129,7 @@
     </div>
 </section>
 <section
-        style="background-color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; color:#aaa; font-size:12px; padding: 0; align-items: center; display: flex;">
+        style="position:fixed; bottom: 0; opacity: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; color:#aaa; font-size:12px; padding: 0; align-items: center; display: flex;">
     <a href="https://mobirise.site/j" style="flex: 1 1; height: 3rem; padding-left: 1rem;"></a>
     <p style="flex: 0 0 auto; margin:0; padding-right:1rem;">Designed with Mobirise - <a href="https://mobirise.site/l"
                                                                                          style="color:#aaa;">More
