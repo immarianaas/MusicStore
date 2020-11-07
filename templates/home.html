@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Music Store: Home Page</h1>
+{% extends 'layout.html' %}
 
+{% block content %}
     {% if not loggedin %}
         <h2><a href="/create-account">Create new account!</a></h2>
         <h2><a href="/login">Log in!</a></h2>
@@ -15,7 +9,6 @@
         <h2><a href="/logout">Log out! (TODO)</a></h2>
     {% endif %}
 
-        <h2><a href="/add-manufacturer">Add manufacturer</a></h2>
-        <h2><a href="/manufacturers">See manufacturers</a></h2>
-</body>
-</html>
+    <h2><a href="/add-manufacturer">Add manufacturer</a></h2>
+    <h2><a href="/manufacturers">See manufacturers</a></h2>
+{% endblock %}

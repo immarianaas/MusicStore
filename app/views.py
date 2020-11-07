@@ -76,3 +76,6 @@ def add_manufacturer(request):
 def see_manufacturers(request):
     manus = Manufacturer.objects.all()
     return render(request, 'all_manufacturers.html', {'manus' : manus})
+
+def layout(request):
+    return render(request, 'layout.html')
