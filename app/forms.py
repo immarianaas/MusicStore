@@ -28,5 +28,19 @@ class CreateManufacturers(forms.Form):
     country = forms.ChoiceField(label='country', choices=COUNTRIES)
     logo = forms.URLField()
 
+class CreateInstrument(forms.Form):
+    instrument_name = forms.CharField(max_length=100)
+    categories = [
+        ('Sopro', 'Sopro'),
+        ('Percução', 'Percução'),
+        ('Cordas', 'Cordas')
+    ]
+    category = forms.ChoiceField(choices=categories)
+    manus = Manufacturer.objects.all()
+    manu_choices = [(m.id,m.name) for m in manus]
+    manufacturer = forms.ChoiceField(choices=manu_choices)
+    description = forms.CharField(max_length=1000)
+    image = forms.URLField()
+
 
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manufacturer: {{ manu.name }}</title>
+</head>
+<body>
+    <h1>{{ manu.name }}</h1>
+
+    <p>Country: {{ manu.country }}</p>
+    <img src="{{ manu.logo }}" >
+
+    <br>
+    <h1>products:</h1>
+    {% for p in prods %}
+
+        <p>name: {{ p.instrument_name }}</p>
+        <p>category: {{ p.category }}</p>
+        <p>description: {{ p.description }}</p>
+        <img src="{{ p.image }}">
+    {% endfor %}
+</body>
+</html>
