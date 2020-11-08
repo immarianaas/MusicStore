@@ -63,7 +63,8 @@ class Manufacturer(models.Model):
 
 class Instrument(models.Model):
     instrument_name = models.CharField(max_length=100)
-    category = models.CharField(max_length=100)
+    cat = [ ('wind', 'wind'), ('strings', 'strings'), ('percussion', 'percussion')]
+    category = models.CharField(choices=cat , max_length=100)
     manufacturer_id = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     description = models.CharField(max_length=1000)
 
