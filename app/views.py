@@ -86,3 +86,32 @@ def see_manufacturers_details(request, id):
     prods = Instrument.objects.filter(manufacturer_id=manu.id)
 
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : prods})
+
+def add_instrument(request):
+    form = CreateInstrument()
+
+    if request.method == 'POST':
+        form = CreateInstrument(request.POST)
+        if form.is_valid():
+            instrument_name = form.cleaned_data['instrument_name']
+            manufacturer = form.cleaned_data['manufacturer']
+            description = form.cleaned_data['description']
+            image = form.cleaned_data['image']
+            category = form.cleaned_data['category']
+
+            manu = Manufacturer.objects.get(pk = manufacturer)
+            print(manu)
+            instr = Instrument.objects.create(category=category, instrument_name=instrument_name, manufacturer_id=manu, description=description, image=image)
+            # isto já faz o save
+            return redirect('/instruments')
+    return render(request, 'create_instrument.html', {'form':form})
+
+def see_instruments(request):
+    inst = Instrument.objects.all()
+
+    return render(request, 'all_instruments.html', {'inst' : inst})
+
+def see_instruments_details(request, id):
+    inst = Instrument.objects.get(pk=id)
+
+    return render(request, 'instrument_details.html', {'m' : inst})

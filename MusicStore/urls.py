@@ -31,4 +31,8 @@ urlpatterns = [
     path('add-manufacturer/', views.add_manufacturer, name='add_manufacturer'),
     path('manufacturers/', views.see_manufacturers, name='see_manufacturers'),
     path('manufacturers/<int:id>', views.see_manufacturers_details, name='manufacturers_details'),
+    path('add-instrument/', views.add_instrument, name='add_instrument'),
+    path('instruments/', views.see_instruments, name='see_instruments'),
+    path('instruments/<int:id>', views.see_instruments_details, name='instruments_details'),
+
 ]

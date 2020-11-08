@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Instruments</title>
+</head>
+<body>
+    <h1>Instruments:</h1>
+    {% for m in inst %}
+        <h2>{{ m.instrument_name }}</h2>
+        <h4>category: {{ m.category }}</h4>
+        <h4>image: <img src="{{ m.image }}"></h4>
+
+        <a href="/edit/{{ m.id }}"><button>Edit (staff only)</button></a>
+
+        <a href="/instruments/{{ m.id }}"><button>See details</button></a>
+
+        <input type="submit" value="Purchase (TODO)">
+        <input type="submit" value="Delete(staff only) (TODO)">
+
+    {% endfor %}
+</body>
+</html>
