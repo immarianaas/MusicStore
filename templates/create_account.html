@@ -1,15 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Account</title>
-</head>
-<body>
-    <!-- se calhar depois usa-se aquelas cenas dos extends e não sei quê... -->
-    <form action="" method="post">
-        {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="create!">
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="box-account">
+        <h1>Create account</h1>
+        <form action="." method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field-account row">
+                    {{ field.errors }}
+                    <div class="col-3">
+                        <span>{{ field.label_tag }}</span>
+                    </div>
+                    <div style="background-color: rgba(8,126,139,0.3)" class="col-9">
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row">
+                <input class="btn-account" type="submit" value="create!">
+            </div>
     </form>
-</body>
-</html>
+    </div>
+{% endblock %}

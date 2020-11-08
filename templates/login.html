@@ -1,10 +1,25 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Log in!" />
-    </form>
+
+    <div class="container login_box">
+        <h1>Login</h1>
+        <form action="." method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div style="border: 2px solid #087e8b;" class="field_wrapper">
+                {{ form.username.errors }}
+                <i class="far fa-user"></i>
+                {{ form.username }}
+            </div>
+            <div style="border: 2px solid #087e8b;" class="field_wrapper">
+                {{ form.password.errors }}
+                <i class="fas fa-key"></i>
+                {{ form.password }}
+            </div>
+            <input class="btn-login" type="submit" value="Log in!" />
+            <a style="color: white; float: left; margin-top: 0.3rem" href="{% url 'create_account' %}">Create new account</a>
+        </form>
+    </div>
 
 {% endblock %}
