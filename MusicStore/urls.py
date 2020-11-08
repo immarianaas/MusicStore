@@ -34,5 +34,6 @@ urlpatterns = [
     path('add-instrument/', views.add_instrument, name='add_instrument'),
     path('instruments/', views.see_instruments, name='see_instruments'),
     path('instruments/<int:id>', views.see_instruments_details, name='instruments_details'),
+    path('edit/instruments/<int:id>', views.edit_instrument, name='edit_instrument')
 
 ]

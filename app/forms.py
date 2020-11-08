@@ -22,12 +22,13 @@ class CreateAccount(forms.Form):
     door = forms.IntegerField(label="door no.")
     password = forms.CharField(widget=forms.PasswordInput)
 
-
+'''
 class CreateManufacturers(forms.Form):
     name = forms.CharField(label='name', max_length=100)
     country = forms.ChoiceField(label='country', choices=COUNTRIES)
     logo = forms.URLField()
-
+'''
+'''
 class CreateInstrument(forms.Form):
     instrument_name = forms.CharField(max_length=100)
     categories = [
@@ -41,6 +42,14 @@ class CreateInstrument(forms.Form):
     manufacturer = forms.ChoiceField(choices=manu_choices)
     description = forms.CharField(max_length=1000)
     image = forms.URLField()
+'''
 
+class ManufacturerForm(ModelForm):
+    class Meta:
+        model = Manufacturer
+        fields = '__all__'
 
-
+class InstrumentForm(ModelForm):
+    class Meta:
+        model = Instrument
+        fields = '__all__'

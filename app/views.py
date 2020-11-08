@@ -55,21 +55,17 @@ def account(request):
 # TODO meter isto nao so com login mas tambem com permissoes especiais
 @login_required(login_url='/login/')
 def add_manufacturer(request):
-    form = CreateManufacturers()
+    # form = CreateManufacturers()
 
     if request.method =='POST':
-        form = CreateManufacturers(request.POST)
+        form = ManufacturerForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            country = form.cleaned_data['country']
-            logo = form.cleaned_data['logo']
-            manu = Manufacturer.objects.create(name=name, country=country, logo=logo)
-            manu.save()
-            return redirect('/account/')
+            form.save()
+            return redirect('/manufacturers/')
         else:
             print("form is apparently not valid")
             print(form.errors)
-
+    form = ManufacturerForm()
     return render(request, 'create_manufacturer.html', {'form' : form})
 
 
@@ -88,11 +84,14 @@ def see_manufacturers_details(request, id):
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : prods})
 
 def add_instrument(request):
-    form = CreateInstrument()
+    # form = CreateInstrument()
 
     if request.method == 'POST':
-        form = CreateInstrument(request.POST)
+        form = InstrumentForm(request.POST)
         if form.is_valid():
+            form.save()
+
+            '''
             instrument_name = form.cleaned_data['instrument_name']
             manufacturer = form.cleaned_data['manufacturer']
             description = form.cleaned_data['description']
@@ -103,7 +102,9 @@ def add_instrument(request):
             print(manu)
             instr = Instrument.objects.create(category=category, instrument_name=instrument_name, manufacturer_id=manu, description=description, image=image)
             # isto já faz o save
+            '''
             return redirect('/instruments')
+    form = InstrumentForm()
     return render(request, 'create_instrument.html', {'form':form})
 
 def see_instruments(request):
@@ -115,3 +116,8 @@ def see_instruments_details(request, id):
     inst = Instrument.objects.get(pk=id)
 
     return render(request, 'instrument_details.html', {'m' : inst})
+
+def edit_instrument(request, id):
+    inicial = Instrument.objects.get(pk=id)
+    form = InstrumentForm(instance=inicial)
+    return render(request, 'create_instrument.html', {'form' : form})

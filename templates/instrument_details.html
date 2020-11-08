@@ -11,7 +11,7 @@
     <h4>description: {{ m.description }}</h4>
     <h4>image: <img src="{{ m.image }}"></h4>
 
-    <form action="edit/{{ m.id }}" method="get" >
+    <form action="/edit/instruments/{{ m.id }}" method="get" >
         <input type="submit" value="Edit (staff only)">
     </form>
 
