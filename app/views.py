@@ -16,6 +16,7 @@ def create_account(request):
     if request.method == 'POST':
         form = CreateAccount(request.POST)
         if form.is_valid():
+
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             nib = form.cleaned_data['nib']
@@ -31,12 +32,12 @@ def create_account(request):
 
             u = models.User.objects.create_user(email, password=password)
             # u.save() # falta meter permissoes...
-            address = Address(country=country, city=city, code=code, street=street, door=door)
-            address.save()
-            person = Person(name=name, user=u, nib=nib, gender=gender, contact=contact, address=address)
-            person.save()
-            print("já criou as cenas...")
-            return redirect("/")
+            #address = Address(country=country, city=city, code=code, street=street, door=door)
+            #address.save()
+            person = Person.objects.create(name=name, user=u, nib=nib, gender=gender, contact=contact, country=country, city=city, code=code, street=street, door=door)
+            #person.save()
+            #print("já criou as cenas...")
+            return redirect("/login")
         else:
             print(form.errors)
             print("form is apparently not valid")
@@ -119,5 +120,25 @@ def see_instruments_details(request, id):
 
 def edit_instrument(request, id):
     inicial = Instrument.objects.get(pk=id)
+    if request.method == 'POST':
+        form = InstrumentForm(request.POST, instance=inicial)
+        if form.is_valid():
+            form.save()
+        return redirect('/instruments/' + str(id))
+
     form = InstrumentForm(instance=inicial)
     return render(request, 'create_instrument.html', {'form' : form})
+
+
+def edit_account(request):
+    user_id = request.user.id
+    u = Person.objects.get(pk = user_id)
+    if request.method == 'POST':
+        form = AccountForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            return redirect('/account/')
+
+    form = AccountForm(instance=u)
+    # TODO cenas pra alterar a pwd (cenas do Django)
+    return render(request, 'edit_account.html', {'form':form})

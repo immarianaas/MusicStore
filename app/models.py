@@ -48,6 +48,11 @@ COUNTRIES = [
     )
 ]
 
+OPTIONS = [
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('O', 'Other / Rather not say')
+]
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
@@ -108,15 +113,16 @@ class Person(models.Model):
     name = models.CharField(max_length=100)
     user = models.OneToOneField(auth_models.User, on_delete=models.CASCADE)
     nib = models.PositiveBigIntegerField()
-    OPTIONS = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other / Rather not say')
-    ]
     gender = models.CharField(choices=OPTIONS, max_length=100)
     # joined ts acho q ele faz automaticamente tmb
     contact = models.PositiveBigIntegerField()
-    address = models.OneToOneField(Address, on_delete=models.CASCADE, max_length=100)
+    # address = models.OneToOneField(Address, on_delete=models.CASCADE, max_length=100)
+
+    street = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    code = models.CharField(max_length=20)
+    country = models.CharField(choices=COUNTRIES, max_length=100)
+    door = models.IntegerField()
 
     def __str__(self):
         return self.name

@@ -2,16 +2,15 @@ from django import forms
 from django.forms import ModelForm
 from app.models import *
 
+class AccountForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = '__all__' #TODO EXCLUIR user DAQUI!!
 
 class CreateAccount(forms.Form):
     email = forms.EmailField(label="email")
     name = forms.CharField(label="name", max_length=100)
     nib = forms.IntegerField()
-    OPTIONS = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other / Rather not say')
-    ]
     gender = forms.ChoiceField(label="gender", choices=OPTIONS)
     contact = forms.IntegerField(label="contact")
 
