@@ -79,3 +79,10 @@ def see_manufacturers(request):
 
 def layout(request):
     return render(request, 'layout.html')
+
+def see_manufacturers_details(request, id):
+    manu = Manufacturer.objects.get(pk = id)
+
+    prods = Instrument.objects.filter(manufacturer_id=manu.id)
+
+    return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : prods})

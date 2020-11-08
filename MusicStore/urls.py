@@ -29,5 +29,6 @@ urlpatterns = [
     path('account/', views.account, name='account'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('add-manufacturer/', views.add_manufacturer, name='add_manufacturer'),
-    path('manufacturers/', views.see_manufacturers, name='see_manufacturers')
+    path('manufacturers/', views.see_manufacturers, name='see_manufacturers'),
+    path('manufacturers/<int:id>', views.see_manufacturers_details, name='manufacturers_details'),
 ]
