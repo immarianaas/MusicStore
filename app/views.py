@@ -19,7 +19,6 @@ def create_account(request):
 
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
-            nib = form.cleaned_data['nib']
             gender = form.cleaned_data['gender']
             contact = form.cleaned_data['contact']
             password = form.cleaned_data['password']
@@ -31,12 +30,11 @@ def create_account(request):
             door = form.cleaned_data['door']
 
             u = models.User.objects.create_user(email, password=password)
-            # u.save() # falta meter permissoes...
-            #address = Address(country=country, city=city, code=code, street=street, door=door)
-            #address.save()
-            person = Person.objects.create(name=name, user=u, nib=nib, gender=gender, contact=contact, country=country, city=city, code=code, street=street, door=door)
-            #person.save()
-            #print("já criou as cenas...")
+            # TODO falta meter permissoes...
+
+            addr = Address.objects.create(country=country, city=city, code=code, street=street, door=door)
+            Person.objects.create(name=name, user=u, gender=gender, contact=contact, address=addr)
+
             return redirect("/login")
         else:
             print(form.errors)
@@ -49,7 +47,6 @@ def create_account(request):
 def account(request):
     user_id = request.user.id
     u = models.User.objects.get(pk=user_id)
-    print(u)
     ac = Person.objects.get(user_id=u.id)
     return render(request, 'account_details.html', {'u': u, 'ac':ac})
 
@@ -79,39 +76,41 @@ def layout(request):
 
 def see_manufacturers_details(request, id):
     manu = Manufacturer.objects.get(pk = id)
+    instrumentos = Instrument.objects.filter(manufacturer_id=manu.id)
+    print(list(instrumentos))
+    instr_info_completa = { i.id: [i, Item.objects.get(instrument=i)] for i in instrumentos }
+    print("info::::", instr_info_completa)
 
-    prods = Instrument.objects.filter(manufacturer_id=manu.id)
+    return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa})
+    #return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : prods})
 
-    return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : prods})
-
-def add_instrument(request):
+def add_item(request): # ALTERADO DE add_instrument
     # form = CreateInstrument()
 
     if request.method == 'POST':
-        form = InstrumentForm(request.POST)
-        if form.is_valid():
-            form.save()
+        #form = InstrumentForm(request.POST)
+        form = InstrumentSlashItemForm(request.POST)
+        # form2 = ItemForm(request.POST)
+        if form.is_valid(): # and form2.is_valid():
+            price = form.cleaned_data.get('price')
+            instr = form.save()
+            # print("deu certo!!")
 
-            '''
-            instrument_name = form.cleaned_data['instrument_name']
-            manufacturer = form.cleaned_data['manufacturer']
-            description = form.cleaned_data['description']
-            image = form.cleaned_data['image']
-            category = form.cleaned_data['category']
-
-            manu = Manufacturer.objects.get(pk = manufacturer)
-            print(manu)
-            instr = Instrument.objects.create(category=category, instrument_name=instrument_name, manufacturer_id=manu, description=description, image=image)
-            # isto já faz o save
-            '''
+            item = Item.objects.create(instrument=instr, price=price)
+            # print(item)
             return redirect('/instruments')
-    form = InstrumentForm()
-    return render(request, 'create_instrument.html', {'form':form})
+        else:
+            print("FORM IS NOT VALID [add_item]")
+    #form = InstrumentForm()
+    form = InstrumentSlashItemForm()
+    #form2 = ItemForm()
+    return render(request, 'create_instrument.html', {'form':form}) # 'form2' : form2})
 
 def see_instruments(request):
-    inst = Instrument.objects.all()
 
-    return render(request, 'all_instruments.html', {'inst' : inst})
+    items = Item.objects.all()
+
+    return render(request, 'all_instruments.html', {'items' : items})
 
 def see_instruments_details(request, id):
     inst = Instrument.objects.get(pk=id)
@@ -142,3 +141,8 @@ def edit_account(request):
     form = AccountForm(instance=u)
     # TODO cenas pra alterar a pwd (cenas do Django)
     return render(request, 'edit_account.html', {'form':form})
+
+
+@login_required(login_url='/login/')
+def shopping_cart(request):
+    user_id = request.user.id

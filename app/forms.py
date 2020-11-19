@@ -5,21 +5,30 @@ from app.models import *
 class AccountForm(ModelForm):
     class Meta:
         model = Person
-        fields = '__all__' #TODO EXCLUIR user DAQUI!!
+        # fields = '__all__' #TODO EXCLUIR user DAQUI!!
+        fields = ['name', 'gender', 'contact']
 
 class CreateAccount(forms.Form):
     email = forms.EmailField(label="email")
+    password = forms.CharField(widget=forms.PasswordInput)
+
     name = forms.CharField(label="name", max_length=100)
-    nib = forms.IntegerField()
-    gender = forms.ChoiceField(label="gender", choices=OPTIONS)
+    gender = forms.ChoiceField(label="gender", choices=GENDER)
     contact = forms.IntegerField(label="contact")
 
+    # address part...
     street = forms.CharField(label="street", max_length=100)
     city = forms.CharField(label="city", max_length=100)
     code = forms.CharField(label="code", max_length=100)
     country = forms.ChoiceField(label="country", choices= COUNTRIES)
     door = forms.IntegerField(label="door no.")
-    password = forms.CharField(widget=forms.PasswordInput)
+
+'''
+class AddressForm(ModelForm):
+    class Meta:
+        model = Address
+        fields = '__all__'
+'''
 
 '''
 class CreateManufacturers(forms.Form):
@@ -48,7 +57,22 @@ class ManufacturerForm(ModelForm):
         model = Manufacturer
         fields = '__all__'
 
+
+class ItemForm(forms.Form):
+    price = forms.DecimalField(max_digits=10, decimal_places=2)
+
+
 class InstrumentForm(ModelForm):
     class Meta:
         model = Instrument
         fields = '__all__'
+
+
+class InstrumentSlashItemForm(ModelForm):
+    price = forms.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        model = Instrument
+        fields = '__all__'
+
+

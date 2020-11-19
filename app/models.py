@@ -48,12 +48,43 @@ COUNTRIES = [
     )
 ]
 
-OPTIONS = [
+GENDER = [
     ('M', 'Male'),
     ('F', 'Female'),
     ('O', 'Other / Rather not say')
 ]
 
+INSTRUMENT_CAT = [
+    ('wind', 'wind'),
+    ('strings', 'strings'),
+    ('percussion', 'percussion')
+]
+
+LIST_TYPE = [
+    ('whishlist', 'wishlist'),
+    ('order', 'order'),
+    ('shoppingcart', 'shoppingcart')
+]
+
+ROLES = [
+    ('A', 'Admin'),
+    ('S', 'Staff'),
+    ('C', 'Customer')
+]
+
+STATUS = [
+    ('PROC', 'Processing order'),
+    ('DELIV', 'Sent to delivery'),
+    ('SENT', 'On its way'),
+    ('REC', 'Delivered at the address')
+]
+
+PAYMENT_METHODS = [
+    ('Credit Card', 'Credit Card'),
+    ('PayPal', 'PayPal')
+]
+
+# not changed
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
     country = models.CharField(choices=COUNTRIES, max_length=100)
@@ -65,35 +96,34 @@ class Manufacturer(models.Model):
 
 
 # -------------------------------------------------------
-
+# not changed (exceto uns nomes)
 class Instrument(models.Model):
-    instrument_name = models.CharField(max_length=100)
-    cat = [ ('wind', 'wind'), ('strings', 'strings'), ('percussion', 'percussion')]
-    category = models.CharField(choices=cat , max_length=100)
-    manufacturer_id = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    category = models.CharField(choices=INSTRUMENT_CAT , max_length=100)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     description = models.CharField(max_length=1000)
+    nr_serie = models.CharField(max_length=20)
 
     # nao sei bem como usar ImageField mas se não resultar
     # tenta-se com outra cena qualquer:
     image = models.URLField()
 
     def __str__(self):
-        return self.category + " " + self.instrument_name
+        return self.category + " " + self.name
 
 
 # -------------------------------------------------------
-
+# not changed (só um nome)
 class Item(models.Model):
-    instrument_id = models.OneToOneField(Instrument, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    instrument = models.OneToOneField(Instrument, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return self.instrument_id
+        return str(self.instrument.id) + " [price: " + str(self.price) + "]"
 
 
 # -------------------------------------------------------
-
+# not changed
 class Address(models.Model):
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
@@ -106,51 +136,63 @@ class Address(models.Model):
 
 
 # -------------------------------------------------------
-
+# changed!
 class Person(models.Model):
-    # TODO provavelmente tem de se alterar isto
-    # (mas por agora fica)
     name = models.CharField(max_length=100)
     user = models.OneToOneField(auth_models.User, on_delete=models.CASCADE)
-    nib = models.PositiveBigIntegerField()
-    gender = models.CharField(choices=OPTIONS, max_length=100)
-    # joined ts acho q ele faz automaticamente tmb
+    gender = models.CharField(choices=GENDER, max_length=100)
     contact = models.PositiveBigIntegerField()
-    # address = models.OneToOneField(Address, on_delete=models.CASCADE, max_length=100)
 
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    role = models.CharField(choices=ROLES, max_length=10)
+
+    '''
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     code = models.CharField(max_length=20)
     country = models.CharField(choices=COUNTRIES, max_length=100)
     door = models.IntegerField()
+    '''
+
+    # shopping_cart = models.OneToOneField(ProdList, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
-class Employee(models.Model):
-    employee_id = models.OneToOneField(Person, on_delete=models.CASCADE)
-    CHOICES = [
-        ('A', 'Admin'),
-        ('S', 'Staff')
-    ]
-    role = models.CharField(choices=CHOICES, max_length=10)
+# -------------------------------------------------------
+# added:
+class ItemQuantity(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
 
 
+# added:
+class ItemList(models.Model):
+    type = models.CharField(choices=LIST_TYPE, max_length=20)
+    items = models.ManyToManyField(ItemQuantity)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+
+# -------------------------------------------------------
+# deleted.
+# class Employee(models.Model):
+#     employee_id = models.OneToOneField(Person, on_delete=models.CASCADE)
+#     role = models.CharField(choices=ROLES, max_length=10)
+
+# deleted (kind of, passou para ItemList e alterou-se algumas ceninhas)
+# class ProdList(models.Model):
+#     # order = models.ForeignKey(Order, on_delete=models.CASCADE)
+#     user = models.ForeignKey(Person, on_delete=models.CASCADE)
+#     list_id = models.IntegerField()
+#     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+# -------------------------------------------------------
+
+# changed.
 class Order(models.Model):
-    person_id = models.ForeignKey(Person, on_delete=models.CASCADE)
-    order_ts = models.TimeField()
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
     delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE)
     payment_time = models.DateTimeField()
-    STATUS = [
-        ('PROC', 'Processing order'),
-        ('DELIV', 'Sent to delivery'),
-        ('SENT', 'On its way'),
-        ('REC', 'Delivered at the address')
-    ]
     order_status = models.CharField(choices=STATUS, max_length=100)
-
-
-class ProdList(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    list = models.ForeignKey(ItemList, on_delete=models.CASCADE)
+    payment_method = models.CharField(choices=PAYMENT_METHODS, max_length=20)
