@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+</head>
+<body>
+    {% for i in lista %}
+        <p>manufacturer: {{ i.item.instrument.manufacturer }}; name: {{ i.item.instrument.name }}; price cada : {{ i.item.price }}; quantidade: {{ i.quantity }}</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" name="add" value="+1">
+            <input type="hidden" name="id" value={{ i.id }}>
+        </form>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" name="sub" value="-1">
+            <input type="hidden" name="id" value={{ i.id }}>
+        </form>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" name="del" value="remove">
+            <input type="hidden" name="id" value={{ i.id }}>
+        </form>
+    {% endfor %}
+</body>
+</html>

@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from app.forms import *
 from django.contrib.auth import models
 
+from django.core.exceptions import ObjectDoesNotExist
+
 
 # Create your views here.
 
@@ -77,12 +79,9 @@ def layout(request):
 def see_manufacturers_details(request, id):
     manu = Manufacturer.objects.get(pk = id)
     instrumentos = Instrument.objects.filter(manufacturer_id=manu.id)
-    print(list(instrumentos))
     instr_info_completa = { i.id: [i, Item.objects.get(instrument=i)] for i in instrumentos }
-    print("info::::", instr_info_completa)
 
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa})
-    #return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : prods})
 
 def add_item(request): # ALTERADO DE add_instrument
     # form = CreateInstrument()
@@ -107,25 +106,46 @@ def add_item(request): # ALTERADO DE add_instrument
     return render(request, 'create_instrument.html', {'form':form}) # 'form2' : form2})
 
 def see_instruments(request):
-
     items = Item.objects.all()
-
     return render(request, 'all_instruments.html', {'items' : items})
 
-def see_instruments_details(request, id):
-    inst = Instrument.objects.get(pk=id)
+def add_to_list(list_type, person, item):
+    try:
+        il = ItemList.objects.get(type=list_type, person=person)
+    except ObjectDoesNotExist:
+        il = ItemList.objects.create(type=list_type, person=person)
 
-    return render(request, 'instrument_details.html', {'m' : inst})
+    item_qty = ItemQuantity.objects.create(item=item, quantity=1)
+
+    il.items.add(item_qty)
+
+
+def see_instruments_details(request, id):
+    item = Item.objects.get(pk=id)
+    if request.method == 'POST':
+        # TODO verificar se tá loggado
+        u = models.User.objects.get(pk=request.user.id)
+        person = Person.objects.get(user=u)
+
+        add_to_list('shoppingcart', person, item)
+        # TODO  (redirecionar, dizer q ja adicionou..)
+    return render(request, 'instrument_details.html', {'item' : item})
 
 def edit_instrument(request, id):
-    inicial = Instrument.objects.get(pk=id)
+    item = Item.objects.get(pk=id)
+    inicial = item.instrument
+
     if request.method == 'POST':
-        form = InstrumentForm(request.POST, instance=inicial)
+        form = InstrumentSlashItemForm(request.POST, instance=inicial)
         if form.is_valid():
-            form.save()
+            price = form.cleaned_data['price']
+            instr = form.save()
+            item.price=price
+            item.save()
+
         return redirect('/instruments/' + str(id))
 
-    form = InstrumentForm(instance=inicial)
+    form = InstrumentSlashItemForm(instance=inicial, initial={'price': item.price})
     return render(request, 'create_instrument.html', {'form' : form})
 
 
@@ -142,7 +162,22 @@ def edit_account(request):
     # TODO cenas pra alterar a pwd (cenas do Django)
     return render(request, 'edit_account.html', {'form':form})
 
+def sum_to_item_qty(item_qty, number):
+    # if numbrt > 1, increase, if else, decrease
+    item_qty.quantity += 1
+    item_qty.save()
 
 @login_required(login_url='/login/')
 def shopping_cart(request):
     user_id = request.user.id
+    u = models.User.objects.get(pk=user_id)
+
+    if request.method == 'POST':
+        if 'add' in request.POST:
+            item_qty = ItemQuantity.objects.get(pk=request.POST['id'])
+            sum_to_item_qty(item_qty, 1)
+
+    lista = ItemList.objects.get(person=Person.objects.get(user=u), type='shoppingcart')
+
+    return render(request, 'shopping_cart.html', { 'lista' : lista.items.all() })
+
