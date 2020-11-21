@@ -177,6 +177,9 @@ def see_instruments_details(request, id):
             return add_to_wishlist(request, request.POST['id'], '/instruments/' + str(id))
 
     if request.user.is_authenticated:
+        person = get_curr_person_object()
+        wishlist_items = [ i.item for i in ItemList.objects.get(person=person, type='wishlist').items.all() ]
+        res = { item : item in wishlist_items }
         pass # TODO (fiquei aqui)
 
     return render(request, 'instrument_details.html', {'item' : item})
