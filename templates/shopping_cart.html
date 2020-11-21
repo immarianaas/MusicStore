@@ -10,18 +10,16 @@
         <form action="" method="post">
             {% csrf_token %}
             <input type="submit" name="add" value="+1">
-            <input type="hidden" name="id" value={{ i.id }}>
-        </form>
-        <form action="" method="post">
-            {% csrf_token %}
             <input type="submit" name="sub" value="-1">
-            <input type="hidden" name="id" value={{ i.id }}>
-        </form>
-        <form action="" method="post">
-            {% csrf_token %}
             <input type="submit" name="del" value="remove">
             <input type="hidden" name="id" value={{ i.id }}>
         </form>
     {% endfor %}
+    <h3>nr products: {{ nr_prods }}</h3>
+    <h3>total: {{ total }}</h3>
+
+    <a href="/account/placeorder"><button>place order [todo] </button></a>
+
+
 </body>
 </html>

@@ -7,16 +7,23 @@
 <body>
     <h3>{{ ac.name }}</h3>
     <p>email: {{ u.username }}</p>
-    <p>nib: {{ ac.nib }}</p>
     <p>gender: {{ ac.get_gender_display }}</p>
     <p>contact: {{ ac.contact }}</p>
     <h4>address:</h4>
-    <p>street: {{ ac.street }}</p>
-    <p>door no.: {{ ac.door }}</p>
-    <p>city: {{ ac.city }}</p>
-    <p>code: {{ ac.code }}</p>
+    <p>street: {{ ac.address.street }}</p>
+    <p>door no.: {{ ac.address.door }}</p>
+    <p>city: {{ ac.address.city }}</p>
+    <p>code: {{ ac.address.code }}</p>
 
-    <p>mostrar orders (TODO)</p>
+    <a href="#"><button>mostrar orders (TODO)</button></a>
+    <a href="/account/shoppingcart"><button>shopping cart [done]</button></a>
+    <a href="/account/whishlist"><button>whishlist (todo)</button></a>
+    <a href="/edit/account"><button>edit personal info (+/- todo)</button></a>
+    <a href="/edit/address"><button>edit address info (todo, not sure tho)</button></a>
+    <a href="/account/orders"><button>see orders & state (todo)</button></a>
+
+    <p> n sei se se mete opcao de se poder adicionar mais addresses ou nao (pela db pode-se fazer isso)</p>
+
     <p>adicionar manufacturer (So staff)</p>
     <p>adicionar instrumento (So staff)</p>
 

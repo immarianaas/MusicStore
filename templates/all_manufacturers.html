@@ -10,6 +10,9 @@
         <h2>{{ m.name }}</h2>
         <h4>country: {{ m.country }}</h4>
         <h4>logo: <img src="{{ m.logo }}"></h4>
+
+        <a href="/manufacturers/{{ m.id }}"><button>See details [done] </button></a>
+
     {% endfor %}
 </body>
 </html>

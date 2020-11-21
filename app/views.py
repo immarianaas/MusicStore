@@ -5,6 +5,7 @@ from django.contrib.auth import models
 
 from django.core.exceptions import ObjectDoesNotExist
 
+import functools
 
 # Create your views here.
 
@@ -30,8 +31,11 @@ def create_account(request):
             code = form.cleaned_data['code']
             country = form.cleaned_data['country']
             door = form.cleaned_data['door']
-
-            u = models.User.objects.create_user(email, password=password)
+            try:
+                u = models.User.objects.create_user(email, password=password)
+            except Exception:
+                # TODO já existe conta c esse email!!!!!!!! (descobrir como meter erros)
+                return redirect("/create-account")
             # TODO falta meter permissoes...
 
             addr = Address.objects.create(country=country, city=city, code=code, street=street, door=door)
@@ -51,6 +55,7 @@ def account(request):
     u = models.User.objects.get(pk=user_id)
     ac = Person.objects.get(user_id=u.id)
     return render(request, 'account_details.html', {'u': u, 'ac':ac})
+
 
 # TODO meter isto nao so com login mas tambem com permissoes especiais
 @login_required(login_url='/login/')
@@ -83,6 +88,8 @@ def see_manufacturers_details(request, id):
 
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa})
 
+
+@login_required(login_url='/login/')
 def add_item(request): # ALTERADO DE add_instrument
     # form = CreateInstrument()
 
@@ -105,9 +112,29 @@ def add_item(request): # ALTERADO DE add_instrument
     #form2 = ItemForm()
     return render(request, 'create_instrument.html', {'form':form}) # 'form2' : form2})
 
+@login_required(login_url='/login/')
+def purchase(request, item_id):
+    person = get_curr_person_object(request)
+    add_to_list('shoppingcart', person, Item.objects.get(pk=item_id))
+
+
 def see_instruments(request):
     items = Item.objects.all()
+    if request.method=='POST':
+        if 'purchase' in request.POST:
+            #person = get_curr_person_object(request)
+            #add_to_list('shoppingcart', person, Item.objects.get(pk=request.POST['id']))
+            purchase(request, request.POST['id'])
     return render(request, 'all_instruments.html', {'items' : items})
+
+
+def is_item_in_list(list_type, item, user):
+    try:
+        il = ItemList.objects.get(type=list_type, person=user, items__item=item)
+    except ObjectDoesNotExist:
+        return False
+    return il.items
+
 
 def add_to_list(list_type, person, item):
     try:
@@ -115,19 +142,31 @@ def add_to_list(list_type, person, item):
     except ObjectDoesNotExist:
         il = ItemList.objects.create(type=list_type, person=person)
 
-    item_qty = ItemQuantity.objects.create(item=item, quantity=1)
+    #print("is item in list?? ", is_item_in_list(list_type, item, person))
+    ans = is_item_in_list(list_type, item, person)
+    if not ans:
+        item_qty = ItemQuantity.objects.create(item=item, quantity=1)
+        il.items.add(item_qty)
+    else:
+        item = ans.get(item__exact=item)
+        item.quantity = item.quantity+1
+        item.save()
 
-    il.items.add(item_qty)
+    return
+
+def get_curr_person_object(request):
+    u = models.User.objects.get(pk=request.user.id)
+    return Person.objects.get(user=u)
 
 
 def see_instruments_details(request, id):
     item = Item.objects.get(pk=id)
+
     if request.method == 'POST':
         # TODO verificar se tá loggado
-        u = models.User.objects.get(pk=request.user.id)
-        person = Person.objects.get(user=u)
-
+        person = get_curr_person_object(request)
         add_to_list('shoppingcart', person, item)
+
         # TODO  (redirecionar, dizer q ja adicionou..)
     return render(request, 'instrument_details.html', {'item' : item})
 
@@ -164,8 +203,13 @@ def edit_account(request):
 
 def sum_to_item_qty(item_qty, number):
     # if numbrt > 1, increase, if else, decrease
-    item_qty.quantity += 1
-    item_qty.save()
+    item_qty.quantity += number
+    if item_qty.quantity <= 0:
+        item_qty.delete()
+    else:
+        item_qty.save()
+
+
 
 @login_required(login_url='/login/')
 def shopping_cart(request):
@@ -173,11 +217,26 @@ def shopping_cart(request):
     u = models.User.objects.get(pk=user_id)
 
     if request.method == 'POST':
+        item_qty = ItemQuantity.objects.get(pk=request.POST['id'])
+
         if 'add' in request.POST:
-            item_qty = ItemQuantity.objects.get(pk=request.POST['id'])
             sum_to_item_qty(item_qty, 1)
+        elif 'sub' in request.POST:
+            sum_to_item_qty(item_qty, -1)
+        elif 'del' in request.POST:
+            item_qty.delete()
 
-    lista = ItemList.objects.get(person=Person.objects.get(user=u), type='shoppingcart')
+    total = 0
+    nr_prods = 0
+    try:
+        lista = ItemList.objects.get(person=Person.objects.get(user=u), type='shoppingcart').items.all()
+        for i in lista:
+            total += i.quantity * i.item.price
+            nr_prods += i.quantity
 
-    return render(request, 'shopping_cart.html', { 'lista' : lista.items.all() })
+    except ObjectDoesNotExist:
+        lista = ItemList.objects.create(person=Person.objects.get(user=u), type='shoppingcart')
+
+    return render(request, 'shopping_cart.html', { 'lista' : lista , 'total' : total, 'nr_prods':nr_prods})
+
 

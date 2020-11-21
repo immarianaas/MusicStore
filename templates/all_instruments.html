@@ -14,11 +14,16 @@
             <h4>image: <img src="{{ m.instrument.image }}" style='max-width :100%; max-height:100%; object-fit:contain;'></h4>
         </div>
         <h3>price: {{ m.price }}</h3>
-        <a href="/edit/instruments/{{ m.id }}"><button>Edit (staff only)</button></a>
+        <a href="/edit/instruments/{{ m.id }}"><button>Edit (staff only) [done]</button></a>
+        <a href="/instruments/{{ m.id }}"><button>See details [done] </button></a>
 
-        <a href="/instruments/{{ m.id }}"><button>See details</button></a>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ m.id }}">
+            <input type="submit" name="purchase" value="Purchase (adiciona ao shopping cart) [done]">
+            <input type="submit" name="whishlist" value="Add to wishlist (todo - acho eu?)">
+        </form>
 
-        <input type="submit" value="Purchase (TODO)">
         <input type="submit" value="Delete(staff only) (TODO)">
 
     {% endfor %}
