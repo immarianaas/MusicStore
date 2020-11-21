@@ -26,8 +26,15 @@
     <link rel="stylesheet" href="{% static '/theme/css/style.css' %}">
     <link rel="preload" as="style" href="{% static '/mobirise/css/mbr-additional.css' %}">
     <link rel="stylesheet" href="{% static '/mobirise/css/mbr-additional.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static '/app_css/app_css.css' %}">
+
     <style>
+        body {
+            background: url("{% static 'images/pexels-photo-132197.jpeg' %}");
+        }
+        main {
+            margin-top: 1rem;
+            margin-bottom: 20ch;
+        }
         .form-container {
             text-align: center;
             color: white;
@@ -64,6 +71,21 @@
         }
         .btn-form:hover {
             background-color: #087e8b;
+        }
+        .href_button {
+            display:inline-block;
+            letter-spacing:normal;
+            border-image:initial;
+            margin:0;
+            padding: 1px 6px;
+            border-width: 2px;
+            border-style: outset;
+            border-radius: 2px;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            align-items: flex-start;
+            text-align: center;
         }
     </style>
 </head>
