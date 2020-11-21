@@ -42,24 +42,11 @@
     </div>
         <!--<a href="/edit/instruments/{{ m.id }}"><button>Edit (staff only) [done]</button></a>
         <i class="fas fa-heart"></i>
-
-        <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Instrument: {{ m.instrument_name }}</title>
-</head>
-<body>
-    <h2>{{ item.instrument.name }}</h2>
-    <h4>category: {{ item.instrument.category }}</h4>
-    <h4>manufacturer: {{ item.instrument.manufacturer.name }}</h4>
-    <h4>description: {{ item.instrument.description }}</h4>
     <div style='width:300px; height: 300px;'>
         <h4>image: <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'></h4>
 
         <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'>
     </div>
-    <h3>price: {{ item.price }}</h3>
     <form action="/edit/instruments/{{ item.id }}" method="get" >
         <input type="submit" value="Edit (staff only) [done]">
     </form>

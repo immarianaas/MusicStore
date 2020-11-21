@@ -1,31 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Account Details</title>
-</head>
-<body>
-    <h3>{{ ac.name }}</h3>
-    <p>email: {{ u.username }}</p>
-    <p>gender: {{ ac.get_gender_display }}</p>
-    <p>contact: {{ ac.contact }}</p>
-    <h4>address:</h4>
-    <p>street: {{ ac.address.street }}</p>
-    <p>door no.: {{ ac.address.door }}</p>
-    <p>city: {{ ac.address.city }}</p>
-    <p>code: {{ ac.address.code }}</p>
-
-    <a href="#"><button>mostrar orders (TODO)</button></a>
-    <a href="/account/shoppingcart"><button>shopping cart [done]</button></a>
-    <a href="/account/whishlist"><button>whishlist (todo)</button></a>
-    <a href="/edit/account"><button>edit personal info (+/- todo)</button></a>
-    <a href="/edit/address"><button>edit address info (todo, not sure tho)</button></a>
-    <a href="/account/orders"><button>see orders & state (todo)</button></a>
+{% extends 'layout.html' %}
+{% block content %}
+    <h3 style="width: 100%; text-align: center">{{ ac.name }}</h3>
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item">email: {{ u.username }}</li>
+            <li class="list-group-item">gender: {{ ac.get_gender_display }}</li>
+            <li class="list-group-item">contact: {{ ac.contact }}</li>
+        </ul>
+        <ul class="list-group" style="margin-top: 0.5rem">
+            <h4>Address:</h4>
+            <li class="list-group-item">street: {{ ac.address.street }}</li>
+            <li class="list-group-item">door no.: {{ ac.address.door }}</li>
+            <li class="list-group-item">city: {{ ac.address.city }}</li>
+            <li class="list-group-item">code: {{ ac.address.code }}</li>
+        </ul>
+    </div>
+    <div style="margin-top: 2rem" class="container">
+        <div class="row">
+            <div class="col">
+                <a class="btn-primary" style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="#">mostrar orders (TODO)</a>
+            </div>
+            <div class="col">
+                <a class="btn-primary" style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/account/shoppingcart">shopping cart [done]</a>
+            </div>
+            <div class="col">
+                <a class="btn-primary" style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/account/whishlist">whishlist (todo)</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 0.5rem">
+            <div class="col">
+                <a class="btn-primary" style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/edit/account">edit personal info (+/- todo)</a>
+            </div>
+            <div class="col">
+                <a class="btn-primary" style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/edit/address">edit address info (todo, not sure tho)</a>
+            </div>
+            <div class="col">
+                <a class="btn-primary" style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/account/orders">see orders & state (todo)</a>
+            </div>
+        </div>
+    </div>
 
     <p> n sei se se mete opcao de se poder adicionar mais addresses ou nao (pela db pode-se fazer isso)</p>
 
     <p>adicionar manufacturer (So staff)</p>
     <p>adicionar instrumento (So staff)</p>
-
-</body>
-</html>
+{% endblock %}

@@ -112,3 +112,24 @@ body {
 .btn-account:hover {
     background-color: #087e8b;
 }
+
+.account-list {
+    background: none;
+    border: none;
+}
+
+.href_button {
+    display:inline-block;
+    letter-spacing:normal;
+    border-image:initial;
+    margin:0;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    align-items: flex-start;
+    text-align: center;
+}
