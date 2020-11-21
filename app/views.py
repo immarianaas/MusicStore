@@ -124,7 +124,7 @@ def purchase(request, item_id, nextt):
 @login_required(login_url='/login/')
 def add_to_wishlist(request, item_id, nextt):
     person = get_curr_person_object(request)
-    add_to_list('whishlist', person, Item.objects.get(pk=item_id))
+    add_to_list('wishlist', person, Item.objects.get(pk=item_id))
     return redirect(nextt)
 
 def see_instruments(request):
@@ -134,12 +134,14 @@ def see_instruments(request):
             return purchase(request, request.POST['id'], '/instruments/')
         elif 'wishlist' in request.POST:
             return add_to_wishlist(request, request.POST['id'], '/instruments/')
-    its = { i : False for i in items}
+    its = [ (i , False) for i in items]
     if request.user.is_authenticated:
         try:
-            il = ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()
-            its = { i : i in il for i in items}
+            #             ItemList.objects.get(person=person, type='whishlist', items__item_id=item.id)
+            il = [ i.item for i in ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()]
+            its = [ (i , i in il) for i in items]
         except ObjectDoesNotExist:
+            print("nope, sory")
             pass
     return render(request, 'all_instruments.html', {'items' : its})
 
@@ -183,13 +185,16 @@ def see_instruments_details(request, id):
         if 'purchase' in request.POST:
             return purchase(request, item.id, '/instruments/' + str(id))
         elif 'wishlist' in request.POST:
-            return add_to_wishlist(request, request.POST['id'], '/instruments/' + str(id))
+            return add_to_wishlist(request, str(id), '/instruments/' + str(id))
 
     wishlist = False # está na wishlist?
     if request.user.is_authenticated:
         person = get_curr_person_object(request)
-        wishlist = ItemList.objects.exists(person=person, type='whishlist', items__exact=item)
-        print('o item ja está na wishlist!')
+        try :
+            ItemList.objects.get(person=person, type='wishlist', items__item_id=item.id)
+            wishlist = True
+        except ObjectDoesNotExist:
+            wishlist = False
 
     return render(request, 'instrument_details.html', {'item' : item, 'wishlist' : wishlist})
 

@@ -8,25 +8,30 @@
             {% endif %}
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="card" style="width: 18rem;">
-                            <img style="max-height: 13rem; max-width: 30rem" class="card-img-top" src="{{ m.instrument.image }}" alt="Card image cap">
+                            <img style="max-height: 13rem; max-width: 30rem" class="card-img-top" src="{{ m.0.instrument.image }}" alt="Card image cap">
                             <div class="card-body">
-                                <h5 class="card-title">{{ m.instrument.name }}</h5>
-                                <p class="card-text">category: {{ m.instrument.category }}</p>
-                                <p class="card-text">price: {{ m.price }}</p>
+                                <h5 class="card-title">{{ m.0.instrument.name }}</h5>
+                                <p class="card-text">category: {{ m.0.instrument.category }}</p>
+                                <p class="card-text">price: {{ m.0.price }}</p>
                                 <div class="row">
                                     <div class="col">
-                                        <a style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/instruments/{{ m.id }}" class=" btn-primary">See details</a>
+                                        <a style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/instruments/{{ m.0.id }}" class=" btn-primary">See details</a>
                                     </div>
                                     <div class="col">
                                         <form action="" method="post">
                                             {% csrf_token %}
-                                            <input type="hidden" name="id" value="{{ m.id }}">
+                                            <input type="hidden" name="id" value="{{ m.0.id }}">
                                             <div class="row">
                                                 <div class="col">
                                                     <input class=" btn-primary" type="submit" name="purchase" value="Buy">
                                                 </div>
                                                 <div class="col">
-                                                    <input class=" btn-primary" type="submit" name="whishlist" value="Add">
+                                                    {% if m.1 %} <!-- se já estiver lá -->
+                                                        <input class="btn-dark disabled" type="button" name="wishlist" value="Added to wishlist!">
+                                                    {% else %}
+                                                    <input class="btn-primary" type="submit" name="wishlist" value="Add to wishlist">
+                                                    {% endif %}
+                                                    <!--<input class=" btn-primary" type="submit" name="whishlist" value="Add">-->
                                                 </div>
                                             </div>
                                         </form>

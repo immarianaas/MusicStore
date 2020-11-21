@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Manufacturers</title>
-</head>
-<body>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Add manufacturer!">
-    </form>
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        {% include 'form.html' with submit_val='Add manufacturer!' %}
+    </div>
+{% endblock %}
+
