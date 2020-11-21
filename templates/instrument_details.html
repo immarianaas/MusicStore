@@ -16,7 +16,12 @@
         <div class="row" style="width: 100%; justify-content: center; text-align: center">
             <form action="/instruments/{{ item.id }}" method="post">
                 {% csrf_token %}
-                <input class="btn-primary" type="submit" value="Buy">
+                {% if wishlist %} <!-- se já estiver lá -->
+                    <input class="btn-dark disabled" type="button" name="wishlist" value="Added to wishlist!">
+                {% else %}
+                    <input class="btn-primary" type="submit" name="wishlist" value="Add to wishlist">
+                {% endif %}
+                <input class="btn-primary" type="submit" name="purchase" value="Buy">
             </form>
         </div>
     </div>

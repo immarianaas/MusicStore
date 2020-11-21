@@ -83,6 +83,7 @@ def layout(request):
 def see_manufacturers_details(request, id):
     manu = Manufacturer.objects.get(pk = id)
     instrumentos = Instrument.objects.filter(manufacturer_id=manu.id)
+
     instr_info_completa = { i.id: [i, Item.objects.get(instrument=i)] for i in instrumentos }
 
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa})
@@ -123,7 +124,7 @@ def purchase(request, item_id, nextt):
 @login_required(login_url='/login/')
 def add_to_wishlist(request, item_id, nextt):
     person = get_curr_person_object(request)
-    add_to_list('whishlist', person, Item.objects.get(pk=item_id))
+    add_to_list('wishlist', person, Item.objects.get(pk=item_id))
     return redirect(nextt)
 
 def see_instruments(request):
@@ -133,7 +134,16 @@ def see_instruments(request):
             return purchase(request, request.POST['id'], '/instruments/')
         elif 'wishlist' in request.POST:
             return add_to_wishlist(request, request.POST['id'], '/instruments/')
-    return render(request, 'all_instruments.html', {'items' : items})
+    its = [ (i , False) for i in items]
+    if request.user.is_authenticated:
+        try:
+            #             ItemList.objects.get(person=person, type='whishlist', items__item_id=item.id)
+            il = [ i.item for i in ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()]
+            its = [ (i , i in il) for i in items]
+        except ObjectDoesNotExist:
+            print("nope, sory")
+            pass
+    return render(request, 'all_instruments.html', {'items' : its})
 
 
 def is_item_in_list(list_type, item, user):
@@ -162,6 +172,7 @@ def add_to_list(list_type, person, item):
 
     return
 
+
 def get_curr_person_object(request):
     u = models.User.objects.get(pk=request.user.id)
     return Person.objects.get(user=u)
@@ -174,15 +185,18 @@ def see_instruments_details(request, id):
         if 'purchase' in request.POST:
             return purchase(request, item.id, '/instruments/' + str(id))
         elif 'wishlist' in request.POST:
-            return add_to_wishlist(request, request.POST['id'], '/instruments/' + str(id))
+            return add_to_wishlist(request, str(id), '/instruments/' + str(id))
 
+    wishlist = False # está na wishlist?
     if request.user.is_authenticated:
-        person = get_curr_person_object()
-        wishlist_items = [ i.item for i in ItemList.objects.get(person=person, type='wishlist').items.all() ]
-        res = { item : item in wishlist_items  }
-        pass # TODO (fiquei aqui)
+        person = get_curr_person_object(request)
+        try :
+            ItemList.objects.get(person=person, type='wishlist', items__item_id=item.id)
+            wishlist = True
+        except ObjectDoesNotExist:
+            wishlist = False
 
-    return render(request, 'instrument_details.html', {'item' : item})
+    return render(request, 'instrument_details.html', {'item' : item, 'wishlist' : wishlist})
 
 @login_required(login_url='/login/')
 def edit_instrument(request, id):
