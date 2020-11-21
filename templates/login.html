@@ -5,7 +5,14 @@
     <div class="container">
         <div style="left:50%; width: 100%; margin-top: 5%; color: white;">
         <h1>Login</h1>
-            <form action="" method="post">
+            {% include 'form.html' with submit_val='Log in!' %}
+            <a style="color: white; float: left; margin-top: 0.3rem" href="{% url 'create_account' %}">Create new account</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+<!-- <form action="" method="post">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <div style="border: 2px solid #087e8b;" class="field_wrapper">
@@ -20,8 +27,4 @@
                 </div>
                 <input class="btn-login" type="submit" value="Log in!" />
                 <a style="color: white; float: left; margin-top: 0.3rem" href="{% url 'create_account' %}">Create new account</a>
-            </form>
-        </div>
-    </div>
-
-{% endblock %}
+            </form> -->

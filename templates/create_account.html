@@ -3,7 +3,11 @@
 {% block content %}
     <div style="text-align: center; color: white; justify-content: center" class="container">
         <h1>Create account</h1>
-        <form action="." method="post">
+        {% include 'form.html' with submit_val='Create New Account!' %}
+    </div>
+{% endblock %}
+
+<!-- <form action="." method="post">
             {% csrf_token %}
             {% for field in form %}
                 <div class=" row">
@@ -19,6 +23,4 @@
             <div style="text-align: center; margin-top: 0.3rem; justify-content: center" class="row">
                 <input class="btn-account" type="submit" value="create!">
             </div>
-    </form>
-    </div>
-{% endblock %}
+        </form> -->

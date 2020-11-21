@@ -1,0 +1,17 @@
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        <div class="row">
+            <div class="col-3">
+                {{ field.label }}
+            </div>
+            <div class="col-9">
+                {{ field }}
+            </div>
+        </div>
+    {% endfor %}
+    <div style="text-align: center; margin-top: 0.4rem;">
+        <input type="submit" value="{{ submit_val }}">
+    </div>
+</form>

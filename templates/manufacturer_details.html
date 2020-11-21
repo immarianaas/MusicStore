@@ -2,14 +2,14 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3">
+            <div class="col-lg-3 col-md-2 col-sm-12">
                 <h1>{{ manu.name }}</h1>
                 <p>Country: {{ manu.country }}</p>
                 <div style='width:300px; height: 300px;'>
                     <img src="{{ manu.logo }}" style='max-width:50%; max-height:50%; object-fit:contain;'>
                 </div>
             </div>
-            <div class="col-9">
+            <div class="col-lg-9 col-md-10 col-sm-12">
                 <h1>products:</h1>
                 {% for p in prods.values %}
                     <div style="border: 2px solid #087e8b;">
