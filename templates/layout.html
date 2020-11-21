@@ -27,7 +27,45 @@
     <link rel="preload" as="style" href="{% static '/mobirise/css/mbr-additional.css' %}">
     <link rel="stylesheet" href="{% static '/mobirise/css/mbr-additional.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static '/app_css/app_css.css' %}">
-
+    <style>
+        .form-container {
+            text-align: center;
+            color: white;
+            justify-content: center;
+        }
+        .field-form {
+            width: 100%;
+            overflow: hidden;
+            margin: 8px 0;
+            font-size: 1.2rem;
+        }
+        .field-form input{
+            background: none;
+            width: 70%;
+            float: left;
+            color: white;
+            border: 2px solid #087e8b;
+            padding-left: 6px;
+        }
+        .field-form select{
+            background: #087e8b;
+            width: 70%;
+            float: left;
+            color: white;
+            border: 2px solid #087e8b
+        }
+        .btn-form {
+            width: 20%;
+            color: white;
+            background: none;
+            border: 2px solid #087e8b;
+            transition: 3s;
+            text-align: center;
+        }
+        .btn-form:hover {
+            background-color: #087e8b;
+        }
+    </style>
 </head>
 <body>
 
