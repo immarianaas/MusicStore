@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Manufacturer: {{ manu.name }}</title>
-</head>
-<body>
-    <h1>{{ manu.name }}</h1>
-
-    <p>Country: {{ manu.country }}</p>
-    <div style='width:300px; height: 300px;'>
-            <img src="{{ manu.logo }}" style='width :100%; height:100%; object-fit:contain;'>
-    </div>
-
-    <br>
-    <h1>products:</h1>
-    {% for p in prods.values %}
-
-            <p>name: {{ p.0.name }}</p>
-            <p>category: {{ p.0.category }}</p>
-            <div style='width:300px; height: 300px;'>
-                <img src="{{ p.0.image }}" style='max-width :100%; max-height:100%; object-fit:contain;'>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <h1>{{ manu.name }}</h1>
+                <p>Country: {{ manu.country }}</p>
+                <div style='width:300px; height: 300px;'>
+                    <img src="{{ manu.logo }}" style='max-width:50%; max-height:50%; object-fit:contain;'>
+                </div>
             </div>
-            <p>price: {{ p.1.price }}</p>
-
-    {% endfor %}
-</body>
-</html>
+            <div class="col-9">
+                <h1>products:</h1>
+                {% for p in prods.values %}
+                    <div style="border: 2px solid #087e8b;">
+                        <p>name: {{ p.0.name }}</p>
+                        <p>category: {{ p.0.category }}</p>
+                        <div style='width:300px; height: 300px;'>
+                            <img src="{{ p.0.image }}" style='max-width :50%; max-height:50%; object-fit:contain;'>
+                        </div>
+                        <p>price: {{ p.1.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
