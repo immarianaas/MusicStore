@@ -5,7 +5,6 @@ from django.contrib.auth import models
 
 from django.core.exceptions import ObjectDoesNotExist
 
-import functools
 
 # Create your views here.
 
@@ -120,12 +119,20 @@ def purchase(request, item_id, nextt):
     # todo apresentar confirmação de que foi adicionado ao cart
     return redirect(nextt)
 
+# nao sei se se deve dar merge destas 2 funcs, depende de como se faz o aviso..
+@login_required(login_url='/login/')
+def add_to_wishlist(request, item_id, nextt):
+    person = get_curr_person_object(request)
+    add_to_list('whishlist', person, Item.objects.get(pk=item_id))
+    return redirect(nextt)
 
 def see_instruments(request):
     items = Item.objects.all()
     if request.method=='POST':
         if 'purchase' in request.POST:
             return purchase(request, request.POST['id'], '/instruments/')
+        elif 'wishlist' in request.POST:
+            return add_to_wishlist(request, request.POST['id'], '/instruments/')
     return render(request, 'all_instruments.html', {'items' : items})
 
 
@@ -164,7 +171,13 @@ def see_instruments_details(request, id):
     item = Item.objects.get(pk=id)
 
     if request.method == 'POST':
-        return purchase(request, item.id, '/instruments/' + str(id))
+        if 'purchase' in request.POST:
+            return purchase(request, item.id, '/instruments/' + str(id))
+        elif 'wishlist' in request.POST:
+            return add_to_wishlist(request, request.POST['id'], '/instruments/' + str(id))
+
+    if request.user.is_authenticated:
+        pass # TODO (fiquei aqui)
 
     return render(request, 'instrument_details.html', {'item' : item})
 

@@ -21,7 +21,8 @@
 
     <form action="/instruments/{{ item.id }}" method="post">
         {% csrf_token %}
-        <input type="submit" value="Purchase (adiciona ao shopping cart) [done]">
+        <input type="submit" name="purchase" value="Purchase (adiciona ao shopping cart) [done]">
+        <input type="submit" name="wishlist" value="add to wishlist (todo)">
     </form>
     <input type="submit" value="Delete(staff only) (TODO)">
 
