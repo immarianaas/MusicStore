@@ -1,21 +1,78 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <h1>Instruments:</h1>
+        {% for m in items %}
+            {% if forloop.counter0|divisibleby:3 %}
+                <div class="row">
+            {% endif %}
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="card" style="width: 18rem;">
+                            <img style="max-height: 13rem; max-width: 30rem" class="card-img-top" src="{{ m.instrument.image }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ m.instrument.name }}</h5>
+                                <p class="card-text">category: {{ m.instrument.category }}</p>
+                                <p class="card-text">price: {{ m.price }}</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <a style="display:inline-block; letter-spacing:normal; border-image:initial; margin:0; padding: 1px 6px; border-width: 2px; border-style: outset; border-radius: 2px; font-family: inherit; font-size: inherit; line-height: inherit; align-items: flex-start; text-align: center" href="/instruments/{{ m.id }}" class=" btn-primary">See details</a>
+                                    </div>
+                                    <div class="col">
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{ m.id }}">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <input class=" btn-primary" type="submit" name="purchase" value="Buy">
+                                                </div>
+                                                <div class="col">
+                                                    <input class=" btn-primary" type="submit" name="whishlist" value="Add">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% if forloop.counter|divisibleby:3 %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+        <!--<a href="/edit/instruments/{{ m.id }}"><button>Edit (staff only) [done]</button></a>
+        <i class="fas fa-heart"></i>
+
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>All Instruments</title>
+    <title>Instrument: {{ m.instrument_name }}</title>
 </head>
 <body>
+    <h2>{{ item.instrument.name }}</h2>
+    <h4>category: {{ item.instrument.category }}</h4>
+    <h4>manufacturer: {{ item.instrument.manufacturer.name }}</h4>
+    <h4>description: {{ item.instrument.description }}</h4>
+    <div style='width:300px; height: 300px;'>
+        <h4>image: <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'></h4>
 
-    <h1>Instruments:</h1>
-    {% for m in items %}
-        <h2>{{ m.instrument.name }}</h2>
-        <h4>category: {{ m.instrument.category }}</h4>
-        <div style="width: 300px; height: 300px;">
-            <h4>image: <img src="{{ m.instrument.image }}" style='max-width :100%; max-height:100%; object-fit:contain;'></h4>
-        </div>
-        <h3>price: {{ m.price }}</h3>
-        <a href="/edit/instruments/{{ m.id }}"><button>Edit (staff only) [done]</button></a>
-        <a href="/instruments/{{ m.id }}"><button>See details [done] </button></a>
+        <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'>
+    </div>
+    <h3>price: {{ item.price }}</h3>
+    <form action="/edit/instruments/{{ item.id }}" method="get" >
+        <input type="submit" value="Edit (staff only) [done]">
+    </form>
+
+    <form action="/instruments/{{ item.id }}" method="post">
+        {% csrf_token %}
+        <input type="submit" name="purchase" value="Purchase (adiciona ao shopping cart) [done]">
+        <input type="submit" name="wishlist" value="add to wishlist (todo)">
+    </form>
+    <input type="submit" value="Delete(staff only) (TODO)">
+
+</body>
+</html>
 
         <form action="" method="post">
             {% csrf_token %}
@@ -24,8 +81,5 @@
             <input type="submit" name="whishlist" value="Add to wishlist (todo - acho eu?)">
         </form>
 
-        <input type="submit" value="Delete(staff only) (TODO)">
-
-    {% endfor %}
-</body>
-</html>
+        <input type="submit" value="Delete(staff only) (TODO)">-->
+{% endblock %}

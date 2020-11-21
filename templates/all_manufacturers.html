@@ -1,18 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All Manufacturers</title>
-</head>
-<body>
-    <h1>Manufacturers:</h1>
-    {% for m in manus %}
-        <h2>{{ m.name }}</h2>
-        <h4>country: {{ m.country }}</h4>
-        <h4>logo: <img src="{{ m.logo }}"></h4>
-
-        <a href="/manufacturers/{{ m.id }}"><button>See details [done] </button></a>
-
-    {% endfor %}
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        {% for m in manus %}
+            {% if forloop.counter0|divisibleby:3 %}
+            <div class="row">
+            {% endif %}
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card" style="width: 18rem;">
+                        <img style="max-height: 13rem; max-width: 30rem" class="card-img-top" src="{{ m.logo }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ m.name }}</h5>
+                            <p class="card-text">country: {{ m.country }}</p>
+                            <a href="/manufacturers/{{ m.id }}" class="btn btn-primary">See details</a>
+                      </div>
+                    </div>
+                </div>
+            {% if forloop.counter|divisibleby:3 %}
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

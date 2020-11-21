@@ -253,5 +253,3 @@ def shopping_cart(request):
         lista = ItemList.objects.create(person=Person.objects.get(user=u), type='shoppingcart')
 
     return render(request, 'shopping_cart.html', { 'lista' : lista , 'total' : total, 'nr_prods':nr_prods})
-
-
