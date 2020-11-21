@@ -72,6 +72,10 @@ body {
     color: white;
 }
 
+.create_acc_input input{
+    background: none;
+}
+
 .box-account h1{
     margin-bottom: 2%;
 }
