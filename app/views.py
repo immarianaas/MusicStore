@@ -112,19 +112,20 @@ def add_item(request): # ALTERADO DE add_instrument
     #form2 = ItemForm()
     return render(request, 'create_instrument.html', {'form':form}) # 'form2' : form2})
 
+
 @login_required(login_url='/login/')
-def purchase(request, item_id):
+def purchase(request, item_id, nextt):
     person = get_curr_person_object(request)
     add_to_list('shoppingcart', person, Item.objects.get(pk=item_id))
+    # todo apresentar confirmação de que foi adicionado ao cart
+    return redirect(nextt)
 
 
 def see_instruments(request):
     items = Item.objects.all()
     if request.method=='POST':
         if 'purchase' in request.POST:
-            #person = get_curr_person_object(request)
-            #add_to_list('shoppingcart', person, Item.objects.get(pk=request.POST['id']))
-            purchase(request, request.POST['id'])
+            return purchase(request, request.POST['id'], '/instruments/')
     return render(request, 'all_instruments.html', {'items' : items})
 
 
@@ -163,13 +164,11 @@ def see_instruments_details(request, id):
     item = Item.objects.get(pk=id)
 
     if request.method == 'POST':
-        # TODO verificar se tá loggado
-        person = get_curr_person_object(request)
-        add_to_list('shoppingcart', person, item)
+        return purchase(request, item.id, '/instruments/' + str(id))
 
-        # TODO  (redirecionar, dizer q ja adicionou..)
     return render(request, 'instrument_details.html', {'item' : item})
 
+@login_required(login_url='/login/')
 def edit_instrument(request, id):
     item = Item.objects.get(pk=id)
     inicial = item.instrument
@@ -187,7 +186,7 @@ def edit_instrument(request, id):
     form = InstrumentSlashItemForm(instance=inicial, initial={'price': item.price})
     return render(request, 'create_instrument.html', {'form' : form})
 
-
+@login_required(login_url='/login/')
 def edit_account(request):
     user_id = request.user.id
     u = Person.objects.get(pk = user_id)
