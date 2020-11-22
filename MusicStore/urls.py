@@ -37,5 +37,6 @@ urlpatterns = [
     path('instruments/<int:id>', views.see_instruments_details, name='instruments_details'),
     path('edit/instruments/<int:id>', views.edit_instrument, name='edit_instrument'),
     path('account/shoppingcart/', views.shopping_cart, name='shopping_cart'),
+    path('account/wishlist/', views.wishlist, name='wishlist'),
     # path('account/placeorder/', views.place_order, name='place_order')
 ]

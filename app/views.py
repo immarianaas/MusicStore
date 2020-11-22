@@ -267,3 +267,39 @@ def shopping_cart(request):
         lista = ItemList.objects.create(person=Person.objects.get(user=u), type='shoppingcart')
 
     return render(request, 'shopping_cart.html', { 'lista' : lista , 'total' : total, 'nr_prods':nr_prods})
+
+@login_required(login_url='/login/')
+def wishlist(request):
+    person = get_curr_person_object(request)
+    if 'checked' not in request.session:
+        request.session['checked'] = False
+
+    if request.method=='POST':
+        if 'rem_when_added_to_cart' in request.POST:
+            request.session['checked'] = True
+        else:
+            request.session['checked'] = False
+
+        item_qty = ItemQuantity.objects.get(pk=request.POST['id'])
+        if 'rem' in request.POST:
+            item_qty.delete()
+        elif 'purchase' in request.POST:
+            if request.session['checked']:
+                # then remove from this list
+                item_qty.delete()
+            return purchase(request, item_qty.item.id, '/account/wishlist' )
+
+
+
+    nr_prods = 0
+    try:
+        lista = ItemList.objects.get(person=person, type='wishlist').items.all()
+        nr_prods = len(lista)
+    except ObjectDoesNotExist:
+        lista = []
+
+    return render(request, 'wishlist.html', {'lista': lista, 'nr':nr_prods, 'remove':request.session['checked']})
+
+
+
+
