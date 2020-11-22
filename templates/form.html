@@ -11,5 +11,7 @@
             </div>
         </div>
     {% endfor %}
-    <input class="btn-form" type="submit" value="{{ submit_val }}">
+    {% if submit_val %}
+        <input class="btn-form" type="submit" value="{{ submit_val }}">
+    {% endif %}
 </form>

@@ -1,22 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ operacao }} Address</title>
-</head>
-<body>
-    <h2>{{ operacao|capfirst }} address: </h2>
-    <form action="" method="post">
-        {% csrf_token %}
-        Country: {{ form.country }} <br>
-        Street: {{ form.street }} <br>
-        City: {{ form.city }} <br>
-        Post code: {{ form.code }} <br>
-        Door: {{ form.door }} <br>
-        <input type="hidden" name="id" value="{{ id }}">
-        <input type="hidden" name="person" value="{{ person.id }}">
 
-        <input type="submit" name="edit" value="save">
-    </form>
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container form-container">
+        <h2>{{ operacao|capfirst }} address </h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="field-form row">
+                    <div class="col-3">
+                        {{ field.label }}
+                    </div>
+                    <div class="col-9">
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <input type="hidden" name="id" value="{{ id }}">
+            <input type="hidden" name="person" value="{{ person.id }}">
+
+            <input class="btn-form" type="submit" name="edit" value="save">
+        </form>
+    </div>
+{% endblock %}
