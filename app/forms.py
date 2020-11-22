@@ -24,12 +24,22 @@ class CreateAccount(forms.Form):
     door = forms.IntegerField(label="door no.")
     '''
 
-'''
+
 class AddressForm(ModelForm):
     class Meta:
         model = Address
-        fields = '__all__'
+        #exclude = ['person']
+        fields= '__all__'
+
 '''
+class CreateAddressForm(forms.Form):
+    street = forms.CharField(max_length=100)
+    city = forms.CharField(max_length=100)
+    code = forms.CharField(max_length=20)
+    country = forms.CharField(choices=COUNTRIES, max_length=100)
+    door = forms.IntegerField()
+'''
+
 
 '''
 class CreateManufacturers(forms.Form):

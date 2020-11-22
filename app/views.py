@@ -302,16 +302,38 @@ def wishlist(request):
         lista = []
     return render(request, 'wishlist.html', {'lista': lista, 'nr':nr_prods, 'remove':request.session['checked']})
 
+
+
 @login_required(login_url='/login/')
 def edit_addresses(request):
     person = get_curr_person_object(request)
+    addr = Address.objects.get(pk=int(request.POST['id']))
+    # vai ser sempre POST
     if request.method == 'POST':
-        # é editar um endereço
-        pass
+        if 'edit' in request.POST:
+            form = AddressForm(request.POST, instance=addr)
+            if form.is_valid():
+                new_addr = form.save()
+                return redirect('/account/')
+        elif 'rem' in request.POST:
+            addr.delete()
+            return redirect('/account/')
+        else:
+            form = AddressForm(instance=addr)
 
-    # else
-    # é criar um novo
-    # TODO not finished
+    return render(request, 'edit_addresses.html', {'form':form, 'operacao' : 'edit', 'person' : get_curr_person_object(request), 'id' : request.POST['id']})
+
+@login_required(login_url='/login/')
+def add_addresses(request):
+
+    if 'POST' in request.method:
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/account/')
+
+    form = AddressForm()
+    return render(request, 'edit_addresses.html', {'form' : form, 'operacao' : 'add', 'person' : get_curr_person_object(request)})
 
 
 

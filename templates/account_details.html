@@ -11,20 +11,27 @@
             <h3>You haven't added an adddress yet...</h3>
         {% endif %}
 
-        <form action="/edit/addresses" method="post">
+        <br>
+        <h2><strong>Your addresses:</strong></h2>
+
+        {% csrf_token %}
         {% for a in addrs %}
+            <h3>Address {{ forloop.counter }}</h3>
         <ul class="list-group" style="margin-top: 0.5rem">
-            <h4>Address:</h4>
             <li class="list-group-item">street: {{ a.street }}</li>
             <li class="list-group-item">door no.: {{ a.door }}</li>
             <li class="list-group-item">city: {{ a.city }}</li>
             <li class="list-group-item">code: {{ a.code }}</li>
+            <li class="list-group-item">country: {{ a.get_country_display }}</li>
+            <form action="/edit/addresses/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ a.id }}">
+                <input type="submit" value="edit this address">
+                <input type="submit" name="rem" value="remove this address">
 
-        <input type="hidden" name="id" value="{{ a.id }}">
-        <input type="submit" name="edit" value="edit this address ^">
+            </form>
         </ul>
         {% endfor %}
-        </form>
     </div>
     <div style="margin-top: 2rem" class="container">
         <div class="row">
@@ -43,7 +50,7 @@
                 <a class="btn-primary href_button" href="/edit/account">edit personal info (+/- todo)</a>
             </div>
             <div class="col">
-                <a class="btn-primary href_button" href="/edit/addresses">add addresses</a>
+                <a class="btn-primary href_button" href="/add/addresses">add addresses</a>
             </div>
             <div class="col">
                 <a class="btn-primary href_button" href="/account/orders">see orders & state (todo)</a>
