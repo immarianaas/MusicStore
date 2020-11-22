@@ -7,13 +7,24 @@
             <li class="list-group-item">gender: {{ ac.get_gender_display }}</li>
             <li class="list-group-item">contact: {{ ac.contact }}</li>
         </ul>
+        {% if addrs|length == 0 %}
+            <h3>You haven't added an adddress yet...</h3>
+        {% endif %}
+
+        <form action="/edit/addresses" method="post">
+        {% for a in addrs %}
         <ul class="list-group" style="margin-top: 0.5rem">
             <h4>Address:</h4>
-            <li class="list-group-item">street: {{ ac.address.street }}</li>
-            <li class="list-group-item">door no.: {{ ac.address.door }}</li>
-            <li class="list-group-item">city: {{ ac.address.city }}</li>
-            <li class="list-group-item">code: {{ ac.address.code }}</li>
+            <li class="list-group-item">street: {{ a.street }}</li>
+            <li class="list-group-item">door no.: {{ a.door }}</li>
+            <li class="list-group-item">city: {{ a.city }}</li>
+            <li class="list-group-item">code: {{ a.code }}</li>
+
+        <input type="hidden" name="id" value="{{ a.id }}">
+        <input type="submit" name="edit" value="edit this address ^">
         </ul>
+        {% endfor %}
+        </form>
     </div>
     <div style="margin-top: 2rem" class="container">
         <div class="row">
@@ -24,7 +35,7 @@
                 <a class="href_button btn-primary" href="/account/shoppingcart">shopping cart [done]</a>
             </div>
             <div class="col">
-                <a class="btn-primary href_button" href="/account/whishlist">whishlist (todo)</a>
+                <a class="btn-primary href_button" href="/account/wishlist">whishlist (todo)</a>
             </div>
         </div>
         <div class="row" style="margin-top: 0.5rem">
@@ -32,7 +43,7 @@
                 <a class="btn-primary href_button" href="/edit/account">edit personal info (+/- todo)</a>
             </div>
             <div class="col">
-                <a class="btn-primary href_button" href="/edit/address">edit address info (todo, not sure tho)</a>
+                <a class="btn-primary href_button" href="/edit/addresses">add addresses</a>
             </div>
             <div class="col">
                 <a class="btn-primary href_button" href="/account/orders">see orders & state (todo)</a>

@@ -24,12 +24,13 @@ def create_account(request):
             gender = form.cleaned_data['gender']
             contact = form.cleaned_data['contact']
             password = form.cleaned_data['password']
-
+            '''
             street = form.cleaned_data['street']
             city = form.cleaned_data['city']
             code = form.cleaned_data['code']
             country = form.cleaned_data['country']
             door = form.cleaned_data['door']
+            '''
             try:
                 u = models.User.objects.create_user(email, password=password)
             except Exception:
@@ -37,8 +38,8 @@ def create_account(request):
                 return redirect("/create-account")
             # TODO falta meter permissoes...
 
-            addr = Address.objects.create(country=country, city=city, code=code, street=street, door=door)
-            Person.objects.create(name=name, user=u, gender=gender, contact=contact, address=addr)
+            #addr = Address.objects.create(country=country, city=city, code=code, street=street, door=door)
+            Person.objects.create(name=name, user=u, gender=gender, contact=contact)
 
             return redirect("/login")
         else:
@@ -53,7 +54,11 @@ def account(request):
     user_id = request.user.id
     u = models.User.objects.get(pk=user_id)
     ac = Person.objects.get(user_id=u.id)
-    return render(request, 'account_details.html', {'u': u, 'ac':ac})
+    try:
+        addrs = Address.objects.filter(person=ac).all()
+    except ObjectDoesNotExist :
+        addrs = []
+    return render(request, 'account_details.html', {'u': u, 'ac':ac, 'addrs' : addrs})
 
 
 # TODO meter isto nao so com login mas tambem com permissoes especiais
@@ -289,16 +294,24 @@ def wishlist(request):
                 item_qty.delete()
             return purchase(request, item_qty.item.id, '/account/wishlist' )
 
-
-
     nr_prods = 0
     try:
         lista = ItemList.objects.get(person=person, type='wishlist').items.all()
         nr_prods = len(lista)
     except ObjectDoesNotExist:
         lista = []
-
     return render(request, 'wishlist.html', {'lista': lista, 'nr':nr_prods, 'remove':request.session['checked']})
+
+@login_required(login_url='/login/')
+def edit_addresses(request):
+    person = get_curr_person_object(request)
+    if request.method == 'POST':
+        # é editar um endereço
+        pass
+
+    # else
+    # é criar um novo
+    # TODO not finished
 
 
 

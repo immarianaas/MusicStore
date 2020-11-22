@@ -15,13 +15,14 @@ class CreateAccount(forms.Form):
     name = forms.CharField(label="name", max_length=100)
     gender = forms.ChoiceField(label="gender", choices=GENDER)
     contact = forms.IntegerField(label="contact")
-
+    '''
     # address part...
     street = forms.CharField(label="street", max_length=100)
     city = forms.CharField(label="city", max_length=100)
     code = forms.CharField(label="code", max_length=100)
     country = forms.ChoiceField(label="country", choices= COUNTRIES)
     door = forms.IntegerField(label="door no.")
+    '''
 
 '''
 class AddressForm(ModelForm):

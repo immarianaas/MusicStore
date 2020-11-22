@@ -122,18 +122,6 @@ class Item(models.Model):
         return str(self.instrument.id) + " [price: " + str(self.price) + "]"
 
 
-# -------------------------------------------------------
-# not changed
-class Address(models.Model):
-    street = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    code = models.CharField(max_length=20)
-    country = models.CharField(choices=COUNTRIES, max_length=100)
-    door = models.IntegerField()
-
-    def __str__(self):
-        return self.street + ", " + str(self.door) + " - " + self.city + " (" + self.country + ")"
-
 
 # -------------------------------------------------------
 # changed!
@@ -143,7 +131,7 @@ class Person(models.Model):
     gender = models.CharField(choices=GENDER, max_length=100)
     contact = models.PositiveBigIntegerField()
 
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    # address = models.ForeignKey(Address, on_delete=models.CASCADE)
     role = models.CharField(choices=ROLES, max_length=10)
 
     '''
@@ -188,6 +176,23 @@ class ItemList(models.Model):
 #     item = models.ForeignKey(Item, on_delete=models.CASCADE)
 # -------------------------------------------------------
 
+
+# -------------------------------------------------------
+# person added
+class Address(models.Model):
+    street = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    code = models.CharField(max_length=20)
+    country = models.CharField(choices=COUNTRIES, max_length=100)
+    door = models.IntegerField()
+
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return self.street + ", " + str(self.door) + " - " + self.city + " (" + self.country + ")"
+
+
+# -------------------------------------------------------
 # changed.
 class Order(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
@@ -196,3 +201,4 @@ class Order(models.Model):
     order_status = models.CharField(choices=STATUS, max_length=100)
     list = models.ForeignKey(ItemList, on_delete=models.CASCADE)
     payment_method = models.CharField(choices=PAYMENT_METHODS, max_length=20)
+
