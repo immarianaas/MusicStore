@@ -30,6 +30,7 @@ urlpatterns = [
     path('edit/account/', views.edit_account, name='edit_account'),
     path('edit/addresses/', views.edit_addresses, name='edit_addresses'),
     path('add/addresses/', views.add_addresses, name='add_addresses'),
+    path('add/addresses/temp/', views.add_addresses_temp, name='add_temp_address'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('add-manufacturer/', views.add_manufacturer, name='add_manufacturer'),
     path('manufacturers/', views.see_manufacturers, name='see_manufacturers'),
@@ -40,5 +41,6 @@ urlpatterns = [
     path('edit/instruments/<int:id>', views.edit_instrument, name='edit_instrument'),
     path('account/shoppingcart/', views.shopping_cart, name='shopping_cart'),
     path('account/wishlist/', views.wishlist, name='wishlist'),
-    # path('account/placeorder/', views.place_order, name='place_order')
+    path('account/placeorder/', views.place_order, name='place_order'),
+    path('account/orders/', views.orders, name='orders'),
 ]

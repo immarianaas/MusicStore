@@ -202,3 +202,5 @@ class Order(models.Model):
     list = models.ForeignKey(ItemList, on_delete=models.CASCADE)
     payment_method = models.CharField(choices=PAYMENT_METHODS, max_length=20)
 
+    def __str__(self):
+        return str(self.person) + str(self.delivery_address) + str(self.payment_time)

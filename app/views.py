@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from app.forms import *
@@ -269,8 +271,8 @@ def shopping_cart(request):
             nr_prods += i.quantity
 
     except ObjectDoesNotExist:
-        lista = ItemList.objects.create(person=Person.objects.get(user=u), type='shoppingcart')
-
+        ItemList.objects.create(person=Person.objects.get(user=u), type='shoppingcart')
+        lista = []
     return render(request, 'shopping_cart.html', { 'lista' : lista , 'total' : total, 'nr_prods':nr_prods})
 
 @login_required(login_url='/login/')
@@ -325,15 +327,106 @@ def edit_addresses(request):
 
 @login_required(login_url='/login/')
 def add_addresses(request):
+    return add_addresses2(request)
 
+@login_required(login_url='/login/')
+def add_addresses_temp(request):
+    return add_addresses2(request, temp_addr=True)
+
+def add_addresses2(request, temp_addr=False):
     if 'POST' in request.method:
         form = AddressForm(request.POST)
         if form.is_valid():
-            form.save()
+            addr = form.save()
+            if temp_addr:
+                addr.person = None
+                addr.save()
+                if 'temp_addr' not in request.session:
+                    request.session['temp_addr'] = []
+                request.session['temp_addr'].append(addr.id)
+                return redirect('/account/placeorder', new_addr=addr.id)
             return redirect('/account/')
 
     form = AddressForm()
     return render(request, 'edit_addresses.html', {'form' : form, 'operacao' : 'add', 'person' : get_curr_person_object(request)})
+
+
+@login_required(login_url='/login/')
+def orders(request):
+    try:
+        ords = Order.objects.filter(person=get_curr_person_object(request))
+    except ObjectDoesNotExist:
+        ords= []
+    return render(request, 'show_orders.html', {'orders' : ords} )
+
+
+@login_required(login_url='/login/')
+def place_order(request, new_addr=False):
+
+    if request.method == 'POST':
+        if 'new_addr' in request.POST:
+            #return add_addresses(request, temp_addr=True)
+            return redirect('/add/addresses/temp/')
+        if 'address' in request.POST:
+            request.session['chosen_addr'] = request.POST['address']
+            print(request.POST['address'])
+            if 'pay' in request.POST:
+
+                # ver se é pra guardar ou nao os temp_addr
+                if 'save_temp_addrs' in request.POST and 'temp_addr' in request.session:
+                    for idd in request.session['temp_addr']:
+                        adr = Address.objects.get(pk=idd)
+                        adr.person = get_curr_person_object(request)
+                        adr.save()
+
+                request.session['temp_addr'] = []
+
+                prod_list =ItemList.objects.get(person=get_curr_person_object(request), type='shoppingcart')
+                prod_list.type='order'
+                prod_list.save()
+
+                # criar order
+                ord=Order.objects.create(person=get_curr_person_object(request),
+                                     delivery_address_id=request.POST['address'],
+                                     payment_method= request.POST['pay'],
+                                     order_status='PROC',
+                                     list=prod_list,
+                                     payment_time= datetime.now()
+                                     )
+                print(ord)
+                return render(request, 'order_completed.html', {'order_id' : ord.id})
+
+
+    # review order part
+    total = 0
+    nr_prods = 0
+
+    lista = ItemList.objects.get(person=get_curr_person_object(request), type='shoppingcart').items.all()
+    for i in lista:
+        total += i.quantity * i.item.price
+        nr_prods += i.quantity
+
+    if nr_prods == 0:
+        return redirect('/account/shoppingcart')
+
+    info = {'prod_list' : lista, 'total' : total, 'nr_prods' : nr_prods}
+    # ------------------
+    # escolher address
+
+    # TODO verificar se existe ou nao..
+    try:
+        addr_choices = Address.objects.filter(person=get_curr_person_object(request)).all()
+    except:
+        addr_choices = []
+
+    info['addr_choices'] = addr_choices
+
+    return render(request, 'place_order.html', info)
+
+
+
+
+
 
 
 

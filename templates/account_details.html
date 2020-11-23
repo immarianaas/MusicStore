@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <h3 style="width: 100%; text-align: center">{{ ac.name }}</h3>
+    <h2 style="width: 100%; text-align: center;"><strong>{{ ac.name }}</strong></h2>
     <div class="container">
         <ul class="list-group">
             <li class="list-group-item">email: {{ u.username }}</li>
@@ -36,30 +36,28 @@
     <div style="margin-top: 2rem" class="container">
         <div class="row">
             <div class="col">
-                <a class="href_button btn-primary" href="#">mostrar orders (TODO)</a>
+                <a class="href_button btn-primary" href="/account/orders">mostrar orders</a>
             </div>
             <div class="col">
-                <a class="href_button btn-primary" href="/account/shoppingcart">shopping cart [done]</a>
+                <a class="href_button btn-primary" href="/account/shoppingcart">shopping cart</a>
             </div>
             <div class="col">
-                <a class="btn-primary href_button" href="/account/wishlist">whishlist (todo)</a>
+                <a class="btn-primary href_button" href="/account/wishlist">whishlist</a>
             </div>
         </div>
         <div class="row" style="margin-top: 0.5rem">
             <div class="col">
-                <a class="btn-primary href_button" href="/edit/account">edit personal info (+/- todo)</a>
+                <a class="btn-primary href_button" href="/edit/account">edit personal info</a>
             </div>
             <div class="col">
                 <a class="btn-primary href_button" href="/add/addresses">add addresses</a>
             </div>
             <div class="col">
-                <a class="btn-primary href_button" href="/account/orders">see orders & state (todo)</a>
+                <a class="btn-primary href_button" href="#">ALTERAR PASSE? (todo)</a>
             </div>
         </div>
     </div>
+    <br>
+    <br>
 
-    <p> n sei se se mete opcao de se poder adicionar mais addresses ou nao (pela db pode-se fazer isso)</p>
-
-    <p>adicionar manufacturer (So staff)</p>
-    <p>adicionar instrumento (So staff)</p>
 {% endblock %}

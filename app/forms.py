@@ -86,4 +86,3 @@ class InstrumentSlashItemForm(ModelForm):
         model = Instrument
         fields = '__all__'
 
-

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Orders</title>
+</head>
+<body>
+    <h1>Your orders:</h1>
+
+    {% if orders|length == 0 %}
+        <h3>You havem't made any order yet.</h3>
+        <a href="/"><button>Go to homepage!</button></a>
+    {% else %}
+        {% for o in orders %}
+            <h2>Order no. {{ forloop.counter }}</h2>
+            <p>order no.: {{ o.id }}</p>
+            <p>delivery address: {{ o.delivery_address }}</p>
+            <p>payment method: {{ o.payment_method }}</p>
+            <p>payment time: {{ o.payment_time }}</p>
+            <p>status: {{ o.order_status }}</p>
+            <h3>ordered products: </h3>
+            {% for e in o.list.items.all %}
+                <p>instrument manufacturer: {{ e.item.instrument.manufacturer }}</p>
+                <p>instrument name: {{ e.item.instrument.name }}</p>
+                <p>instrument id: {{ e.item.instrument.nr_serie }}</p>
+                <p>{{ e.item.price }}€ x {{ e.quantity }}</p>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

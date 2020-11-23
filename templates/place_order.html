@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+</head>
+<body>
+    <h3>Product overview:</h3>
+    {% for p in prod_list %}
+        <p>{{ p.item.instrument.name }} x {{ p.quantity }} ( {{ p.item.price }}€ each )</p>
+    {% endfor %}
+    <h4>{{ prod_list | length }} item(s) for a total of {{ total }}€</h4>
+
+    <h3>Delivery address:</h3>
+    <form action="" method="post">
+    {% csrf_token %}
+    {% for a in addr_choices %}
+        <input type="radio" name="address" id="radio{{ a.id }}" value="{{ a.id }}" >
+        <label for="radio{{ a.id }}">{{ a }}</label>
+        <!--<input type="text" value="{{ a.id }}">-->
+        <br>
+    {% endfor %}
+    <input type="checkbox" id="checkbox_save_addrs" name="save_addrs" >
+    <label for="checkbox_save_addrs">Save temporary addresses.</label>
+    <a href=""><input type="submit" name="new_addr" value="Create a new address (will not be saved (not sure yet))."></a>
+    <a href="/account/"><button>Go to account to edit/add to your addresses.</button></a>
+
+    <h3>Payment options:</h3>
+        <input type="radio" name="pay" id="pay1" value="PayPal">
+        <label for="pay1">PayPal</label>
+
+        <input type="radio" name="pay" id="pay2" value="Credit Card">
+        <label for="pay2">Credit Card</label>
+    <br>
+    <input type="submit" value="Click to finish purchase!">
+    </form>
+
+
+</body>
+</html>
