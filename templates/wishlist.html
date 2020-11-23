@@ -1,25 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wishlist</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container container-info">
+        <h3>There are {{ nr }} item(s) in your wishlist: </h3>
 
-<h3>There are {{ nr }} item(s) in your wishlist: </h3>
+        <form action="" method="post">
+            <input type="checkbox" id="rem_when_added_checkbox" name="rem_when_added_to_cart" {% if remove  %} checked {% endif %}  >
+            <label for="rem_when_added_checkbox">remove from wishlist when added to cart</label>
 
-<form action="" method="post">
-    <input type="checkbox" id="rem_when_added_checkbox" name="rem_when_added_to_cart" {% if remove  %} checked {% endif %}  >
-    <label for="rem_when_added_checkbox">remove from wishlist when added to cart</label>
-
-    {% for i in lista %}
-        <p>name: {{ i.item.instrument.name }}; price: {{ i.item.price }} </p>
-            {% csrf_token %}
-            <input type="hidden" name="id" value={{ i.id }} />
-            <input type="submit" name="rem" value="remove from whishlist">
-            <input type="submit" name="purchase" value="add to shopping cart!">
-    {% endfor %}
-</form>
-
-</body>
-</html>
+            {% for i in lista %}
+                <p>name: {{ i.item.instrument.name }}; price: {{ i.item.price }} </p>
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value={{ i.id }} />
+                    <input type="submit" name="rem" value="remove from whishlist">
+                    <input type="submit" name="purchase" value="add to shopping cart!">
+            {% endfor %}
+        </form>
+    </div>
+{% endblock %}

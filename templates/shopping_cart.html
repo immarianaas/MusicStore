@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Shopping Cart</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
     {% for i in lista %}
         <p>manufacturer: {{ i.item.instrument.manufacturer }}; name: {{ i.item.instrument.name }}; price cada : {{ i.item.price }}; quantidade: {{ i.quantity }}</p>
         <form action="" method="post">
@@ -18,8 +13,6 @@
     <h3>nr products: {{ nr_prods }}</h3>
     <h3>total: {{ total }}</h3>
 
-    <a href="/account/placeorder"><button>place order [todo] </button></a>
+    <a class="href_button" href="/account/placeorder">place order [todo]</a>
 
-
-</body>
-</html>
+{% endblock %}
