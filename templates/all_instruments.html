@@ -16,9 +16,9 @@
                                     <input type="hidden" name="id" value="{{ m.0.id }}">
                                     <input class="tag" type="submit" name="purchase" value="Buy">
                                     {% if m.1 %}  <!--se já estiver lá-->
-                                        <input class="tag" type="submit" name="wishlist" value="Remove from wishlist">
+                                        <input class="tag" type="submit" name="rem_wishlist" value="Remove from wishlist">
                                     {% else %}
-                                        <input class="tag" type="submit" name="wishlist" value="Add to wishlist">
+                                        <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
                                     {% endif %}
                                 </div>
                             </form>

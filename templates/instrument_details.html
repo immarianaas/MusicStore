@@ -17,9 +17,9 @@
             <form action="/instruments/{{ item.id }}" method="post">
                 {% csrf_token %}
                 {% if wishlist %} <!-- se já estiver lá -->
-                    <input class="btn-href" type="button" name="wishlist" value="Remove from wishlist">
+                    <input class="btn-href" type="submit" name="rem_wishlist" value="Remove from wishlist">
                 {% else %}
-                    <input class="btn-href" type="submit" name="wishlist" value="Add to wishlist">
+                    <input class="btn-href" type="submit" name="add_wishlist" value="Add to wishlist">
                 {% endif %}
                 <input class="btn-href" type="submit" name="purchase" value="Buy">
             </form>
