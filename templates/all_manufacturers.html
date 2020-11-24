@@ -8,24 +8,9 @@
                     <div>
                         <h1>{{ m.name }}</h1>
                         <p>Country : {{ m.country }}</p>
-
                     </div>
-<section class="cards-wrapper">
-    {% for m in manus %}
-        <div class="card-grid-space">
-            <a class="card-instruments" href="{% url 'manufacturers_details' m.id %}"
-               style="--bg-img: url({{ m.logo }})">
-                <div>
-                    <h1>{{ m.name }}</h1>
-                    <p>Country: {{ m.country }}</p>
-                </div>
-            {% if forloop.counter|divisibleby:3 %}
+                </a>
             </div>
-            {% endif %}
         {% endfor %}
-    </div>
-            </a>
-        </div>
-    {% endfor %}
-</section>
-{% endblock %} 
+    </section>
+{% endblock %}
