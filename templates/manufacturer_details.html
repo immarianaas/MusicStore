@@ -11,6 +11,9 @@
             </div>
             <div class="col-lg-10 col-md-9 col-sm-12">
                 <section class="cards-wrapper">
+                    {% if prods|length == 0 %}
+                        <h5 style="text-align: center">No products associated, yet.</h5>
+                    {% else %}
                     {% for p in prods.values %}
                         <div class="card-grid-space">
                             <div class="num">{{ p.0.name }}</div>
@@ -40,6 +43,7 @@
                             </a>
                         </div>
                     {% endfor %}
+                    {% endif %}
                 </section>
             </div>
         </div>
