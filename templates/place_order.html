@@ -6,7 +6,7 @@
                 <h2>Payment</h2>
                 <p>Thank you for choosing our products</p>
             </div>
-            <form>
+            <!--<form>-->
                 <div class="products">
                     <h3 class="title">Checkout</h3>
                     {% for p in prod_list %}
@@ -48,9 +48,9 @@
                         <label for="checkbox_save_addrs">Save temporary addresses.</label>
 
                         <br>
-                        <a class="btn-href" href="{% url 'add_temp_address' %}">Create a new address (will not be saved (not sure yet))</a>
+                        <a class="btn-href" href="{% url 'add_temp_address' %}">Create a new address</a>
                         <br>
-                        <a class="btn-href" href="{% url 'account' %}">Go to account to edit/add your addresses.</a>
+                        <a class="btn-href" href="{% url 'account' %}">Go to account to edit/add your addresses</a>
 
                         <h3 class="title">Payment options</h3>
                         <input type="radio" name="pay" id="pay1" value="PayPal">
@@ -59,11 +59,11 @@
                         <input type="radio" name="pay" id="pay2" value="Credit Card">
                         <label for="pay2">Credit Card</label>
                         <br>
-                        <input class="btn-form" type="submit" value="Click to finish purchase!">
+                        <input class="btn-form" type="submit" value="Click to finish!">
                     </form>
 
                 </div>
-            </form>
+            <!--</form>-->
         </div>
     </section>
 {% endblock %}
