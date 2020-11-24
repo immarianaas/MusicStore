@@ -146,8 +146,8 @@
                 <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
                     <li class="nav-item"><a class="nav-link link text-black display-4" href="/instruments/">
                         instruments</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="/manifacturers/">
-                        manifacturers</a></li>
+                    <li class="nav-item"><a class="nav-link link text-black display-4" href="/manufacturers/">
+                        manufacturers</a></li>
                     {% if request.user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link link text-black display-4"
                                             href="{% url 'account' %}"><i style="font-size: 2rem;" class="fas fa-user"></i>  account</a>
@@ -157,7 +157,7 @@
                         </li>
 
                         <li class="nav-item"><a class="nav-link link text-black display-4"
-                            href="{% url 'account' %}"><i style="font-size: 2rem;" class="fas fa-heart"></i>  wishlist</a>
+                            href="{% url 'wishlist' %}"><i style="font-size: 2rem;" class="fas fa-heart"></i>  wishlist</a>
                         </li>
                     {% endif %}
                 </ul>

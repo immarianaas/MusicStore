@@ -12,8 +12,10 @@
                         <img style="max-height: 13rem; max-width: 30rem" class="card-img-top" src="{{ m.logo }}" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{ m.name }}</h5>
-                            <p class="card-text">country: {{ m.country }}</p>
+                            <p class="card-text">country: {{ m.get_country_display }}</p>
                             <a href="/manufacturers/{{ m.id }}" class="btn btn-primary">See details</a>
+                            <a href="edit/manufacturers/{{ m.id }}" class="btn btn-warning">edit</a>
+                            <a href="delete/manufacturers/{{ m.id }}" class="btn btn-warning">delete</a>
                       </div>
                     </div>
                 </div>

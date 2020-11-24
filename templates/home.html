@@ -32,11 +32,19 @@
             </div>
         </div>
     </div>
-
     <a href="/instruments/"><button>See all available instruments!</button>
     <a href="/manufacturers/"><button>See all manifacturers</button>
-    <a href="/account/"><button>See your account page</button>
-    <a href="/account/wishlist/"><button>See your favourites</button>
-    <a href="/account/shoppingcart/"><button>See your shoppingcart</button>
+        {% if request.user.is_authenticated %}
+
+        <a href="/account/"><button>See your account page</button>
+        <a href="/account/wishlist/"><button>See your favourites</button>
+        <a href="/account/shoppingcart/"><button>See your shoppingcart</button>
+
+            {% if role == 'S' %}
+                <a href="/add-manufacturer/"><button>Add a new manufacturer</button>
+                <a href="/add-instrument/"><button>Add a new item</button>
+            {% endif %}
+
+        {% endif %}
     <!-- não sei bem q cenas se mete aqui, isto foi mais como exemplo :shrug: -->
 {% endblock %}
