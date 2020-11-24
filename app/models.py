@@ -10,7 +10,8 @@ COUNTRIES = [
         ('ES', 'Spain'),
         ('FR', 'France'),
         ('NL', 'The Netherlands'),
-        ('EN', 'England')
+        ('EN', 'England'),
+        ('DE', 'Germany'),
     )
      ),
     (
