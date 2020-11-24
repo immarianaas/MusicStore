@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Order Completed</title>
-</head>
-<body>
-<h1>Thank u for using our store.</h1>
-<h3>Your order's ID: {{ order_id }}</h3>
-<a href="/"><button>Click to redirect to home page.</button></a>
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container form-container">
+        <h1>Thank you for using our store.</h1>
+        <h3>Your order's ID: {{ order_id }}</h3>
+        <a class="btn-href" href="/">Click to redirect to home page.</a>
+    </div>
+{% endblock %}
