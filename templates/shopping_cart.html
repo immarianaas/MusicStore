@@ -1,18 +1,30 @@
 {% extends 'layout.html' %}
 {% block content %}
-    {% for i in lista %}
-        <p>manufacturer: {{ i.item.instrument.manufacturer }}; name: {{ i.item.instrument.name }}; price cada : {{ i.item.price }}; quantidade: {{ i.quantity }}</p>
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="submit" name="add" value="+1">
-            <input type="submit" name="sub" value="-1">
-            <input type="submit" name="del" value="remove">
-            <input type="hidden" name="id" value={{ i.id }}>
-        </form>
-    {% endfor %}
-    <h3>nr products: {{ nr_prods }}</h3>
-    <h3>total: {{ total }}</h3>
+    <div class="container form-container">
+        <h1 class="font-weight-bold">Shopping cart</h1>
+        <ul class="list-orders list-shopping-cart">
+            {% for i in lista %}
+                <li>
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ i.item.instrument.name }} ({{ i.item.price }}$): x{{ i.quantity }}</p>
+                        </div>
+                        <div class="col">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input class="btn-href" type="submit" name="add" value="+1">
+                                <input class="btn-href" type="submit" name="sub" value="-1">
+                                <input class="btn-href" type="submit" name="del" value="remove">
+                                <input type="hidden" name="id" value={{ i.id }}>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <p>nr products: {{ nr_prods }}</p>
+        <h3>total: {{ total }}</h3>
 
-    <a class="href_button" href="/account/placeorder">place order [todo]</a>
-
+        <a style="width: 30%" class="href_button" href="/account/placeorder">Place order</a>
+    </div>
 {% endblock %}
