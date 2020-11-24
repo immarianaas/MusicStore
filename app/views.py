@@ -140,13 +140,24 @@ def add_to_wishlist(request, item_id, nextt):
     add_to_list('wishlist', person, Item.objects.get(pk=item_id))
     return redirect(nextt)
 
+@login_required(login_url='/login')
+def rem_from_wishlist(request, item_id, nextt):
+    whishlist_items = ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items
+    whishlist_items.get(item_id=item_id).delete()
+    print(whishlist_items.all())
+    return redirect(nextt)
+
+
 def see_instruments(request):
     items = Item.objects.all()
     if request.method=='POST':
         if 'purchase' in request.POST:
             return purchase(request, request.POST['id'], '/instruments/')
-        elif 'wishlist' in request.POST:
-            return add_to_wishlist(request, request.POST['id'], '/instruments/')
+        elif 'add_wishlist' in request.POST:
+            add_to_wishlist(request, request.POST['id'], '/instruments/')
+        elif 'rem_wishlist' in request.POST:
+            rem_from_wishlist(request, request.POST['id'], '/instruments/')
+
     its = [ (i , False) for i in items]
     if request.user.is_authenticated:
         try:
@@ -197,9 +208,10 @@ def see_instruments_details(request, id):
     if request.method == 'POST':
         if 'purchase' in request.POST:
             return purchase(request, item.id, '/instruments/' + str(id))
-        elif 'wishlist' in request.POST:
+        elif 'add_wishlist' in request.POST:
             return add_to_wishlist(request, str(id), '/instruments/' + str(id))
-
+        elif 'rem_wishlist' in request.POST:
+            return rem_from_wishlist(request, str(id), '/instruments/'+str(id))
     wishlist = False # está na wishlist?
     if request.user.is_authenticated:
         person = get_curr_person_object(request)
@@ -462,7 +474,10 @@ def edit_manufacturer(request, id):
         manu = Manufacturer.objects.get(pk=id)
     except:
         return redirect("/")
-    # TODO not finished!!
+    if request.method == 'POST':
+        form = ManufacturerForm(request.POST, instance=manu)
+        form.save()
+        return redirect('/manufacturers/' + str(manu.id))
     form = ManufacturerForm(instance=manu)
     return render(request, 'edit_manufacturer.html', {'form' : form})
 
