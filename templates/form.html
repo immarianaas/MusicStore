@@ -10,6 +10,8 @@
                 {{ field }}
             </div>
         </div>
+        <div>{{ field.errors }}</div>
+
     {% endfor %}
     {% if submit_val %}
         <input class="btn-form" type="submit" value="{{ submit_val }}">

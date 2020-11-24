@@ -43,4 +43,6 @@ urlpatterns = [
     path('account/wishlist/', views.wishlist, name='wishlist'),
     path('account/placeorder/', views.place_order, name='place_order'),
     path('account/orders/', views.orders, name='orders'),
+    path('account/change_password/', auth_views.PasswordChangeView.as_view(template_name='change_pwd.html'), name='change_password'),
+    path('password_change_done', views.password_changed, name='password_change_done'),
 ]

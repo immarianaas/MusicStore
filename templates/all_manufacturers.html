@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
     <div class="container">
+        <h2><strong>Manufacturers:</strong></h2>
+
         {% for m in manus %}
             {% if forloop.counter0|divisibleby:3 %}
             <div class="row">
