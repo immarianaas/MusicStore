@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Password Changed</title>
-</head>
-<body>
-    <h1>Your password was successfully changed!</h1>
-    <a href="/"><button>Go to home page</button></a>
-    <a href="/"><button>Go to account details</button></a>
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container container-info">
+        <h1>Your password was successfully changed!</h1>
+        <a class="btn-href" href="/">Go to home page</a>
+        <a class="btn-href" href="{% url 'account' %}">Go to account details</a>
+    </div>
+{% endblock %}

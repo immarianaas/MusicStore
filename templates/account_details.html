@@ -1,67 +1,5 @@
 {% extends 'layout.html' %}
 {% block content %}
-<!--
-    <h2 style="width: 100%; text-align: center;"><strong>{{ ac.name }}</strong></h2>
-    <div class="container">
-        <ul class="list-group">
-            <li class="list-group-item">email: {{ u.username }}</li>
-            <li class="list-group-item">gender: {{ ac.get_gender_display }}</li>
-            <li class="list-group-item">contact: {{ ac.contact }}</li>
-        </ul>
-        {% if addrs|length == 0 %}
-            <h3>You haven't added an adddress yet...</h3>
-        {% endif %}
-
-        <br>
-        <h2><strong>Your addresses:</strong></h2>
-
-        {% csrf_token %}
-        {% for a in addrs %}
-            <h3>Address {{ forloop.counter }}</h3>
-        <ul class="list-group" style="margin-top: 0.5rem">
-            <li class="list-group-item">street: {{ a.street }}</li>
-            <li class="list-group-item">door no.: {{ a.door }}</li>
-            <li class="list-group-item">city: {{ a.city }}</li>
-            <li class="list-group-item">code: {{ a.code }}</li>
-            <li class="list-group-item">country: {{ a.get_country_display }}</li>
-            <form action="/edit/addresses/" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="id" value="{{ a.id }}">
-                <input type="submit" value="edit this address">
-                <input type="submit" name="rem" value="remove this address">
-
-            </form>
-        </ul>
-        {% endfor %}
-    </div>
-    <div style="margin-top: 2rem" class="container">
-        <div class="row">
-            <div class="col">
-                <a class="href_button btn-primary" href="/account/orders">mostrar orders</a>
-            </div>
-            <div class="col">
-                <a class="href_button btn-primary" href="/account/shoppingcart">shopping cart</a>
-            </div>
-            <div class="col">
-                <a class="btn-primary href_button" href="/account/wishlist">whishlist</a>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 0.5rem">
-            <div class="col">
-                <a class="btn-primary href_button" href="/edit/account">edit personal info</a>
-            </div>
-            <div class="col">
-                <a class="btn-primary href_button" href="/add/addresses">add addresses</a>
-            </div>
-            <div class="col">
-                <a class="btn-primary href_button" href="#">ALTERAR PASSE? (todo)</a>
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
-
--->
     <div class="container container-info">
         <h3 style="width: 100%; text-align: center" class="font-weight-bold">{{ ac.name }}</h3>
         <div class="container">
@@ -130,8 +68,6 @@
                 </div>
             </div>
         </div>
-<br>
-<br>
     </div>
 
 {% endblock %}
