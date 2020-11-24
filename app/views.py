@@ -382,9 +382,10 @@ def orders(request):
 def place_order(request, new_addr=False):
 
     if request.method == 'POST':
-        if 'new_addr' in request.POST:
-            #return add_addresses(request, temp_addr=True)
-            return redirect('/add/addresses/temp/')
+        #if 'new_addr' in request.POST:
+        #    #return add_addresses(request, temp_addr=True)
+        #
+        # return redirect('/add/addresses/temp/')
         if 'address' in request.POST:
             request.session['chosen_addr'] = request.POST['address']
             print(request.POST['address'])
@@ -398,8 +399,8 @@ def place_order(request, new_addr=False):
                         adr.save()
 
                 request.session['temp_addr'] = []
-
                 prod_list =ItemList.objects.get(person=get_curr_person_object(request), type='shoppingcart')
+
                 prod_list.type='order'
                 prod_list.save()
 
@@ -418,8 +419,11 @@ def place_order(request, new_addr=False):
     # review order part
     total = 0
     nr_prods = 0
+    try:
+        lista = ItemList.objects.get(person=get_curr_person_object(request), type='shoppingcart').items.all()
+    except:
+        return redirect("/instruments/")
 
-    lista = ItemList.objects.get(person=get_curr_person_object(request), type='shoppingcart').items.all()
     for i in lista:
         total += i.quantity * i.item.price
         nr_prods += i.quantity
