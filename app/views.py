@@ -11,22 +11,20 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 def home(request):
-    # role = None
-    # if request.user.is_authenticated:
-    #     role = get_curr_person_object(request).role
-    instruments = None
-    if not request.user.is_authenticated:
-        instruments = Instrument.objects.all();
-        instruments = [ (i , False) for i in instruments]
-        try:
-            #             ItemList.objects.get(person=person, type='whishlist', items__item_id=item.id)
-            il = [ i.item for i in ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()]
-            its = [ (i , False) for i in items]
-        except ObjectDoesNotExist:
-            print("nope, sory")
-            pass
-        #print(role, role=='S')
-    return render(request, 'home.html', {'loggedin': request.user.is_authenticated, 'items' : instruments})
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('login/')
+
+    print(request.user.groups.filter(name='staff').exists())
+    if request.user.groups.filter(name='staff').exists():
+        return render(request, 'home.html', {'loggedin' : True, 'admin' : True})
+
+    if request.user.is_authenticated:
+        return redirect('instruments/', permanent=True)
+
+    instruments = Instrument.objects.all();
+    instruments = [ (i , Item.objects.get(id=i.id)) for i in instruments]
+
+    return render(request, 'home.html', {'loggedin' : False, 'items' : instruments})
 
 def create_account(request):
     form = CreateAccount()

@@ -105,8 +105,6 @@ class Instrument(models.Model):
     description = models.CharField(max_length=1000)
     nr_serie = models.CharField(max_length=20)
 
-    # nao sei bem como usar ImageField mas se não resultar
-    # tenta-se com outra cena qualquer:
     image = models.URLField()
 
     def __str__(self):
