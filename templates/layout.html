@@ -29,7 +29,8 @@
 
     <style>
         body {
-            background: url("{% static 'images/pexels-photo-132197.jpeg' %}");
+            background: rgb(243 238 238 / 61%);
+            font-family: "Tahoma", Tahoma, sans-serif;
         }
         main {
             margin-top: 1rem;
@@ -146,7 +147,7 @@
                 <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
                     <li class="nav-item"><a class="nav-link link text-black display-4" href="">
                         About us</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="">
+                    <li class="nav-item"><a class="nav-link link text-black display-4" href="{% url 'see_instruments' %}">
                         Buy</a></li>
                     <li class="nav-item"><a class="nav-link link text-black display-4"
                                             href="">Contacts</a>
