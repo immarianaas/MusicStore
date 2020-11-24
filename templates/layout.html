@@ -28,40 +28,50 @@
     <link rel="stylesheet" href="{% static '/mobirise/css/mbr-additional.css' %}" type="text/css">
 
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
+
         body {
-            background: rgb(243 238 238 / 61%);
-            font-family: "Tahoma", Tahoma, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Open Sans';
+            background: #fafafa;
         }
+
         main {
-            margin-top: 1rem;
-            margin-bottom: 20ch;
+            min-height: 75.2vh;
+            overflow: hidden;
         }
+
         .form-container {
             text-align: center;
-            color: white;
+            color: #1d3557;
             justify-content: center;
         }
+
         .field-form {
             width: 100%;
             overflow: hidden;
             margin: 8px 0;
             font-size: 1.2rem;
         }
-        .field-form input{
-            background: none;
+
+        .field-form input {
+            background: rgb(8 126 139 / 20%);
             width: 70%;
             float: left;
-            color: white;
-            border: 2px solid #087e8b;
+            color: #1d3557;
+            border: 2px solid #457b9d;
             padding-left: 6px;
         }
-        .field-form select{
+
+        .field-form select {
             background: #087e8b;
             width: 70%;
             float: left;
             color: white;
             border: 2px solid #087e8b
         }
+
         .btn-form {
             width: 20%;
             color: white;
@@ -70,9 +80,11 @@
             transition: 3s;
             text-align: center;
         }
+
         .btn-form:hover {
             background-color: #087e8b;
         }
+
         .href_button {
             width: 60%;
             background-color: #087e8b;
@@ -80,10 +92,10 @@
             color: white;
             border: #087e8b;
             text-decoration: none;
-            display:inline-block;
-            letter-spacing:normal;
-            border-image:initial;
-            margin:0;
+            display: inline-block;
+            letter-spacing: normal;
+            border-image: initial;
+            margin: 0;
             padding: 1px 6px;
             border-width: 2px;
             border-style: outset;
@@ -95,27 +107,295 @@
             text-align: center;
             transition: 1s;
         }
+
         .href_button:hover {
             color: rgb(154, 231, 234);
         }
+
         .container-info {
             margin-top: 2rem;
             justify-content: center;
             text-align: center;
             color: white;
         }
+
         .li-back {
             background: none;
             text-align: left;
             border: none;
         }
-        .ul-background li{
+
+        .ul-background li {
             background: none;
             border: none;
         }
+
         .address-div {
             width: 100%;
             margin-top: 1rem;
+        }
+
+        :root {
+            --color: #3c3163;
+            --transition-time: 0.5s;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .cards-wrapper {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 4rem;
+            padding: 4rem;
+            margin: 0 auto;
+            width: max-content;
+        }
+
+        .card-instruments {
+            font-family: 'Heebo';
+            --bg-filter-opacity: 0.5;
+            background-image: linear-gradient(rgba(0, 0, 0, var(--bg-filter-opacity)), rgba(0, 0, 0, var(--bg-filter-opacity))), var(--bg-img);
+            height: 20em;
+            width: 15em;
+            font-size: 1.5em;
+            color: white;
+            border-radius: 1em;
+            padding: 1em;
+            /*margin: 2em;*/
+            display: flex;
+            align-items: flex-end;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 5em -1em black;
+            transition: all, var(--transition-time);
+            position: relative;
+            overflow: hidden;
+            border: 10px solid #ccc;
+            text-decoration: none;
+        }
+
+        .card-instruments:hover {
+            transform: rotate(0);
+        }
+
+        .card-instruments h1 {
+            margin: 0;
+            font-size: 1.5em;
+            line-height: 1.2em;
+        }
+
+        .card-instruments p {
+            font-size: 0.75em;
+            font-family: 'Open Sans';
+            margin-top: 0.5em;
+            line-height: 2em;
+        }
+
+        .card-instruments .tags {
+            display: flex;
+        }
+
+        .card-instruments .tags .tag {
+            font-size: 0.75em;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 0.3rem;
+            padding: 0 0.5em;
+            margin-right: 0.5em;
+            line-height: 1.5em;
+            transition: all, var(--transition-time);
+        }
+
+        .card-instruments:hover .tags .tag {
+            background: var(--color);
+            color: white;
+        }
+
+        .card-instruments .date {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 0.75em;
+            padding: 1em;
+            line-height: 1em;
+            opacity: .8;
+        }
+
+        .card-instruments:before, .card-instruments:after {
+            content: '';
+            transform: scale(0);
+            transform-origin: top left;
+            border-radius: 50%;
+            position: absolute;
+            left: -50%;
+            top: -50%;
+            z-index: -5;
+            transition: all, var(--transition-time);
+            transition-timing-function: ease-in-out;
+        }
+
+        .card-instruments:before {
+            background: #ddd;
+            width: 250%;
+            height: 250%;
+        }
+
+        .card-instruments:after {
+            background: white;
+            width: 200%;
+            height: 200%;
+        }
+
+        .card-instruments:hover {
+            color: var(--color);
+        }
+
+        .card-instruments:hover:before, .card-instruments:hover:after {
+            transform: scale(1);
+        }
+
+        .card-grid-space .num {
+            font-size: 3em;
+            margin-bottom: 1.2rem;
+            margin-left: 1rem;
+        }
+
+        /* MEDIA QUERIES */
+        @media screen and (max-width: 1285px) {
+            .cards-wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media screen and (max-width: 900px) {
+            .cards-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .info {
+                justify-content: center;
+            }
+
+            .card-grid-space .num {
+            / margin-left: 0;
+            / text-align: center;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .cards-wrapper {
+                padding: 4rem 2rem;
+            }
+
+            .card {
+                max-width: calc(100vw - 4rem);
+            }
+        }
+
+        @media screen and (max-width: 450px) {
+            .info {
+                display: block;
+                text-align: center;
+            }
+
+            .info h1 {
+                margin: 0;
+            }
+        }
+        .home {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+        .home-container {
+            width: 1000px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+        }
+        .home-container .card{
+            position: relative;
+            cursor: pointer;
+        }
+        .home-container .card .face{
+            width: 300px;
+            height: 200px;
+            transition: 0.5s;
+        }
+
+        .home-container .card .face.face1{
+            position: relative;
+            background: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            transform: translateY(100px);
+        }
+        .home-container .card:hover .face.face1{
+            background: #ff0057;
+            transform: translateY(0);
+        }
+        .home-container .card .face.face1 .content{
+            opacity: 0.2;
+            transition: 0.5s;
+        }
+        .home-container .card:hover .face.face1 .content{
+            opacity: 1;
+        }
+        .home-container .card .face.face1 .content img{
+            max-width: 100px;
+        }
+
+        .home-container .card .face.face1 .content h3{
+            margin: 10px 0 0;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        .home-container .card .face.face2{
+            position: relative;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            transform: translateY(-100px);
+        }
+        .home-container .card:hover .face.face2{
+            transform: translateY(0);
+        }
+
+        .home-container .card .face.face2 .content p{
+            margin: 0;
+            padding: 0;
+        }
+        .home-container .card .face.face2 .content a{
+            margin: 15px 0 0;
+            display:  inline-block;
+            text-decoration: none;
+            font-weight: 900;
+            color: #333;
+            padding: 5px;
+            border: 1px solid #333;
+        }
+
+        .home-container .card .face.face2 .content a:hover{
+            background: #333;
+            color: #fff;
         }
     </style>
 </head>
@@ -147,18 +427,23 @@
                 <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
                     <li class="nav-item"><a class="nav-link link text-black display-4" href="/instruments/">
                         instruments</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="/manifacturers/">
-                        manifacturers</a></li>
+                    <li class="nav-item"><a class="nav-link link text-black display-4" href="/manufacturers/">
+                        manufacturers</a></li>
                     {% if request.user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link link text-black display-4"
-                                            href="{% url 'account' %}"><i style="font-size: 2rem;" class="fas fa-user"></i>  account</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link link text-black display-4" href="{% url 'shopping_cart' %}"><i style="font-size: 2rem;" class="fas fa-shopping-cart" ></i>  shopping cart</a>
+                                                href="{% url 'account' %}"><i style="font-size: 2rem;"
+                                                                              class="fas fa-user"></i> account</a>
                         </li>
 
                         <li class="nav-item"><a class="nav-link link text-black display-4"
-                            href="{% url 'account' %}"><i style="font-size: 2rem;" class="fas fa-heart"></i>  wishlist</a>
+                                                href="{% url 'shopping_cart' %}"><i style="font-size: 2rem;"
+                                                                                    class="fas fa-shopping-cart"></i>
+                            shopping cart</a>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link link text-black display-4"
+                                                href="{% url 'account' %}"><i style="font-size: 2rem;"
+                                                                              class="fas fa-heart"></i> wishlist</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -178,7 +463,7 @@
     {% block content %}{% endblock %}
 </main>
 
-<section class="fixed-bottom cid-s48P1Icc8J" once="footers" id="footer3-i">
+<section class="position-relative cid-s48P1Icc8J" once="footers" id="footer3-i">
     <div class="container">
         <div class="media-container-row align-center mbr-white">
             <div class="row row-links">
