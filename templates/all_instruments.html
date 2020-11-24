@@ -1,35 +1,4 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <section class="cards-wrapper">
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        {% for m in items %}
-            <div class="card-grid-space">
-                <div class="num">{{ m.0.instrument.name }}</div>
-                <a class="card-instruments" href="{% url 'instruments_details' m.0.id %}"
-                   style="--bg-img: url({{ m.0.instrument.image }})">
-                    <div>
-                        <h1>{{ m.0.price }}$</h1>
-                        <p>Description : {{ m.0.instrument.description }}</p>
-                        <div class="tags">
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <div class="form-inputs-instruments">
-                                    <input type="hidden" name="id" value="{{ m.0.id }}">
-                                    <input class="tag" type="submit" name="purchase" value="Buy">
-                                    {% if m.1 %}  <!--se já estiver lá-->
-                                        <input class="tag" type="submit" name="rem_wishlist" value="Remove from wishlist">
-                                    {% else %}
-                                        <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
-                                    {% endif %}
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </section>
+    {% include 'instruments4include.html' %}
 {% endblock %}

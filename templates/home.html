@@ -1,64 +1,68 @@
 {% extends 'layout.html' %}
-
+{% load group_tag %}
 {% block content %}
-    <div class="home">
-        <div class="home-container">
-            <div class="card">
-                <div class="face face1">
-                    <div class="content">
-                        <h3>See all manufacturers</h3>
+    {% if loggedin and request.user|has_group:"staff" %}
+        <div class="home">
+            <div class="home-container">
+                <div class="card">
+                    <div class="face face1">
+                        <div class="content">
+                            <h3>See all manufacturers</h3>
+                        </div>
+                    </div>
+                    <div class="face face2">
+                        <div class="content">
+                            <p>See all the manufacturers associated with us.</p>
+                            <a href="{% url 'see_manufacturers' %}">Go to page</a>
+                        </div>
                     </div>
                 </div>
-                <div class="face face2">
-                    <div class="content">
-                        <p>See all the manufacturers associated with us.</p>
-                        <a href="{% url 'see_manufacturers' %}">Go to page</a>
+                <div class="card">
+                    <div class="face face1">
+                        <div class="content">
+                            <h3>Add Manufacturer</h3>
+                        </div>
+                    </div>
+                    <div class="face face2">
+                        <div class="content">
+                            <p>Add a new manufacturer to the database.</p>
+                            <a href="{% url 'add_manufacturer' %}">Go to page</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="face face1">
-                    <div class="content">
-                        <h3>Add Manufacturer</h3>
+            <div class="home-container">
+                <div class="card">
+                    <div class="face face1">
+                        <div class="content">
+                            <h3>See available instruments</h3>
+                        </div>
+                    </div>
+                    <div class="face face2">
+                        <div class="content">
+                            <p>Check all the products available for sale.</p>
+                            <a href="{% url 'see_instruments' %}">Go to page</a>
+                        </div>
                     </div>
                 </div>
-                <div class="face face2">
-                    <div class="content">
-                        <p>Add a new manufacturer to the database.</p>
-                        <a href="{% url 'add_manufacturer' %}">Go to page</a>
+                <div class="card">
+                    <div class="face face1">
+                        <div class="content">
+                            <h3>Add instrument</h3>
+                        </div>
+                    </div>
+                    <div class="face face2">
+                        <div class="content">
+                            <p>Add a new instrument of a associated manufacturer.</p>
+                            <a href="{% url 'add_instrument' %}">Go to page</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="home-container">
-            <div class="card">
-                <div class="face face1">
-                    <div class="content">
-                        <h3>See available instruments</h3>
-                    </div>
-                </div>
-                <div class="face face2">
-                    <div class="content">
-                        <p>Check all the products available for sale.</p>
-                        <a href="{% url 'see_instruments' %}">Go to page</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="face face1">
-                    <div class="content">
-                        <h3>Add instrument</h3>
-                    </div>
-                </div>
-                <div class="face face2">
-                    <div class="content">
-                        <p>Add a new instrument of a associated manufacturer.</p>
-                        <a href="{% url 'add_instrument' %}">Go to page</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% else %}
+        {% include 'instruments4include.html' %}
+    {% endif %}
     <!--
 <<<<<<< HEAD
     <a href="/instruments/"><button>See all available instruments!</button>
