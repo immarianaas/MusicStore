@@ -5,25 +5,20 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     {% for m in items %}
-        <p>{{ m }}</p>
         <div class="card-grid-space">
-            <div class="num">{{ m.0.instrument.name }}</div>
+            <div class="num">{{ m.0.name }}</div>
             <a class="card-instruments" href="{% url 'instruments_details' m.0.id %}"
-               style="--bg-img: url({{ m.0.instrument.image }})">
+               style="--bg-img: url({{ m.0.image }})">
                 <div>
-                    <h1>{{ m.0.price }}$</h1>
-                    <p>Description : {{ m.0.instrument.description }}</p>
+                    <h1>{{ m.1.price }}$</h1>
+                    <p>Description : {{ m.0.description }}</p>
                     <div class="tags">
-                        <form action="" method="post">
+                        <form action="." method="post">
                             {% csrf_token %}
                             <div class="form-inputs-instruments">
                                 <input type="hidden" name="id" value="{{ m.0.id }}">
                                 <input class="tag" type="submit" name="purchase" value="Buy">
-                                {% if m.1 %}  <!--se já estiver lá-->
-                                    <input class="tag" type="submit" name="rem_wishlist" value="Remove from wishlist">
-                                {% else %}
-                                    <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
-                                {% endif %}
+                                <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
                             </div>
                         </form>
                     </div>

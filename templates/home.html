@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% load group_tag %}
 {% block content %}
-    {% if loggedin and request.user|has_group:"staff" %}
+    {% if loggedin and admin %}
         <a class="btn btn-primary">Clica aqui para listar todas as orders</a>
         <div class="home">
             <div class="home-container">
@@ -64,22 +64,4 @@
     {% else %}
         {% include 'instruments4include.html' %}
     {% endif %}
-    <!--
-<<<<<<< HEAD
-    <a href="/instruments/"><button>See all available instruments!</button>
-    <a href="/manufacturers/"><button>See all manifacturers</button>
-        {% if request.user.is_authenticated %}
-
-        <a href="/account/"><button>See your account page</button>
-        <a href="/account/wishlist/"><button>See your favourites</button>
-        <a href="/account/shoppingcart/"><button>See your shoppingcart</button>
-
-            {% if role == 'S' %}
-                <a href="/add-manufacturer/"><button>Add a new manufacturer</button>
-                <a href="/add-instrument/"><button>Add a new item</button>
-            {% endif %}
-
-        {% endif %}
-
-    -->
 {% endblock %}
