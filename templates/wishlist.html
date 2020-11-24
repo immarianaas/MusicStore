@@ -1,19 +1,28 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <div class="container container-info">
-        <h3>There are {{ nr }} item(s) in your wishlist: </h3>
+    <div class="container-fluid container-info">
+        <section class="section-orders">
+            {% if lista|length == 0 %}
+                <h3>First, put some product into your wishlist.</h3>
+                <a class="btn-href" href="/">Go to homepage</a>
+            {% else %}
+                <h1>You have {{ nr }} item(s) in your wishlist</h1>
+                <form action="" method="post">
+                    <input type="checkbox" id="rem_when_added_checkbox" name="rem_when_added_to_cart" {% if remove %}
+                           checked {% endif %}  >
+                    <label for="rem_when_added_checkbox">remove from wishlist when added to cart</label>
 
-        <form action="" method="post">
-            <input type="checkbox" id="rem_when_added_checkbox" name="rem_when_added_to_cart" {% if remove  %} checked {% endif %}  >
-            <label for="rem_when_added_checkbox">remove from wishlist when added to cart</label>
-
-            {% for i in lista %}
-                <p>name: {{ i.item.instrument.name }}; price: {{ i.item.price }} </p>
-                    {% csrf_token %}
-                    <input type="hidden" name="id" value={{ i.id }} />
-                    <input type="submit" name="rem" value="remove from whishlist">
-                    <input type="submit" name="purchase" value="add to shopping cart!">
-            {% endfor %}
-        </form>
+                    {% for i in lista %}
+                        {% csrf_token %}
+                        <details>
+                            <summary>{{ i.item.instrument.name }} (${{ i.item.price }})</summary>
+                            <input type="hidden" name="id" value="{{ i.id }}"/>
+                            <input class="btn-href" type="submit" name="rem" value="remove from whishlist">
+                            <input class="btn-href" type="submit" name="purchase" value="add to shopping cart!">
+                        </details>
+                    {% endfor %}
+                </form>
+            {% endif %}
+        </section>
     </div>
 {% endblock %}
