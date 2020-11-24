@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h1>All orders</h1>
+    {% if orders|length == 0 %}
+    <h2>No order has ever been made.</h2>
+    {% else %}
+        <h3>Showing {{ orders | length }} order(s).</h3>
+    {% endif %}
+
+
+{% for o in orders %}
+    <p>{{ o }}</p>
+{% endfor %}
+
+</body>
+<head>
+    <meta charset="UTF-8">
+    <title>All Orders</title>
+</head>
+</html>

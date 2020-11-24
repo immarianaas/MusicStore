@@ -489,5 +489,14 @@ def edit_manufacturer(request, id):
     form = ManufacturerForm(instance=manu)
     return render(request, 'edit_manufacturer.html', {'form' : form})
 
+@login_required(login_url='/login/')
+@permission_required('app.delete_order', raise_exception=True)
+def list_all_orders(request):
+    try:
+        ords = Order.objects.all()
+    except ObjectDoesNotExist:
+        ords = []
+
+    return render(request, 'all_orders.html', {'orders' : ords})
 
 
