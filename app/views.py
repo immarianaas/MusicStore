@@ -157,6 +157,10 @@ def see_instruments(request):
             add_to_wishlist(request, request.POST['id'], '/instruments/')
         elif 'rem_wishlist' in request.POST:
             rem_from_wishlist(request, request.POST['id'], '/instruments/')
+        elif 'search' in request.POST:
+            query = request.POST['search']
+            items = Item.objects.filter(instrument__name__icontains=query).all()
+            # instrument__manufacturer__name__icontains=query
 
     its = [ (i , False) for i in items]
     if request.user.is_authenticated:
