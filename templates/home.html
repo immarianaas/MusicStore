@@ -2,6 +2,7 @@
 {% load group_tag %}
 {% block content %}
     {% if loggedin and request.user|has_group:"staff" %}
+        <a class="btn btn-primary">Clica aqui para listar todas as orders</a>
         <div class="home">
             <div class="home-container">
                 <div class="card">
