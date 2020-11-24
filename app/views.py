@@ -436,7 +436,35 @@ def password_changed(request):
 def password_change_done(request):
     return render(request, 'pwd_succ_changed.html')
 
+@login_required(login_url='/login/')
+@permission_required('app.delete_instrument', raise_exception=True)
+def delete_instrument(request, id):
+    try:
+        Item.objects.get(pk=id).delete()
+    except:
+        return redirect("/")
+    return redirect("/instruments")
 
+
+@login_required(login_url='/login/')
+@permission_required('app.delete_instrument', raise_exception=True)
+def delete_manufacturer(request, id):
+    try:
+        Manufacturer.objects.get(pk=id).delete()
+    except:
+        return redirect("/")
+    return redirect("/manufacturers")
+
+@login_required(login_url='/login/')
+@permission_required('app.delete_instrument', raise_exception=True)
+def edit_manufacturer(request, id):
+    try:
+        manu = Manufacturer.objects.get(pk=id)
+    except:
+        return redirect("/")
+    # TODO not finished!!
+    form = ManufacturerForm(instance=manu)
+    return render(request, 'edit_manufacturer.html', {'form' : form})
 
 
 

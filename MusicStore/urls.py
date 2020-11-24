@@ -36,14 +36,14 @@ urlpatterns = [
     path('manufacturers/', views.see_manufacturers, name='see_manufacturers'),
     path('manufacturers/<int:id>', views.see_manufacturers_details, name='manufacturers_details'),
 
-    # path('edit/manufacturers/<int:id>', views.edit_manufacturer, name='edit_manufacturer'),
-    # path('delete/manufacturers/<int:id>', views.delete_manufacturer, name='delete_manufacturer'),
+    path('edit/manufacturers/<int:id>', views.edit_manufacturer, name='edit_manufacturer'),
+    path('delete/manufacturers/<int:id>', views.delete_manufacturer, name='delete_manufacturer'),
 
     path('add-instrument/', views.add_item, name='add_instrument'),
     path('instruments/', views.see_instruments, name='see_instruments'),
     path('instruments/<int:id>', views.see_instruments_details, name='instruments_details'),
     path('edit/instruments/<int:id>', views.edit_instrument, name='edit_instrument'),
-    # path('delete/instruments/<int:id>', views.delete_instrument, name='delete_instrument'),
+    path('delete/instruments/<int:id>', views.delete_instrument, name='delete_instrument'),
 
     path('account/shoppingcart/', views.shopping_cart, name='shopping_cart'),
     path('account/wishlist/', views.wishlist, name='wishlist'),
