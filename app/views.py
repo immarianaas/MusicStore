@@ -423,9 +423,12 @@ def place_order(request, new_addr=False):
 
     return render(request, 'place_order.html', info)
 
+@login_required(login_url='/login/')
+def password_changed(request):
+    return render(request, 'pwd_succ_changed.html')
 
-
-
+def password_change_done(request):
+    return render(request, 'pwd_succ_changed.html')
 
 
 
