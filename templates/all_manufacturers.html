@@ -1,16 +1,32 @@
+
 {% extends 'layout.html' %}
 {% block content %}
-<section class="cards-wrapper">
-    {% for m in manus %}
-        <div class="card-grid-space">
-            <a class="card-instruments" href="{% url 'manufacturers_details' m.id %}"
-               style="--bg-img: url({{ m.logo }})">
-                <div>
-                    <h1>{{ m.name }}</h1>
-                    <p>Country: {{ m.country }}</p>
-                </div>
-            </a>
-        </div>
-    {% endfor %}
-</section>
+    <section class="cards-wrapper">
+        {% for m in items %}
+            <div class="card-grid-space">
+                <div class="num">{{ m.0.instrument.name }}</div>
+                <a class="card-instruments" href="{% url 'instruments_details' m.0.id %}"
+                   style="--bg-img: url({{ m.0.instrument.image }})">
+                    <div>
+                        <h1>{{ m.0.price }}$</h1>
+                        <p>Description : {{ m.0.instrument.description }}</p>
+                        <div class="tags">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="form-inputs-instruments">
+                                    <input type="hidden" name="id" value="{{ m.0.id }}">
+                                    <input class="tag" type="submit" name="purchase" value="Buy">
+                                    {% if m.1 %}  <!--se já estiver lá-->
+                                        <input class="tag" type="submit" name="wishlist" value="Remove from wishlist">
+                                    {% else %}
+                                        <input class="tag" type="submit" name="wishlist" value="Add to wishlist">
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}

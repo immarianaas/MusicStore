@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect
 from app.forms import *
 from django.contrib.auth import models
@@ -11,8 +11,11 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html', {'loggedin': request.user.is_authenticated})
-
+    role = None
+    if request.user.is_authenticated:
+        role = get_curr_person_object(request).role
+        #print(role, role=='S')
+    return render(request, 'home.html', {'loggedin': request.user.is_authenticated, 'role' : role})
 
 def create_account(request):
     form = CreateAccount()
@@ -64,7 +67,9 @@ def account(request):
 
 
 # TODO meter isto nao so com login mas tambem com permissoes especiais
-@login_required(login_url='/login/')
+
+@login_required(login_url='/login/') #help
+@permission_required('app.add_manufacturer', login_url='/login/')
 def add_manufacturer(request):
     # form = CreateManufacturers()
 
@@ -96,7 +101,8 @@ def see_manufacturers_details(request, id):
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa})
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/login/') #help
+@permission_required('app.add_item', login_url='/login/')
 def add_item(request): # ALTERADO DE add_instrument
     # form = CreateInstrument()
 
@@ -205,7 +211,8 @@ def see_instruments_details(request, id):
 
     return render(request, 'instrument_details.html', {'item' : item, 'wishlist' : wishlist})
 
-@login_required(login_url='/login/')
+@login_required(login_url='/login/') #help
+@permission_required('app.change_instrument', raise_exception=True)
 def edit_instrument(request, id):
     item = Item.objects.get(pk=id)
     inicial = item.instrument
@@ -234,7 +241,6 @@ def edit_account(request):
             return redirect('/account/')
 
     form = AccountForm(instance=u)
-    # TODO cenas pra alterar a pwd (cenas do Django)
     return render(request, 'edit_account.html', {'form':form})
 
 def sum_to_item_qty(item_qty, number):
@@ -430,7 +436,35 @@ def password_changed(request):
 def password_change_done(request):
     return render(request, 'pwd_succ_changed.html')
 
+@login_required(login_url='/login/')
+@permission_required('app.delete_instrument', raise_exception=True)
+def delete_instrument(request, id):
+    try:
+        Item.objects.get(pk=id).delete()
+    except:
+        return redirect("/")
+    return redirect("/instruments")
 
+
+@login_required(login_url='/login/')
+@permission_required('app.delete_instrument', raise_exception=True)
+def delete_manufacturer(request, id):
+    try:
+        Manufacturer.objects.get(pk=id).delete()
+    except:
+        return redirect("/")
+    return redirect("/manufacturers")
+
+@login_required(login_url='/login/')
+@permission_required('app.delete_instrument', raise_exception=True)
+def edit_manufacturer(request, id):
+    try:
+        manu = Manufacturer.objects.get(pk=id)
+    except:
+        return redirect("/")
+    # TODO not finished!!
+    form = ManufacturerForm(instance=manu)
+    return render(request, 'edit_manufacturer.html', {'form' : form})
 
 
 
