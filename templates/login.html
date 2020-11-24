@@ -5,7 +5,7 @@
     <div class="container form-container">
         <h1>Login</h1>
             {% include 'form.html' with submit_val='Log in!' %}
-            <span style="margin-top: 10%"><a style="color: white" href="{% url 'create_account' %}">Create new account</a></span>
+            <span style="margin-top: 10%"><a href="{% url 'create_account' %}">Create new account</a></span>
     </div>
 
 {% endblock %}
