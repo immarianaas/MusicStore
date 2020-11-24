@@ -1,32 +1,37 @@
-
 {% extends 'layout.html' %}
 {% block content %}
-    <section class="cards-wrapper">
-        {% for m in items %}
-            <div class="card-grid-space">
-                <div class="num">{{ m.0.instrument.name }}</div>
-                <a class="card-instruments" href="{% url 'instruments_details' m.0.id %}"
-                   style="--bg-img: url({{ m.0.instrument.image }})">
-                    <div>
-                        <h1>{{ m.0.price }}$</h1>
-                        <p>Description : {{ m.0.instrument.description }}</p>
-                        <div class="tags">
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <div class="form-inputs-instruments">
-                                    <input type="hidden" name="id" value="{{ m.0.id }}">
-                                    <input class="tag" type="submit" name="purchase" value="Buy">
-                                    {% if m.1 %}  <!--se já estiver lá-->
-                                        <input class="tag" type="submit" name="wishlist" value="Remove from wishlist">
-                                    {% else %}
-                                        <input class="tag" type="submit" name="wishlist" value="Add to wishlist">
-                                    {% endif %}
-                                </div>
-                            </form>
-                        </div>
+    <div class="container">
+        <h2><strong>Manufacturers:</strong></h2>
+
+        {% for m in manus %}
+            {% if forloop.counter0|divisibleby:3 %}
+            <div class="row">
+            {% endif %}
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card" style="width: 18rem;">
+                        <img style="max-height: 13rem; max-width: 30rem" class="card-img-top" src="{{ m.logo }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ m.name }}</h5>
+                            <p class="card-text">country: {{ m.country }}</p>
+                            <a href="/manufacturers/{{ m.id }}" class="btn btn-primary">See details</a>
+                      </div>
                     </div>
-                </a>
+<section class="cards-wrapper">
+    {% for m in manus %}
+        <div class="card-grid-space">
+            <a class="card-instruments" href="{% url 'manufacturers_details' m.id %}"
+               style="--bg-img: url({{ m.logo }})">
+                <div>
+                    <h1>{{ m.name }}</h1>
+                    <p>Country: {{ m.country }}</p>
+                </div>
+            {% if forloop.counter|divisibleby:3 %}
             </div>
+            {% endif %}
         {% endfor %}
-    </section>
-{% endblock %}
+    </div>
+            </a>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %} 
