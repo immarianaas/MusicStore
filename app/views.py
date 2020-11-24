@@ -11,11 +11,22 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 def home(request):
-    role = None
-    if request.user.is_authenticated:
-        role = get_curr_person_object(request).role
+    # role = None
+    # if request.user.is_authenticated:
+    #     role = get_curr_person_object(request).role
+    instruments = None
+    if not request.user.is_authenticated:
+        instruments = Instrument.objects.all();
+        instruments = [ (i , False) for i in instruments]
+        try:
+            #             ItemList.objects.get(person=person, type='whishlist', items__item_id=item.id)
+            il = [ i.item for i in ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()]
+            its = [ (i , False) for i in items]
+        except ObjectDoesNotExist:
+            print("nope, sory")
+            pass
         #print(role, role=='S')
-    return render(request, 'home.html', {'loggedin': request.user.is_authenticated, 'role' : role})
+    return render(request, 'home.html', {'loggedin': request.user.is_authenticated, 'items' : instruments})
 
 def create_account(request):
     form = CreateAccount()
