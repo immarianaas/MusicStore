@@ -1,37 +1,49 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <div class="container">
-        <h1>Instruments:</h1>
+    <section class="cards-wrapper">
         {% for m in items %}
-            {% if forloop.counter0|divisibleby:3 %}
-                <div class="row">
-            {% endif %}
-                    <div class="col-sm-12 col-md-6 col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img style="max-height: 13rem; max-width: 30rem" class="card-img-top" src="{{ m.0.instrument.image }}" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ m.0.instrument.name }}</h5>
-                                <p class="card-text">category: {{ m.0.instrument.category }}</p>
-                                <p class="card-text">price: {{ m.0.price }}</p>
-                                <div class="row">
-                                    <div class="col">
-                                        <a href="/instruments/{{ m.0.id }}" class="href_button btn-primary">See details</a>
-                                    </div>
-                                    <div class="col">
+            <div class="card-grid-space">
+                <div class="num">{{ m.0.instrument.name }}</div>
+                <a class="card-instruments" href="{% url 'instruments_details' m.0.id %}"
+                   style="--bg-img: url({{ m.0.instrument.image }})">
+                    <div>
+                        <h1>{{ m.0.price }}$</h1>
+                        <p>Description : {{ m.0.instrument.description }}</p>
+                        <div class="tags">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="form-inputs-instruments">
+                                    <input type="hidden" name="id" value="{{ m.0.id }}">
+                                    <input class="tag" type="submit" name="purchase" value="Buy">
+                                    {% if m.1 %}  <!--se já estiver lá-->
+                                        <input class="tag" type="submit" name="wishlist" value="Remove from wishlist">
+                                    {% else %}
+                                        <input class="tag" type="submit" name="wishlist" value="Add to wishlist">
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
+<!--
                                         <form action="" method="post">
-                                            {% csrf_token %}
+
                                             <input type="hidden" name="id" value="{{ m.0.id }}">
                                             <div class="row">
                                                 <div class="col">
                                                     <input class=" btn-primary" type="submit" name="purchase" value="Buy">
                                                 </div>
                                                 <div class="col">
-                                                    {% if m.1 %} <!-- se já estiver lá -->
+                                                    {% if m.1 %}  se já estiver lá
                                                         <input class="btn-dark disabled" type="button" name="wishlist" value="Added to wishlist!">
                                                     {% else %}
                                                     <input class="btn-primary" type="submit" name="wishlist" value="Add to wishlist">
                                                     {% endif %}
-                                                    <!--<input class=" btn-primary" type="submit" name="whishlist" value="Add">-->
+                                                    <input class=" btn-primary" type="submit" name="whishlist" value="Add">
                                                 </div>
                                             </div>
                                         </form>
@@ -40,38 +52,5 @@
                             </div>
                         </div>
                     </div>
-            {% if forloop.counter|divisibleby:3 %}
                 </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-        <!--<a href="/edit/instruments/{{ m.id }}"><button>Edit (staff only) [done]</button></a>
-        <i class="fas fa-heart"></i>
-    <div style='width:300px; height: 300px;'>
-        <h4>image: <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'></h4>
-
-        <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'>
-    </div>
-    <form action="/edit/instruments/{{ item.id }}" method="get" >
-        <input type="submit" value="Edit (staff only) [done]">
-    </form>
-
-    <form action="/instruments/{{ item.id }}" method="post">
-        {% csrf_token %}
-        <input type="submit" name="purchase" value="Purchase (adiciona ao shopping cart) [done]">
-        <input type="submit" name="wishlist" value="add to wishlist (todo)">
-    </form>
-    <input type="submit" value="Delete(staff only) (TODO)">
-
-</body>
-</html>
-
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="id" value="{{ m.id }}">
-            <input type="submit" name="purchase" value="Purchase (adiciona ao shopping cart) [done]">
-            <input type="submit" name="whishlist" value="Add to wishlist (todo - acho eu?)">
-        </form>
-
         <input type="submit" value="Delete(staff only) (TODO)">-->
-{% endblock %}
