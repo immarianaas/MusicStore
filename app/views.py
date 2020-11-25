@@ -127,7 +127,7 @@ def see_manufacturers_details(request, id):
 
     instr_info_completa = { i.id: [i, Item.objects.get(instrument=i), Item.objects.get(instrument=i) in wishlist_item ] for i in instrumentos }
 
-    instr_info_completa = { i.id: [i, Item.objects.get(instrument=i)] for i in instrumentos }
+    #instr_info_completa = { i.id: [i, Item.objects.get(instrument=i)] for i in instrumentos }
     admin = request.user.groups.filter(name='staff').exists()
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa, "admin" : admin})
 
@@ -156,7 +156,7 @@ def add_item(request): # ALTERADO DE add_instrument
     form = InstrumentSlashItemForm()
     #form2 = ItemForm()
     admin = request.user.groups.filter(name='staff').exists()
-    return render(request, 'create_instrument.html', {'form':form, 'admin' : admin}) # 'form2' : form2})
+    return render(request, 'create_instrument.html', {'form':form, 'admin' : admin, 'op': 'Create'}) # 'form2' : form2})
 
 
 @login_required(login_url='/login/')
@@ -278,7 +278,7 @@ def edit_instrument(request, id):
         return redirect('/instruments/' + str(id))
 
     form = InstrumentSlashItemForm(instance=inicial, initial={'price': item.price})
-    return render(request, 'create_instrument.html', {'form' : form})
+    return render(request, 'create_instrument.html', {'form' : form, 'op' : 'Edit'})
 
 @login_required(login_url='/login/')
 def edit_account(request):
@@ -501,7 +501,7 @@ def password_change_done(request):
 @permission_required('app.delete_instrument', raise_exception=True)
 def delete_instrument(request, id):
     try:
-        Item.objects.get(pk=id).delete()
+        Item.objects.get(pk=id).instrument.delete()
     except:
         return redirect("/")
     return redirect("/instruments")
@@ -525,8 +525,9 @@ def edit_manufacturer(request, id):
         return redirect("/")
     if request.method == 'POST':
         form = ManufacturerForm(request.POST, instance=manu)
-        form.save()
-        return redirect('/manufacturers/' + str(manu.id))
+        if form.is_valid():
+            form.save()
+            return redirect('/manufacturers/' + str(manu.id))
     form = ManufacturerForm(instance=manu)
     return render(request, 'edit_manufacturer.html', {'form' : form})
 
