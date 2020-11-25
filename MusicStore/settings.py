@@ -25,7 +25,7 @@ SECRET_KEY = 'p%fk*gs+5kf3ik1w(184fy6wqs_sbjjijb-qy74!x=x3!f!881'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['Orlandop.pythonanywhere.com']
 
 
 # Application definition
@@ -118,7 +118,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+MEDIA_ROOT = '/home/Orlandop/MusicStore/media'
+MEDIA_URL = '/media/'
+STATIC_ROOT = '/home/Orlandop/MusicStore/static'
 STATIC_URL = '/static/'
-
-LOGIN_REDIRECT_URL= '/'
