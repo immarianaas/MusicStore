@@ -281,8 +281,7 @@ def edit_instrument(request, id):
 
 @login_required(login_url='/login/')
 def edit_account(request):
-    user_id = request.user.id
-    u = Person.objects.get(pk = user_id)
+    u = get_curr_person_object(request)
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=u)
         if form.is_valid():
