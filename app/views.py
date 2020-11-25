@@ -2,6 +2,8 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect
+from django.utils.datastructures import MultiValueDictKeyError
+
 from app.forms import *
 from django.contrib.auth import models
 
@@ -12,6 +14,17 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
     if request.method == 'POST' and not request.user.is_authenticated:
+        try:
+            if request.POST['search']:
+                instruments = Instrument.objects.all();
+                items = Item.objects.filter(instrument__name__icontains=request.POST['search']).all()
+                instruments = [(i, Item.objects.get(id=i.id)) for i in instruments for item in items if
+                               i.id == item.instrument.id]
+
+                return render(request, 'home.html', {'loggedin': False, 'items': instruments})
+        except MultiValueDictKeyError:
+            pass
+
         return redirect('login/')
 
     if request.user.groups.filter(name='staff').exists():

@@ -2,7 +2,6 @@
 {% load group_tag %}
 {% block content %}
     {% if loggedin and admin %}
-        <a class="btn btn-primary" href="/orders/">Click here to list all orders</a>
         <div class="home">
             <div class="home-container">
                 <div class="card">
@@ -32,6 +31,9 @@
                     </div>
                 </div>
             </div>
+            <div style="text-align: center" class="container-fluid">
+                    <a class="a-no-light" href="/orders/"><div id="btn-home"><span class="noselect">See orders made by clients</span><div id="circle"></div></div></a>
+                </div>
             <div class="home-container">
                 <div class="card">
                     <div class="face face1">

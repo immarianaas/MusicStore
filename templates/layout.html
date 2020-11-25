@@ -939,6 +939,61 @@
             background: #07051a;
             color: white;
         }
+        .a-no-light {
+            text-decoration: none;
+        }
+        .a-no-light:hover {
+            color: #232323;
+        }
+        #btn-home {
+            left: 40%;
+            width: 20%;
+            background: #333;
+            height: 50px;
+            min-width: 150px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Cookie', cursive;
+            position: relative;
+            transition: 2.5s;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding-top: 5px;
+        }
+        #btn-home #circle {
+            width: 1rem;
+            height: 1rem;
+            background: transparent;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            overflow: hidden;
+            transition: 1s;
+        }
+        #btn-home .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        #btn-home:hover {
+            background: #727070;
+        }
+        #btn-home:hover #cirle {
+            height: 50px;
+            width: 150px;
+            left: 0;
+            border-radius: 0;
+            border-bottom: 2px solid #eee;
+        }
     </style>
 </head>
 <body>
