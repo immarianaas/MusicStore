@@ -69,7 +69,7 @@ def account(request):
 # TODO meter isto nao so com login mas tambem com permissoes especiais
 
 @login_required(login_url='/login/') #help
-@permission_required('app.add_manufacturer', login_url='/login/')
+@permission_required('app.add_manufacturer', raise_exception=True)
 def add_manufacturer(request):
     # form = CreateManufacturers()
 
@@ -121,7 +121,7 @@ def see_manufacturers_details(request, id):
 
 
 @login_required(login_url='/login/') #help
-@permission_required('app.add_item', login_url='/login/')
+@permission_required('app.add_item', raise_exception=True)
 def add_item(request): # ALTERADO DE add_instrument
     # form = CreateInstrument()
 
@@ -189,8 +189,7 @@ def see_instruments(request):
             il = [ i.item for i in ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()]
             its = [ (i , i in il) for i in items]
         except ObjectDoesNotExist:
-
-            its = []
+            pass
     return render(request, 'all_instruments.html', {'items' : its})
 
 
@@ -384,10 +383,11 @@ def add_addresses2(request, temp_addr=False):
             if temp_addr:
                 addr.person = None
                 addr.save()
-                if 'temp_addr' not in request.session:
-                    request.session['temp_addr'] = []
+                #if 'temp_addr' not in request.session: #here
+                request.session['temp_addr'] = []
                 request.session['temp_addr'].append(addr.id)
-                return redirect('/account/placeorder', new_addr=addr.id)
+                print(request.session['temp_addr'])
+                return redirect('/account/placeorder')
             return redirect('/account/')
 
     form = AddressForm()
@@ -404,24 +404,28 @@ def orders(request):
 
 
 @login_required(login_url='/login/')
-def place_order(request, new_addr=False):
-
+def place_order(request):
+    #print("hello?" , new_addr)
     if request.method == 'POST':
-        #if 'new_addr' in request.POST:
-        #    #return add_addresses(request, temp_addr=True)
-        #
-        # return redirect('/add/addresses/temp/')
+
+        if 'new_addr' in request.POST:
+            #return add_addresses(request, temp_addr=True)
+            print('is this it?')
+            return redirect('/add/addresses/temp/')
+
         if 'address' in request.POST:
             request.session['chosen_addr'] = request.POST['address']
-            print(request.POST['address'])
+            print('if address in requ.POST: ', request.POST['address'])
             if 'pay' in request.POST:
 
                 # ver se é pra guardar ou nao os temp_addr
-                if 'save_temp_addrs' in request.POST and 'temp_addr' in request.session:
+                # save_addrs
+                if 'save_addrs' in request.POST and 'temp_addr' in request.session:
                     for idd in request.session['temp_addr']:
                         adr = Address.objects.get(pk=idd)
                         adr.person = get_curr_person_object(request)
                         adr.save()
+
 
                 request.session['temp_addr'] = []
                 prod_list =ItemList.objects.get(person=get_curr_person_object(request), type='shoppingcart')
@@ -462,10 +466,13 @@ def place_order(request, new_addr=False):
 
     # TODO verificar se existe ou nao..
     try:
-        addr_choices = Address.objects.filter(person=get_curr_person_object(request)).all()
+        addr_choices = list(Address.objects.filter(person=get_curr_person_object(request)).all())
     except:
         addr_choices = []
-
+    if 'temp_addr' in request.session:
+        addr_choices += [Address.objects.get(pk=x) for x in request.session['temp_addr'] ]
+        #map(lambda x:Address.objects.get(pk=x) , request.session['temp_addr'].copy())
+        print('temp_addr' , request.session['temp_addr'])
     info['addr_choices'] = addr_choices
 
     return render(request, 'place_order.html', info)
