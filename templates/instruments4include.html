@@ -1,9 +1,11 @@
-<section class="cards-wrapper">
-    <form class="form-inline my-2 my-lg-0" action="" method="post">
+<div class="search-form">
+    <form method="post" action="">
         {% csrf_token %}
-        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input type="search" name="search">
+        <i class="fa fa-search"></i>
     </form>
+</div>
+<section class="cards-wrapper">
     {% for m in items %}
         <div class="card-grid-space">
             <div class="num">{{ m.0.name }}</div>

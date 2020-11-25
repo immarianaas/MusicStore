@@ -878,6 +878,122 @@
             75% { opacity: 1; transform: scale(0.4) translate(-600px, 100px) }
             100% { opacity: 1; transform: scale(0.4) translate(100px, 300px) }
         }
+        .search-form {
+            margin-top: 3rem;
+            width: 100%;
+        }
+        .search-form form {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            transition: all 1s;
+            width: 50px;
+            height: 50px;
+            background: white;
+            box-sizing: border-box;
+            border-radius: 25px;
+            border: 4px solid white;
+            padding: 5px;
+        }
+        .search-form input{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;;
+            height: 42.5px;
+            line-height: 30px;
+            outline: 0;
+            border: 0;
+            display: none;
+            font-size: 1em;
+            border-radius: 20px;
+            padding: 0 20px;
+        }
+        .search-form .fa{
+            box-sizing: border-box;
+            padding: 10px;
+            width: 42.5px;
+            height: 42.5px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 50%;
+            color: #07051a;
+            text-align: center;
+            font-size: 1.2em;
+            transition: all 1s;
+        }
+        .search-form form:hover{
+            width: 200px;
+            cursor: pointer;
+        }
+
+        .search-form form:hover input{
+            background-color: #07051a;
+            display: block;
+            color: white;
+        }
+
+        .search-form form:hover .fa{
+            background: #07051a;
+            color: white;
+        }
+        .a-no-light {
+            text-decoration: none;
+        }
+        .a-no-light:hover {
+            color: #232323;
+        }
+        #btn-home {
+            left: 40%;
+            width: 20%;
+            background: #333;
+            height: 50px;
+            min-width: 150px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Cookie', cursive;
+            position: relative;
+            transition: 2.5s;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding-top: 5px;
+        }
+        #btn-home #circle {
+            width: 1rem;
+            height: 1rem;
+            background: transparent;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            overflow: hidden;
+            transition: 1s;
+        }
+        #btn-home .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        #btn-home:hover {
+            background: #727070;
+        }
+        #btn-home:hover #cirle {
+            height: 50px;
+            width: 150px;
+            left: 0;
+            border-radius: 0;
+            border-bottom: 2px solid #eee;
+        }
     </style>
 </head>
 <body>
