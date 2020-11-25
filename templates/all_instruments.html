@@ -1,11 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <section class="cards-wrapper">
-        <form class="form-inline my-2 my-lg-0" method="post" action="">
+    <div class="search-form">
+        <form method="post" action="">
             {% csrf_token %}
-            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input type="search">
+            <i class="fa fa-search"></i>
         </form>
+    </div>
+    <section class="cards-wrapper">
         {% for m in items %}
             <div class="card-grid-space">
                 <div class="num">{{ m.0.instrument.name }}</div>
@@ -25,7 +27,8 @@
                                             <input class="tag" type="submit" name="rem_wishlist"
                                                    value="Remove from wishlist">
                                         {% else %}
-                                            <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
+                                            <input class="tag" type="submit" name="add_wishlist"
+                                                   value="Add to wishlist">
                                         {% endif %}
                                     </div>
                                 </form>
