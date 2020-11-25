@@ -14,24 +14,20 @@
             </div>
         </div>
         <div class="row" style="margin-top: 0.5rem; width: 100%; justify-content: center; text-align: center">
-            <form action="/instruments/{{ item.id }}" method="post">
-                {% csrf_token %}
-                {% if wishlist %} <!-- se já estiver lá -->
-                    <input class="btn-href" type="submit" name="rem_wishlist" value="Remove from wishlist">
-                {% else %}
-                    <input class="btn-href" type="submit" name="add_wishlist" value="Add to wishlist">
-                {% endif %}
-                <input class="btn-href" type="submit" name="purchase" value="Buy">
-            </form>
-            <a href="/edit/instruments/{{ item.id }}"><button class="btn-danger">edit</button></a>
-            <a href="/delete/instruments/{{ item.id }}"><button class="btn-danger">delete</button></a>
-
+            {% if not admin %}
+                <form action="/instruments/{{ item.id }}" method="post">
+                    {% csrf_token %}
+                    {% if wishlist %} <!-- se já estiver lá -->
+                        <input class="btn-href" type="submit" name="rem_wishlist" value="Remove from wishlist">
+                    {% else %}
+                        <input class="btn-href" type="submit" name="add_wishlist" value="Add to wishlist">
+                    {% endif %}
+                    <input class="btn-href" type="submit" name="purchase" value="Buy">
+                </form>
+            {% else %}
+                <a class="btn-href" href="/edit/instruments/{{ item.id }}">edit</a>
+                <a class="btn-href" href="/delete/instruments/{{ item.id }}">delete</a>
+            {% endif %}
         </div>
     </div>
-
-    <!-- ENQUANTO N DER PARA VERIFICAR O TIPO DE LOGIN<form action="/edit/instruments/{{ item.id }}" method="get" >
-        <input class="btn-primary" type="submit" value="Edit (staff only) [done]">
-    </form>-->
-
-    <!--<input class="btn-primary" type="submit" value="Delete(staff only) (TODO)">-->
 {% endblock %}

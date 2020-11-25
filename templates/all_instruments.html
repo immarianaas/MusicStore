@@ -13,21 +13,23 @@
                     <div>
                         <h1>{{ m.0.price }}$</h1>
                         <p>Description : {{ m.0.instrument.description }}</p>
-                        <div class="tags">
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <div class="form-inputs-instruments">
-                                    <input type="hidden" name="id" value="{{ m.0.id }}">
-                                    <input class="tag" type="submit" name="purchase" value="Buy">
-                                    {% if m.1 %}  <!--se já estiver lá-->
-                                        <input class="tag" type="submit" name="rem_wishlist"
-                                               value="Remove from wishlist">
-                                    {% else %}
-                                        <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
-                                    {% endif %}
-                                </div>
-                            </form>
-                        </div>
+                        {% if not admin %}
+                            <div class="tags">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-inputs-instruments">
+                                        <input type="hidden" name="id" value="{{ m.0.id }}">
+                                        <input class="tag" type="submit" name="purchase" value="Buy">
+                                        {% if m.1 %}  <!--se já estiver lá-->
+                                            <input class="tag" type="submit" name="rem_wishlist"
+                                                   value="Remove from wishlist">
+                                        {% else %}
+                                            <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
                     </div>
                 </a>
             </div>
