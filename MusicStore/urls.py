@@ -45,11 +45,11 @@ urlpatterns = [
     path('edit/instruments/<int:id>', views.edit_instrument, name='edit_instrument'),
     path('delete/instruments/<int:id>', views.delete_instrument, name='delete_instrument'),
 
+    path('orders/', views.list_all_orders, name='password_change_done'),
     path('account/shoppingcart/', views.shopping_cart, name='shopping_cart'),
     path('account/wishlist/', views.wishlist, name='wishlist'),
     path('account/placeorder/', views.place_order, name='place_order'),
     path('account/orders/', views.orders, name='orders'),
-    path('account/change_password/', auth_views.PasswordChangeView.as_view(template_name='change_pwd.html'), name='change_password'),
-    path('password_change_done/', views.password_changed, name='password_change_done'),
-    path('orders/', views.list_all_orders, name='password_change_done'),
+    path('account/change_password/', auth_views.PasswordChangeView.as_view(template_name='change_pwd.html', success_url='/account/password_change/done/'), name='change_password'),
+    path('account/password_change/done/', views.password_changed, name='password_change_done'),
 ]
