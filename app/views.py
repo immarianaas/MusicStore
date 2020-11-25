@@ -38,19 +38,11 @@ def create_account(request):
             gender = form.cleaned_data['gender']
             contact = form.cleaned_data['contact']
             password = form.cleaned_data['password']
-            '''
-            street = form.cleaned_data['street']
-            city = form.cleaned_data['city']
-            code = form.cleaned_data['code']
-            country = form.cleaned_data['country']
-            door = form.cleaned_data['door']
-            '''
+
             try:
                 u = models.User.objects.create_user(email, password=password)
             except Exception:
-                # TODO já existe conta c esse email!!!!!!!! (descobrir como meter erros)
                 return redirect("/create-account")
-            # TODO falta meter permissoes...
 
             #addr = Address.objects.create(country=country, city=city, code=code, street=street, door=door)
             Person.objects.create(name=name, user=u, gender=gender, contact=contact)
@@ -103,9 +95,25 @@ def layout(request):
 
 def see_manufacturers_details(request, id):
     manu = Manufacturer.objects.get(pk = id)
-    instrumentos = Instrument.objects.filter(manufacturer_id=manu.id)
 
-    instr_info_completa = { i.id: [i, Item.objects.get(instrument=i)] for i in instrumentos }
+    if 'purchase' in request.POST:
+        # o id é o item_id
+        return purchase(request, request.POST['id'], '/manufacturers/' + str(id))
+    elif 'add_wishlist' in request.POST:
+        return add_to_wishlist(request, request.POST['id'], '/manufacturers/' + str(id))
+    elif 'rem_wishlist' in request.POST:
+        return rem_from_wishlist(request, request.POST['id'], '/manufacturers/'+str(id))
+
+    instrumentos = Instrument.objects.filter(manufacturer_id=manu.id)
+    try :
+        wishlist_item_quantity = ItemList.objects.get(type='wishlist', person=get_curr_person_object(request)).items.all()
+        wishlist_item = [i.item for i in wishlist_item_quantity]
+    except ObjectDoesNotExist:
+        wishlist_item = []
+
+    instr_info_completa = { i.id: [i, Item.objects.get(instrument=i), Item.objects.get(instrument=i) in wishlist_item ] for i in instrumentos }
+
+    print(instr_info_completa)
 
     return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa})
 
@@ -163,9 +171,9 @@ def see_instruments(request):
         if 'purchase' in request.POST:
             return purchase(request, request.POST['id'], '/instruments/')
         elif 'add_wishlist' in request.POST:
-            add_to_wishlist(request, request.POST['id'], '/instruments/')
+            return add_to_wishlist(request, request.POST['id'], '/instruments/')
         elif 'rem_wishlist' in request.POST:
-            rem_from_wishlist(request, request.POST['id'], '/instruments/')
+            return rem_from_wishlist(request, request.POST['id'], '/instruments/')
         elif 'search' in request.POST:
             query = request.POST['search']
             items = Item.objects.filter(instrument__name__icontains=query).all()
@@ -178,8 +186,7 @@ def see_instruments(request):
             il = [ i.item for i in ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()]
             its = [ (i , i in il) for i in items]
         except ObjectDoesNotExist:
-            print("nope, sory")
-            pass
+            its = []
     return render(request, 'all_instruments.html', {'items' : its})
 
 

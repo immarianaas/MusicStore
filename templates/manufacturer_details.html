@@ -29,11 +29,11 @@
                                             <div class="form-inputs-instruments">
                                                 <input type="hidden" name="id" value="{{ p.0.id }}">
                                                 <input class="tag" type="submit" name="purchase" value="Buy">
-                                                {% if m.1 %}  <!--se já estiver lá-->
-                                                    <input class="tag" type="submit" name="wishlist"
+                                                {% if p.2 %}  <!--se já estiver lá-->
+                                                    <input class="tag" type="submit" name="rem_wishlist"
                                                            value="Remove from wishlist">
                                                 {% else %}
-                                                    <input class="tag" type="submit" name="wishlist"
+                                                    <input class="tag" type="submit" name="add_wishlist"
                                                            value="Add to wishlist">
                                                 {% endif %}
                                             </div>

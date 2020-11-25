@@ -185,7 +185,7 @@ class Address(models.Model):
     country = models.CharField(choices=COUNTRIES, max_length=100)
     door = models.IntegerField()
 
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.street + ", " + str(self.door) + " - " + self.city + " (" + self.country + ")"
