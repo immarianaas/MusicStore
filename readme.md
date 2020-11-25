@@ -1,4 +1,5 @@
 # Music Store
+#### http://orlandop.pythonanywhere.com/
 
 ## Funcionalidades
 
@@ -12,7 +13,7 @@
 - mesmas possibilidades que haviam antes de se autenticar
 - possibilidade de adicionar um produto ao carrinho de compras (clicando em 'buy')
 	- após adicionar os produtos que pretender pode encaminhar-se para o checkout (1o clicando no carrinho disposto na navbar, em 2o clicando em 'Place Order')
-	- encontrando-se no separador de 'Payment', pode então associar uma morada de entrega (não havendo nenhuma pode criar no momento clicando em 'Create a new address', ou entao indo às configurações de conta e adicionar um novo endereço)
+	- encontrando-se no separador de 'Payment', pode então associar uma morada de entrega (pode-se criar uma nova clicando em 'Create a new address', podendo esta ficar guardada na conta do utilizador, ou apenas ficar associada à compra, ou entao indo às configurações de conta e adicionar um novo endereço)
 	- é necessário também especificar qual o método de pagamento
 	- e clicando em 'Click to finish' teremos entao concluído o processo
 - ou entao adicionar esse produto aos seus favoritos
@@ -23,7 +24,7 @@ Ver / pesquisar os instrumentos / maufacturers e “comprar”
 	- também é fazível ações já referidas anteriormente, como verificar quais os favoritos, qual o estado do carrinho de compras
 	- por último, algo bastante útil, será o facto de ser possível verificar detalhes duma compra bem como o seu estado de entrega ( disponível clicando em 'see your orders' )
 
-### Após efetuar login (admin)
+### Após efetuar login (staff)
 - pode verificar os fabricantes de instrumentos associados com a empresa ('see all manufacturers')
 	- pode editar ou eliminar fabricantes, assim como verificar todos os instrumentos associados a esse fabricante
 - pode também verificar os instrumentos disponíveis
@@ -35,4 +36,20 @@ Ver / pesquisar os instrumentos / maufacturers e “comprar”
 - quando algum utilizador tenta aceder a uma página à qual não tem permissão, é prontamente redirecionado para uma página com erro 403
 	- para exemplificar: http://orlandop.pythonanywhere.com/edit/instruments/1
 
+# credenciais para _login_:
+### Conta de _staff_:
+- username `john@musicstore.com`
+- password `snickers13`
 
+### Conta de cliente "normal":
+- username `mariana@gmail.com`
+- password `12345678`
+
+### Conta _admin_ do Django:
+- username `admin`
+- password `admin`
+---
+
+**nota:**
+Estes dados devem ser usados no projeto em http://orlandop.pythonanywhere.com/ , visto que a base de dados do projeto submetido para avaliação tem dados diferentes dos da implementação no PythonAnywhere.
+ 
