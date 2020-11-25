@@ -29,7 +29,7 @@
                                     <h1>{{ p.1.price }}$</h1>
                                     <p>Category: {{ p.0.category }}</p>
                                     <p>Description : {{ p.0.description }}</p>
-
+                                    {% if not admin %}
                                     <div class="tags">
                                         <form action="" method="post">
                                             {% csrf_token %}
@@ -46,7 +46,7 @@
                                             </div>
                                         </form>
                                     </div>
-
+                                    {% endif %}
                                 </div>
                             </a>
                         </div>
