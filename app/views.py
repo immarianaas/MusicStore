@@ -14,7 +14,6 @@ def home(request):
     if request.method == 'POST' and not request.user.is_authenticated:
         return redirect('login/')
 
-    print(request.user.groups.filter(name='staff').exists())
     if request.user.groups.filter(name='staff').exists():
         return render(request, 'home.html', {'loggedin' : True, 'admin' : True})
 
@@ -83,12 +82,14 @@ def add_manufacturer(request):
             print("form is apparently not valid")
             print(form.errors)
     form = ManufacturerForm()
-    return render(request, 'create_manufacturer.html', {'form' : form})
+    admin = request.user.groups.filter(name='staff').exists()
+    return render(request, 'create_manufacturer.html', {'form' : form, 'admin' : admin})
 
 
 def see_manufacturers(request):
     manus = Manufacturer.objects.all()
-    return render(request, 'all_manufacturers.html', {'manus' : manus})
+    admin = request.user.groups.filter(name='staff').exists()
+    return render(request, 'all_manufacturers.html', {'manus' : manus, 'admin' : admin})
 
 def layout(request):
     return render(request, 'layout.html')
@@ -113,9 +114,10 @@ def see_manufacturers_details(request, id):
 
     instr_info_completa = { i.id: [i, Item.objects.get(instrument=i), Item.objects.get(instrument=i) in wishlist_item ] for i in instrumentos }
 
-    print(instr_info_completa)
+    instr_info_completa = { i.id: [i, Item.objects.get(instrument=i)] for i in instrumentos }
+    admin = request.user.groups.filter(name='staff').exists()
+    return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa, "admin" : admin})
 
-    return render(request, 'manufacturer_details.html', {'manu' : manu, 'prods' : instr_info_completa})
 
 
 @login_required(login_url='/login/') #help
@@ -140,7 +142,8 @@ def add_item(request): # ALTERADO DE add_instrument
     #form = InstrumentForm()
     form = InstrumentSlashItemForm()
     #form2 = ItemForm()
-    return render(request, 'create_instrument.html', {'form':form}) # 'form2' : form2})
+    admin = request.user.groups.filter(name='staff').exists()
+    return render(request, 'create_instrument.html', {'form':form, 'admin' : admin}) # 'form2' : form2})
 
 
 @login_required(login_url='/login/')
@@ -186,6 +189,7 @@ def see_instruments(request):
             il = [ i.item for i in ItemList.objects.get(person=get_curr_person_object(request), type='wishlist').items.all()]
             its = [ (i , i in il) for i in items]
         except ObjectDoesNotExist:
+
             its = []
     return render(request, 'all_instruments.html', {'items' : its})
 
@@ -241,7 +245,8 @@ def see_instruments_details(request, id):
         except ObjectDoesNotExist:
             wishlist = False
 
-    return render(request, 'instrument_details.html', {'item' : item, 'wishlist' : wishlist})
+    admin = request.user.groups.filter(name='staff').exists()
+    return render(request, 'instrument_details.html', {'item' : item, 'wishlist' : wishlist, 'admin' : admin})
 
 @login_required(login_url='/login/') #help
 @permission_required('app.change_instrument', raise_exception=True)
