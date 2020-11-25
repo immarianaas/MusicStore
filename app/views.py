@@ -203,7 +203,8 @@ def see_instruments(request):
             its = [ (i , i in il) for i in items]
         except ObjectDoesNotExist:
             pass
-    return render(request, 'all_instruments.html', {'items' : its})
+    admin = request.user.groups.filter(name='staff').exists()
+    return render(request, 'all_instruments.html', {'items' : its, 'admin' : admin})
 
 
 def is_item_in_list(list_type, item, user):
