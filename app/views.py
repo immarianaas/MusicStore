@@ -79,9 +79,8 @@ def account(request):
     return render(request, 'account_details.html', {'u': u, 'ac':ac, 'addrs' : addrs})
 
 
-# TODO meter isto nao so com login mas tambem com permissoes especiais
 
-@login_required(login_url='/login/') #help
+@login_required(login_url='/login/')
 @permission_required('app.add_manufacturer', raise_exception=True)
 def add_manufacturer(request):
     # form = CreateManufacturers()
@@ -133,7 +132,7 @@ def see_manufacturers_details(request, id):
 
 
 
-@login_required(login_url='/login/') #help
+@login_required(login_url='/login/')
 @permission_required('app.add_item', raise_exception=True)
 def add_item(request): # ALTERADO DE add_instrument
     # form = CreateInstrument()
@@ -163,7 +162,6 @@ def add_item(request): # ALTERADO DE add_instrument
 def purchase(request, item_id, nextt):
     person = get_curr_person_object(request)
     add_to_list('shoppingcart', person, Item.objects.get(pk=item_id))
-    # todo apresentar confirmação de que foi adicionado ao cart
     return redirect(nextt)
 
 # nao sei se se deve dar merge destas 2 funcs, depende de como se faz o aviso..
@@ -261,7 +259,7 @@ def see_instruments_details(request, id):
     admin = request.user.groups.filter(name='staff').exists()
     return render(request, 'instrument_details.html', {'item' : item, 'wishlist' : wishlist, 'admin' : admin})
 
-@login_required(login_url='/login/') #help
+@login_required(login_url='/login/')
 @permission_required('app.change_instrument', raise_exception=True)
 def edit_instrument(request, id):
     item = Item.objects.get(pk=id)
@@ -477,7 +475,6 @@ def place_order(request):
     # ------------------
     # escolher address
 
-    # TODO verificar se existe ou nao..
     try:
         addr_choices = list(Address.objects.filter(person=get_curr_person_object(request)).all())
     except:
