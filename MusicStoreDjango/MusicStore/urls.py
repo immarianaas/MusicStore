@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from app import views
+from wsapp import views as wsviews
 
 from django.contrib.auth import views as auth_views
 
@@ -52,4 +53,8 @@ urlpatterns = [
     path('account/orders/', views.orders, name='orders'),
     path('account/change_password/', auth_views.PasswordChangeView.as_view(template_name='change_pwd.html', success_url='/account/password_change/done/'), name='change_password'),
     path('account/password_change/done/', views.password_changed, name='password_change_done'),
+
+    # --- projeto 2 ---
+
+    path('ws/manufacturers', wsviews.get_manufacturers, name='get_manufacturers'),
 ]
