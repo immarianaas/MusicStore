@@ -18,4 +18,8 @@ export class ManufacturerService {
   getManufacturers(): Observable<Manufacturer[]> {
     return this.http.get<Manufacturer[]>(this.baseURL + 'manufacturers');
   }
+
+  getManufacturer(id: number): Observable<Manufacturer> {
+    return this.http.get<Manufacturer>(this.baseURL + 'manufacturers/' + id);
+  }
 }

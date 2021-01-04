@@ -21,3 +21,8 @@ def get_manufacturers(request):
     '''
     ser = ManufacturerSerializer(manus, many=True)
     return Response(ser.data)
+
+@api_view(['GET'])
+def get_manufacturer_by_id(request, id):
+    manu = Manufacturer.objects.get(pk=id)
+    return Response(ManufacturerSerializer(manu).data)

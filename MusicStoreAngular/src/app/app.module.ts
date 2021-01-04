@@ -7,11 +7,13 @@ import { ManufacturersComponent } from './manufacturers/manufacturers.component'
 import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
+import { ManufacturerDetailsComponent } from './manufacturer-details/manufacturer-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ManufacturersComponent,
+    ManufacturerDetailsComponent,
   ],
   imports: [
     BrowserModule,

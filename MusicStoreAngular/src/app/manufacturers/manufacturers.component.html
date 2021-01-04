@@ -2,6 +2,8 @@
 
 <ul>
   <li *ngFor="let manufacturer of manufacturers">
-    <p>{{manufacturer.name}}</p>
+    <a routerLink="/manufacturers/{{manufacturer.id}}">
+      <p>{{manufacturer.name}}</p>
+    </a>
   </li>
 </ul>

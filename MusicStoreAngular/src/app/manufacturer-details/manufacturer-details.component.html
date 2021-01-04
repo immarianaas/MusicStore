@@ -1,0 +1,27 @@
+<div *ngIf="manufacturer">
+  <h2>Information about {{ manufacturer.name}}</h2>
+  <div>
+    <label>Name:
+      <!--
+        * diferença entre [(ngModel)] e [ngModel]:
+          -> qdo temos [(..)], se alterarmos o valor, ele é alterado
+             dinamicamente no resto da pagina
+          -> qdo temos [..], isso nao acontece
+      -->
+      <input [(ngModel)]="manufacturer.name">
+    </label>
+  </div>
+  <div>
+    <label>Country:
+      <input [(ngModel)]="manufacturer.country">
+    </label>
+  </div>
+  <div>
+    <label>Logo
+      <input [(ngModel)]="manufacturer.logo">
+      <img src="{{manufacturer.logo}}">
+    </label>
+
+  </div>
+
+</div>

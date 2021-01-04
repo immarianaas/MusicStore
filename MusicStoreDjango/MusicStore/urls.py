@@ -57,4 +57,5 @@ urlpatterns = [
     # --- projeto 2 ---
 
     path('ws/manufacturers', wsviews.get_manufacturers, name='get_manufacturers'),
+    path('ws/manufacturers/<int:id>', wsviews.get_manufacturer_by_id, name='get_manufacturers_by_id'),
 ]
