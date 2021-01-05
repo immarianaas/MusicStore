@@ -26,3 +26,12 @@ def get_manufacturers(request):
 def get_manufacturer_by_id(request, id):
     manu = Manufacturer.objects.get(pk=id)
     return Response(ManufacturerSerializer(manu).data)
+
+
+@api_view(['GET'])
+def get_items(request):
+    # na página dos instrumentos são 'items' que vão aparecer
+    # porque os instrumentos em si não tem conhecimento, por exemplo, do preço
+    items = Item.objects.all()
+    ser = ItemSerializer(items, many=True)
+    return Response(ser.data)

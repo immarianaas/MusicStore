@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ManufacturerDetailsComponent } from './manufacturer-details/manufacturer-details.component';
+import { ItemsComponent } from './items/items.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ManufacturersComponent,
     ManufacturerDetailsComponent,
+    ItemsComponent,
   ],
   imports: [
     BrowserModule,
