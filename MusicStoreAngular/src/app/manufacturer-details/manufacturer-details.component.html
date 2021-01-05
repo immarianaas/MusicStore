@@ -19,7 +19,7 @@
           <h5 *ngIf="instruments?.length == 0" style="text-align: center">No products associated, yet.</h5>
           <div *ngFor="let item of instruments" class="card-grid-space">
             <div class="num">{{ item.instrument.name }}</div>
-            <a class="card-instruments" href="{% url 'instruments_details' p.0.id %}"
+            <a class="card-instruments" routerLink="/instruments/{{ item.instrument.id }}"
                style="--bg-img: url({{ item.instrument.image }})">
               <div>
                 <h1>{{ item.price }}$</h1>
