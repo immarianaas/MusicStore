@@ -23,15 +23,15 @@ export class ItemsComponent implements OnInit {
   getItems(): void {
     this.itemService.getItems().subscribe(
       items => {
-        /* // isto nao resultou
+        /*
+        // isto nao resultou
         // tslint:disable-next-line:label-position
         for (const entry of items) {
-          let instr = new Item(entry.id, entry.price);
-          instr.instrument = this.instrService.getInstrument(<number> <unknown> entry.instrument);
+          entry.instrument_object = this.instrService.getInstrument(entry.instrument);
           this.items.push();
         }
 
-         */
+        */
         this.items = items;
 
       }

@@ -2,7 +2,15 @@
 
 <ul>
   <li *ngFor="let item of items">
-    <p> hey</p>
-    <p>{{item.instrument}}</p>
+    <p>name: {{item.instrument.name}}</p>
+    <p>category: {{item.instrument.category}}</p>
+    <p>manufacturer name: {{item.instrument.manufacturer.name}}</p>
+    <p>manufacturer country: {{item.instrument.manufacturer.country}}</p>
+    <p> manufacturer logo: </p>
+    <img src="{{item.instrument.manufacturer.logo}}">
+    <p>description: {{item.instrument.description}}</p>
+    <p>serial no.: {{item.instrument.nr_serie}}</p>
+    <p>image:</p>
+    <img src="{{item.instrument.image}}">
   </li>
 </ul>
