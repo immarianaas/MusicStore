@@ -40,3 +40,8 @@ def get_items(request):
 def get_item_by_id(request, id):
     item = Item.objects.get(pk=id)
     return Response(ItemSerializer(item).data)
+
+@api_view(['GET'])
+def get_instruments_by_manufacturer(request, id):
+    items = Item.objects.filter(instrument__manufacturer__pk=id)
+    return Response(ItemSerializer(items, many=True).data)
