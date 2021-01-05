@@ -7,6 +7,7 @@ import { ManufacturerDetailsComponent } from './manufacturer-details/manufacture
 import { ItemsComponent } from './items/items.component';
 import {ItemDetailsComponent} from './item-details/item-details.component';
 import {NoPathExceptionComponent} from './no-path-exception/no-path-exception.component';
+import {LoginComponent} from './login/login.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/instruments', pathMatch: 'full'},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'manufacturers/:id', component: ManufacturerDetailsComponent},
   {path: 'instruments', component: ItemsComponent},
   {path: '**', component: NoPathExceptionComponent},
-  {path: 'instruments/:id', component: ItemDetailsComponent}
+  {path: 'instruments/:id', component: ItemDetailsComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 /*

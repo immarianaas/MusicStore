@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 from app import views
 from wsapp import views as wsviews
@@ -55,6 +56,9 @@ urlpatterns = [
     path('account/password_change/done/', views.password_changed, name='password_change_done'),
 
     # --- projeto 2 ---
+
+    path('ws/token-auth/', obtain_jwt_token),
+    path('ws/token-refresh/', refresh_jwt_token),
 
     path('ws/manufacturers', wsviews.get_manufacturers, name='get_manufacturers'),
     path('ws/manufacturers/<int:id>', wsviews.get_manufacturer_by_id, name='get_manufacturers_by_id'),

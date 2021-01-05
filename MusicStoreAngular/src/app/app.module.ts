@@ -11,6 +11,8 @@ import { ManufacturerDetailsComponent } from './manufacturer-details/manufacture
 import { ItemsComponent } from './items/items.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { NoPathExceptionComponent } from './no-path-exception/no-path-exception.component';
+import {UserService} from './user.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { NoPathExceptionComponent } from './no-path-exception/no-path-exception.
     ItemsComponent,
     ItemDetailsComponent,
     NoPathExceptionComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ import { NoPathExceptionComponent } from './no-path-exception/no-path-exception.
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
