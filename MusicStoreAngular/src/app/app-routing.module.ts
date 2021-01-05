@@ -14,9 +14,11 @@ const routes: Routes = [
   {path: 'manufacturers', component: ManufacturersComponent},
   {path: 'manufacturers/:id', component: ManufacturerDetailsComponent},
   {path: 'instruments', component: ItemsComponent},
-  {path: '**', component: NoPathExceptionComponent},
   {path: 'instruments/:id', component: ItemDetailsComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+
+  {path: '**', component: NoPathExceptionComponent},
+
 ];
 
 /*
