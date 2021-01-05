@@ -3,9 +3,11 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
 from wsapp.serializers import *
 
 # Create your views here.
@@ -31,6 +33,7 @@ def get_manufacturer_by_id(request, id):
 
 @csrf_exempt
 @api_view(['GET'])
+@authentication_classes([JSONWebTokenAuthentication])
 # -> apenas permite acederes se estiveres autenticado
 # @permission_classes((IsAuthenticated, ))
 def get_items(request):
