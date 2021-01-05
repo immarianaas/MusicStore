@@ -1,0 +1,20 @@
+.container-instruments {
+  margin-top: 2rem;
+}
+
+.btn-href {
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0.3rem;
+  padding: 0 0.5em;
+  margin-right: 0.5em;
+  line-height: 1.5em;
+  transition: all, blue;
+  color: white;
+}
+
+.btn-href:hover {
+  text-decoration: none;
+  background: blue;
+  color: white;
+}
