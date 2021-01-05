@@ -1,18 +1,24 @@
-<h2>Instruments:</h2>
+<section>
+  <section class="cards-wrapper">
+    <div class="card-grid-space" *ngFor="let item of items">
+      <div class="num">{{ item.instrument.name }}</div>
+      <a class="card-instruments" routerLink="/instruments/{{item.id}}"
+         style="--bg-img: url({{ item.instrument.image }})">
+        <div>
+          <h1>{{ item.price }}$</h1>
+          <p>Description : {{ item.instrument.description }}</p>
+          <div class="tags">
+            <form action="." method="post">
+              <div class="form-inputs-instruments">
+                <input type="hidden" name="id" value="{{ item.instrument.name }}"> <!-- TODO colocar id -->
+                <input class="tag" type="submit" name="purchase" value="Buy">
+                <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
+              </div>
+            </form>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+</section>
 
-<ul>
-  <li *ngFor="let item of items">
-    <a routerLink="/instruments/{{item.id}}">
-      <p>name: {{item.instrument.name}}</p>
-    </a>
-    <p>category: {{item.instrument.category}}</p>
-    <p>manufacturer name: {{item.instrument.manufacturer.name}}</p>
-    <p>manufacturer country: {{item.instrument.manufacturer.country}}</p>
-    <p> manufacturer logo: </p>
-    <img src="{{item.instrument.manufacturer.logo}}">
-    <p>description: {{item.instrument.description}}</p>
-    <p>serial no.: {{item.instrument.nr_serie}}</p>
-    <p>image:</p>
-    <img src="{{item.instrument.image}}">
-  </li>
-</ul>
