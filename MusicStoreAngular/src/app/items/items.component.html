@@ -2,7 +2,9 @@
 
 <ul>
   <li *ngFor="let item of items">
-    <p>name: {{item.instrument.name}}</p>
+    <a routerLink="/instruments/{{item.id}}">
+      <p>name: {{item.instrument.name}}</p>
+    </a>
     <p>category: {{item.instrument.category}}</p>
     <p>manufacturer name: {{item.instrument.manufacturer.name}}</p>
     <p>manufacturer country: {{item.instrument.manufacturer.country}}</p>

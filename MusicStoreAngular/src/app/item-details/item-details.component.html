@@ -1,0 +1,43 @@
+<p>item-details works!</p>
+
+<div *ngIf="item">
+  <h2>Instrument {{item.instrument.name}}</h2>
+
+  <div>
+    <label> Name:
+      <input [ngModel]="item.instrument.name">
+    </label>
+  </div>
+
+  <div>
+    <label> Category:
+      <input [(ngModel)]="item.instrument.category">
+    </label>
+  </div>
+
+  <div>
+    <label> Manufacturer:
+      <a routerLink="/manufacturers/{{item.instrument.manufacturer.id}}">
+        <p> {{item.instrument.manufacturer.name}}</p>
+      </a>
+    </label>
+  </div>
+
+
+  <div>
+    <label> Description:
+      <input [(ngModel)]="item.instrument.description">
+    </label>
+  </div>
+
+
+  <div>
+    <label> Image:
+      <input [(ngModel)]="item.instrument.image">
+      <img src="{{item.instrument.image}}">
+    </label>
+  </div>
+
+
+
+</div>
