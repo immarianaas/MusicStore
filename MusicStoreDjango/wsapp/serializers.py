@@ -16,6 +16,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'instrument', 'price' )
+        depth=2
 
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:

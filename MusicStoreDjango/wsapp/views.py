@@ -35,3 +35,8 @@ def get_items(request):
     items = Item.objects.all()
     ser = ItemSerializer(items, many=True)
     return Response(ser.data)
+
+@api_view(['GET'])
+def get_item_by_id(request, id):
+    item = Item.objects.get(pk=id)
+    return Response(ItemSerializer(item).data)
