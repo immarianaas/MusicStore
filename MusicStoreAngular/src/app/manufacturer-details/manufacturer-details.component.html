@@ -1,27 +1,52 @@
-<div *ngIf="manufacturer">
-  <h2>Information about {{ manufacturer.name}}</h2>
-  <div>
-    <label>Name:
-      <!--
-        * diferença entre [(ngModel)] e [ngModel]:
-          -> qdo temos [(..)], se alterarmos o valor, ele é alterado
-             dinamicamente no resto da pagina
-          -> qdo temos [..], isso nao acontece
-      -->
-      <input [(ngModel)]="manufacturer.name">
-    </label>
+<section>
+  <div class="container-fluid main" *ngIf="manufacturer">
+    <div style="width: 100%; height: 30%" class="row">
+      <div class="col-lg-2 col-md-3 col-sm-12">
+        <h1 class="font-weight-bold">{{ manufacturer.name }}</h1>
+        <h5>Country: {{ manufacturer.country }}</h5>
+        <div style='width:100%; height: 30%;' class="container-fluid">
+          <img style="max-width: 60%; max-height: 60%" class="img-thumbnail" src="{{ manufacturer.logo }}">
+        </div>
+        <!--{% if admin %} -->
+        <div style="text-align: center; justify-content: center" class="row">
+          <a class="btn-href" href="">Edit</a>
+          <a class="btn-href" href="">Delete</a>
+        </div>
+        <!--{% endif %} -->
+      </div>
+      <div class="col-lg-10 col-md-9 col-sm-12">
+        <section class="cards-wrapper" *ngIf="instruments">
+          <h5 *ngIf="instruments?.length == 0" style="text-align: center">No products associated, yet.</h5>
+          <div *ngFor="let item of instruments" class="card-grid-space">
+            <div class="num">{{ item.instrument.name }}</div>
+            <a class="card-instruments" routerLink="/instruments/{{ item.instrument.id }}"
+               style="--bg-img: url({{ item.instrument.image }})">
+              <div>
+                <h1>{{ item.price }}$</h1>
+                <p>Category: {{ item.instrument.category }}</p>
+                <p>Description : {{ item.instrument.description }}</p>
+                <!--{% if not admin %}-->
+                <div class="tags">
+                  <form action="" method="post">
+                    <div class="form-inputs-instruments">
+                      <input type="hidden" name="id" value="{{ item.instrument.id }}">
+                      <input class="tag" type="submit" name="purchase" value="Buy">
+                      <!--{% if p.2 %}-->
+                      <input class="tag" type="submit" name="rem_wishlist"
+                             value="Remove from wishlist">
+                      <!--{% else %}-->
+                      <input class="tag" type="submit" name="add_wishlist"
+                             value="Add to wishlist">
+                      <!--{% endif %}-->
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
-  <div>
-    <label>Country:
-      <input [(ngModel)]="manufacturer.country">
-    </label>
-  </div>
-  <div>
-    <label>Logo
-      <input [(ngModel)]="manufacturer.logo">
-      <img src="{{manufacturer.logo}}">
-    </label>
+</section>
 
-  </div>
-
-</div>
