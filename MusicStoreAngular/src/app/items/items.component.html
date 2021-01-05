@@ -8,7 +8,7 @@
           <h1>{{ item.price }}$</h1>
           <p>Description : {{ item.instrument.description }}</p>
           <div class="tags">
-            <form action="." method="post">
+            <form action="." method="post"> <!-- Isto agr pode ser feito a partir do chamamento duma funcao -->
               <div class="form-inputs-instruments">
                 <input type="hidden" name="id" value="{{ item.instrument.name }}"> <!-- TODO colocar id -->
                 <input class="tag" type="submit" name="purchase" value="Buy">
