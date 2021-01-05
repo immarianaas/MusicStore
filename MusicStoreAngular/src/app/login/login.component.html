@@ -1,0 +1,42 @@
+<p>login works!</p>
+<h2>Log In</h2>
+<div *ngIf="!userService.token">
+  <!-- username -->
+  <div>
+    <label>Username:</label>
+    <input type="text" [(ngModel)]="user.username">
+    <span *ngFor="let error of userService.errors.username">
+      {{ error }}
+    </span>
+  </div>
+
+  <!-- password -->
+  <div>
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="user.password">
+    <span *ngFor="let error of userService.errors.password">
+      {{ error }}
+    </span>
+  </div>
+
+  <div>
+    <button (click)="login()">Log In!</button>
+  </div>
+  <div>
+    <span *ngFor="let error of userService.errors.non_field_errors">
+      {{ error }}
+    </span>
+  </div>
+
+</div>
+
+<!-- fim do if -->
+
+<div *ngIf="userService.token">
+  <div>
+    You are logged in as {{userService.username}}.<br />
+    Token expires: {{userService.token_expires}}.<br />
+    <button (click)="refreshToken()">Refresh Token here</button>
+    <button (click)="logout()">Log Out</button>
+  </div>
+</div>

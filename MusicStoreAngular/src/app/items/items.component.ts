@@ -5,6 +5,7 @@ import { ItemService } from '../item.service';
 import { Instrument } from '../instrument';
 import { InstrumentService } from '../instrument.service';
 
+
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
@@ -23,19 +24,10 @@ export class ItemsComponent implements OnInit {
   getItems(): void {
     this.itemService.getItems().subscribe(
       items => {
-        /*
-        // isto nao resultou
-        // tslint:disable-next-line:label-position
-        for (const entry of items) {
-          entry.instrument_object = this.instrService.getInstrument(entry.instrument);
-          this.items.push();
-        }
-
-        */
         this.items = items;
-
       }
     );
+
   }
 
 }

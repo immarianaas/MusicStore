@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ManufacturerDetailsComponent } from './manufacturer-details/manufacturer-details.component';
 import { ItemsComponent } from './items/items.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import {UserService} from './user.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
     ManufacturerDetailsComponent,
     ItemsComponent,
     ItemDetailsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
