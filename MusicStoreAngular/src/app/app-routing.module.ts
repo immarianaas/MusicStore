@@ -6,6 +6,7 @@ import { ManufacturersComponent } from './manufacturers/manufacturers.component'
 import { ManufacturerDetailsComponent } from './manufacturer-details/manufacturer-details.component';
 import { ItemsComponent } from './items/items.component';
 import {ItemDetailsComponent} from './item-details/item-details.component';
+import {NoPathExceptionComponent} from './no-path-exception/no-path-exception.component';
 import {LoginComponent} from './login/login.component';
 
 const routes: Routes = [
@@ -13,11 +14,9 @@ const routes: Routes = [
   {path: 'manufacturers', component: ManufacturersComponent},
   {path: 'manufacturers/:id', component: ManufacturerDetailsComponent},
   {path: 'instruments', component: ItemsComponent},
-
-  /*{path: '**', component:}, TODO para uma rota q nao exista */
+  {path: '**', component: NoPathExceptionComponent},
   {path: 'instruments/:id', component: ItemDetailsComponent},
   {path: 'login', component: LoginComponent}
-
 ];
 
 /*
