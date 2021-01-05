@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ManufacturerDetailsComponent } from './manufacturer-details/manufacturer-details.component';
 import { ItemsComponent } from './items/items.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import { NoPathExceptionComponent } from './no-path-exception/no-path-exception.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
     ManufacturerDetailsComponent,
     ItemsComponent,
     ItemDetailsComponent,
+    NoPathExceptionComponent,
   ],
   imports: [
     BrowserModule,
