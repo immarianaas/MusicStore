@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from wsapp.serializers import *
+from django.contrib.auth import models
+
 
 # Create your views here.
 
@@ -59,3 +61,13 @@ def get_item_by_id(request, id):
 def get_instruments_by_manufacturer(request, id):
     items = Item.objects.filter(instrument__manufacturer__pk=id)
     return Response(ItemSerializer(items, many=True).data)
+
+def get_curr_person_object(request):
+    u = models.User.objects.get(pk=request.user.id)
+    return Person.objects.get(user=u)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_users_account(request):
+    p = get_curr_person_object(request)
+    return Response(PersonSerializer(p).data)

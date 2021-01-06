@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from './user';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -26,7 +27,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public login(user) {
+  public login(user: User) {
     this.http.post(this.baseURL + 'token-auth/', JSON.stringify(user), httpOptions).subscribe(
       data => {
         this.updateData(data['token']);

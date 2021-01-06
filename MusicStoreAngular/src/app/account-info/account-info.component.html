@@ -1,0 +1,9 @@
+<div *ngIf="account">
+  <p>{{account.user.username}}</p>
+  <p>{{account.user.password}}</p>
+  <p>{{account.gender}}</p>
+  <p>{{account.role}}</p>
+
+</div>
+
+<div *ngIf="!account">Not logged in...</div>
