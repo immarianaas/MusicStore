@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Item } from '../item';
 import { ItemService } from '../item.service';
 
 import { Instrument } from '../instrument';
 import { InstrumentService } from '../instrument.service';
+import {Manufacturer} from '../manufacturer';
 
 
 @Component({
@@ -14,11 +15,15 @@ import { InstrumentService } from '../instrument.service';
 export class ItemsComponent implements OnInit {
   items: Item[];
   //instr: Instrument;
+  @Input() manufacturer_id: number;
 
   constructor(private itemService: ItemService, private instrService: InstrumentService) { }
 
   ngOnInit(): void {
-    this.getItems();
+    if (!this.manufacturer_id)
+      this.getItems();
+    else
+      this.getItemsByManufacturer();
   }
 
   getItems(): void {
@@ -27,7 +32,10 @@ export class ItemsComponent implements OnInit {
         this.items = items;
       }
     );
+  }
 
+  getItemsByManufacturer(): void {
+    this.itemService.getItemsByManufacturer(this.manufacturer_id).subscribe(items => this.items = items);
   }
 
 }

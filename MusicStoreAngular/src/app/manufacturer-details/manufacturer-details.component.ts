@@ -33,8 +33,10 @@ export class ManufacturerDetailsComponent implements OnInit {
     this.manufacturersService.getManufacturer(id).subscribe(manufacturer => this.manufacturer = manufacturer);
   }
 
+
   getItemsOfManufacturer(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.manufacturersService.getItemsOfManufacturer(id).subscribe(instruments => this.instruments = instruments);
   }
+
 }

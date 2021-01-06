@@ -33,6 +33,12 @@ export class ItemService {
     return this.http.get<Item[]>(url, this.getCorrectHeader());
   }
 
+  getItemsByManufacturer(manu_id: number): Observable<Item[]> {
+    const url = this.baseURL + 'manufacturers/' + manu_id + '/items';
+    return this.http.get<Item[]>(url, this.getCorrectHeader());
+  }
+
+
   getItem(id: number): Observable<Item> {
     const url = this.baseURL + 'items/' + id;
     return this.http.get<Item>(url);
