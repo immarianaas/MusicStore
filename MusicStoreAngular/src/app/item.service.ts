@@ -43,7 +43,7 @@ export class ItemService {
       return {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': 'JWT ' + this.userService.token
+          Authorization: 'JWT ' + this.userService.token
         })
       };
 
@@ -53,5 +53,9 @@ export class ItemService {
     )};
   }
 
+  purchaseItem(id: number): Observable<any> {
+    const url = this.baseURL + 'purchase';
+    return this.http.post(url, id, this.getCorrectHeader());
+  }
 
 }
