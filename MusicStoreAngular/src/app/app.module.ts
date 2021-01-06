@@ -13,6 +13,7 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
 import { NoPathExceptionComponent } from './no-path-exception/no-path-exception.component';
 import {UserService} from './user.service';
 import { LoginComponent } from './login/login.component';
+import { AccountInfoComponent } from './account-info/account-info.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { LoginComponent } from './login/login.component';
     ItemDetailsComponent,
     NoPathExceptionComponent,
     LoginComponent,
+    AccountInfoComponent,
   ],
   imports: [
     BrowserModule,

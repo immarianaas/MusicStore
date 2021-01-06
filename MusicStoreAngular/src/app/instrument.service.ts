@@ -22,4 +22,5 @@ export class InstrumentService {
     const url = this.baseURL + 'instrument/' + id;
     return this.http.get<Instrument>(url);
   }
+
 }

@@ -25,6 +25,6 @@ export class ManufacturerService {
   }
 
   getItemsOfManufacturer(id: number): Observable<Item[]> {
-    return this.http.get<Item[]>(this.baseURL + 'instruments/' + id);
+    return this.http.get<Item[]>(this.baseURL + 'manufacturers/' + id + '/items');
   }
 }

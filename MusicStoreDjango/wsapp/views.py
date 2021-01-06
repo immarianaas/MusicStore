@@ -99,3 +99,14 @@ def add_to_list(list_type, person, item):
         item.save()
 
     return
+  
+def get_curr_person_object(request):
+    u = models.User.objects.get(pk=request.user.id)
+    return Person.objects.get(user=u)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_users_account(request):
+    p = get_curr_person_object(request)
+    return Response(PersonSerializer(p).data)
+

@@ -22,6 +22,7 @@ class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = ( 'id', 'name', 'user', 'gender', 'contact', 'role' )
+        depth = 1
 
 class ItemQuantitySerializer(serializers.ModelSerializer):
     class Meta:
