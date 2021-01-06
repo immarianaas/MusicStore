@@ -24,15 +24,15 @@ export class LoginComponent implements OnInit {
   }
 
 
-  login() {
-    this.userService.login({'username' : this.user.username, 'password': this.user.password});
+  login(): void {
+    this.userService.login({username : this.user.username, password: this.user.password});
   }
 
-  refreshToken() {
+  refreshToken(): void {
     this.userService.refreshToken();
   }
 
-  logout() {
+  logout(): void {
     this.userService.logout();
   }
 

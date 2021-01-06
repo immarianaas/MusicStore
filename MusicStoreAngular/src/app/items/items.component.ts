@@ -2,8 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import { Item } from '../item';
 import { ItemService } from '../item.service';
 
-import { Instrument } from '../instrument';
 import { InstrumentService } from '../instrument.service';
+import {Router} from '@angular/router';
+import {AuthGuardService} from '../auth-guard.service';
+import {Location} from '@angular/common';
 import {Manufacturer} from '../manufacturer';
 
 
@@ -14,16 +16,22 @@ import {Manufacturer} from '../manufacturer';
 })
 export class ItemsComponent implements OnInit {
   items: Item[];
-  //instr: Instrument;
+  // instr: Instrument;
   @Input() manufacturer_id: number;
 
-  constructor(private itemService: ItemService, private instrService: InstrumentService) { }
+
+  constructor(private itemService: ItemService, private instrService: InstrumentService,
+              private authService: AuthGuardService, private location: Location) { }
 
   ngOnInit(): void {
     if (!this.manufacturer_id)
       this.getItems();
     else
       this.getItemsByManufacturer();
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   getItems(): void {
@@ -36,6 +44,17 @@ export class ItemsComponent implements OnInit {
 
   getItemsByManufacturer(): void {
     this.itemService.getItemsByManufacturer(this.manufacturer_id).subscribe(items => this.items = items);
+  }
+
+  purchase(id: number): void {
+    if (!this.authService.isLogged()) {
+      return ;
+    }
+    this.itemService.purchaseItem(id).subscribe();
+  }
+
+  addWishlist(id: number): void {
+    console.log(id);
   }
 
 }

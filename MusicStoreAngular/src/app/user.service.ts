@@ -17,7 +17,7 @@ export class UserService {
   public token: string;
 
   // token expiration date
-  public token_expires: Date;
+  public tokenExpires: Date;
 
   // username of logged in user
   public username: string;
@@ -27,7 +27,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public login(user: User) {
+  public login(user: User): void {
     this.http.post(this.baseURL + 'token-auth/', JSON.stringify(user), httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
@@ -39,7 +39,7 @@ export class UserService {
     console.log('login ended' + this.toString());
   }
 
-  public refreshToken() {
+  public refreshToken(): void {
     this.http.post(this.baseURL + 'token-refresh/', JSON.stringify({token: this.token}), httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
@@ -47,32 +47,32 @@ export class UserService {
       err => {
         this.errors = err['error'];
       }
-    )
+    );
   }
 
 
-  public logout() {
+  public logout(): void {
     this.token = null;
-    this.token_expires = null;
+    this.tokenExpires = null;
     this.username = null;
   }
 
-  private updateData(token) {
+  private updateData(token): void {
     this.token = token;
     this.errors = [];
     // decode the token to read the username
     // and the expiration timestamp
-    const token_parts = this.token.split('.');
-    console.log(token_parts);
+    const tokenParts = this.token.split('.');
+    console.log(tokenParts);
 
-    const token_decoded = JSON.parse(window.atob(token_parts[1]));
+    const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
 
-    this.token_expires = new Date(token_decoded.exp * 1000);
-    this.username = token_decoded.username;
+    this.tokenExpires = new Date(tokenDecoded.exp * 1000);
+    this.username = tokenDecoded.username;
   }
 
   toString(): string {
-    return "AUTHENTICATION token: " + this.token + "\nexpires: " + this.token_expires;
+    return 'AUTHENTICATION token: ' + this.token + '\nexpires: ' + this.tokenExpires;
   }
 
 }

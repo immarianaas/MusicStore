@@ -11,7 +11,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from wsapp.serializers import *
 from django.contrib.auth import models
-
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -62,6 +62,44 @@ def get_instruments_by_manufacturer(request, id):
     items = Item.objects.filter(instrument__manufacturer__pk=id)
     return Response(ItemSerializer(items, many=True).data)
 
+@api_view(['POST'])
+def purchase(request):
+    if not request.user.is_authenticated:
+        # retornar um http de erro
+        pass
+
+    person = Person.objects.get(user=request.user)
+    item = Item.objects.get(pk=request.data)
+    add_to_list('shoppingcart', person, item)
+
+    ser = ItemSerializer(item)
+    return Response(ser.data, status=status.HTTP_201_CREATED)
+
+def is_item_in_list(list_type, item, user):
+    try:
+        il = ItemList.objects.get(type=list_type, person=user, items__item=item)
+    except ObjectDoesNotExist:
+        return False
+    return il.items
+
+def add_to_list(list_type, person, item):
+    try:
+        il = ItemList.objects.get(type=list_type, person=person)
+    except ObjectDoesNotExist:
+        il = ItemList.objects.create(type=list_type, person=person)
+
+    #print("is item in list?? ", is_item_in_list(list_type, item, person))
+    ans = is_item_in_list(list_type, item, person)
+    if not ans:
+        item_qty = ItemQuantity.objects.create(item=item, quantity=1)
+        il.items.add(item_qty)
+    else:
+        item = ans.get(item__exact=item)
+        item.quantity = item.quantity+1
+        item.save()
+
+    return
+  
 def get_curr_person_object(request):
     u = models.User.objects.get(pk=request.user.id)
     return Person.objects.get(user=u)
@@ -71,3 +109,4 @@ def get_curr_person_object(request):
 def get_users_account(request):
     p = get_curr_person_object(request)
     return Response(PersonSerializer(p).data)
+

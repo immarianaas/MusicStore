@@ -2,23 +2,20 @@
   <section class="cards-wrapper">
     <div class="card-grid-space" *ngFor="let item of items">
       <div class="num">{{ item.instrument.name }}</div>
-      <a class="card-instruments" routerLink="/instruments/{{item.id}}"
-         style="--bg-img: url({{ item.instrument.image }})">
+        <a class="card-instruments" routerLink="/instruments/{{item.id}}"
+           style="--bg-img: url({{ item.instrument.image }})">
         <div>
           <h1>{{ item.price }}$</h1>
           <p>Description : {{ item.instrument.description }}</p>
           <div class="tags">
-            <form action="." method="post"> <!-- Isto agr pode ser feito a partir do chamamento duma funcao -->
-              <div class="form-inputs-instruments">
-                <input type="hidden" name="id" value="{{ item.instrument.name }}"> <!-- TODO colocar id -->
-                <input class="tag" type="submit" name="purchase" value="Buy">
-                <input class="tag" type="submit" name="add_wishlist" value="Add to wishlist">
-              </div>
-            </form>
           </div>
         </div>
-      </a>
-    </div>
+        </a>
+        <div class="btn-items">
+          <button (click)="purchase(item.instrument.id)" class="btn-item btn">Buy</button>
+          <button (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
+        </div>
+      </div>
   </section>
 </section>
 
