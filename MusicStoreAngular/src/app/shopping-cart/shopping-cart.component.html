@@ -17,7 +17,7 @@
               <div class="row text-muted">{{ itemqt.item.instrument.category}}</div>
               <div class="row">{{itemqt.item.instrument.name}}</div>
             </div>
-            <div class="col"> <button (click)="decItem(i)">-</button><a class="border">{{itemqt.quantity}}</a><button (click)="incItem(i)">+</button> </div>
+            <div class="col"> <a style="cursor: pointer" (click)="decItem(i)">-</a><a class="border">{{itemqt.quantity}}</a><a style="cursor: pointer" (click)="incItem(i)">+</a> </div>
             <div class="col">&euro; {{itemqt.item.price}} <span (click)="removeItem(i)" class="close">&#10005;</span></div>
           </div>
         </div>
