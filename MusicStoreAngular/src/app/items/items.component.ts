@@ -19,7 +19,6 @@ export class ItemsComponent implements OnInit {
   // instr: Instrument;
   @Input() manufacturer_id: number;
 
-
   constructor(private itemService: ItemService, private instrService: InstrumentService,
               private authService: AuthGuardService, private location: Location) { }
 

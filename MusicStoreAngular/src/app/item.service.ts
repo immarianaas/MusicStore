@@ -25,8 +25,6 @@ export class ItemService {
   ) {}
 
 
-
-
   getItems(): Observable<Item[]> {
     const url = this.baseURL + 'items';
 

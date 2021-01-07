@@ -1,42 +1,100 @@
-<p>login works!</p>
-<h2>Log In</h2>
-<div *ngIf="!userService.token">
+<div *ngIf="!creating_account">
+
+  <h2>Log In</h2>
+
+  <div *ngIf="!userService.token">
+    <!-- username -->
+    <div>
+      <label>Username:</label>
+      <input type="text" [(ngModel)]="user.username">
+      <span *ngFor="let error of userService.errors.username">
+        {{ error }}
+      </span>
+    </div>
+
+    <!-- password -->
+    <div>
+      <label>Password:</label>
+      <input type="password" [(ngModel)]="user.password">
+      <span *ngFor="let error of userService.errors.password">
+        {{ error }}
+      </span>
+    </div>
+
+    <div>
+      <button (click)="login()">Log In!</button>
+    </div>
+    <div>
+      <span *ngFor="let error of userService.errors.non_field_errors">
+        {{ error }}
+      </span>
+    </div>
+
+    <button (click)="create_account()">Create an account!</button>
+
+  </div>
+
+  <!-- fim do if -->
+
+  <div *ngIf="userService.token">
+    <div>
+      You are logged in as {{userService.username}}.<br />
+      Token expires: {{userService.tokenExpires}}.<br />
+      <button (click)="refreshToken()">Refresh Token here</button>
+      <button (click)="logout()">Log Out</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="creating_account">
+  <h2>Create new account!</h2>
+
+
+
+
   <!-- username -->
   <div>
     <label>Username:</label>
     <input type="text" [(ngModel)]="user.username">
-    <span *ngFor="let error of userService.errors.username">
-      {{ error }}
-    </span>
+    <span *ngFor="let error of errors['username']"> {{error}} </span>
   </div>
 
   <!-- password -->
   <div>
     <label>Password:</label>
-    <input type="password" [(ngModel)]="user.password">
-    <span *ngFor="let error of userService.errors.password">
-      {{ error }}
-    </span>
+    <input type="text" [(ngModel)]="user.password">
+    <span *ngFor="let error of errors['password']"> {{error}} </span>
   </div>
 
+  <!-- name -->
   <div>
-    <button (click)="login()">Log In!</button>
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="account.name">
+    <span *ngFor="let error of errors['name']"> {{error}} </span>
+
   </div>
+
+  <!-- gender -->
   <div>
-    <span *ngFor="let error of userService.errors.non_field_errors">
-      {{ error }}
-    </span>
+    <label>Gender:</label>
+    <!--<input type="text" [(ngModel)]="account.gender">-->
+    <select id="gender" [(ngModel)]="account.gender" >
+      <option value="" disabled selected hidden>Select one option</option>
+      <option value="F">Female</option>
+      <option value="M">Male</option>
+      <option value="O">Other / Rather not say</option>
+    </select>
+    <span *ngFor="let error of errors['gender']"> {{error}} </span>
+
   </div>
 
-</div>
-
-<!-- fim do if -->
-
-<div *ngIf="userService.token">
+  <!-- contact -->
   <div>
-    You are logged in as {{userService.username}}.<br />
-    Token expires: {{userService.token_expires}}.<br />
-    <button (click)="refreshToken()">Refresh Token here</button>
-    <button (click)="logout()">Log Out</button>
+    <label>Contact:</label>
+    <input type="text" [(ngModel)]="account.contact">
+    <span *ngFor="let error of errors['contact']"> {{error}} </span>
+
   </div>
+  <button (click)="save_new_account()">Create account!</button>
+  <button (click)="cancel()">Cancel & take me back</button>
+
 </div>

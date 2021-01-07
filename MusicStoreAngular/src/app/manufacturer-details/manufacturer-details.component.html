@@ -15,12 +15,13 @@
         <!--{% endif %} -->
       </div>
 
+      <div class="col-lg-10 col-md-9 col-sm-12">
+
       <app-items [manufacturer_id]="manufacturer.id"></app-items>
 
       <div *ngIf="2==3">
         <!-- só meti isto q é pra "esconder" o que vem a seguir! -->
         <!-- que provavelmente vai ser pra tirar -->
-      <div class="col-lg-10 col-md-9 col-sm-12">
         <section class="cards-wrapper" *ngIf="instruments">
           <h5 *ngIf="instruments?.length == 0" style="text-align: center">No products associated, yet.</h5>
           <div *ngFor="let item of instruments" class="card-grid-space">

@@ -67,5 +67,9 @@ urlpatterns = [
     path('ws/items', wsviews.get_items, name='get_items'),
     path('ws/items/<int:id>', wsviews.get_item_by_id, name='get_item_by_id'),
     path('ws/purchase', wsviews.purchase, name='purchase'),
+
+    # account related:
     path('ws/account', wsviews.get_users_account, name='get_users_account'),
+    path('ws/create-account', wsviews.create_account, name='create_account_api'),
+    path('ws/addresses', wsviews.get_my_addresses, name='get_my_addresses'),
 ]

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Account } from './account';
 import {UserService} from './user.service';
+import {Address} from './address';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,19 @@ export class AccountService {
     return this.http.get<Account>(this.baseURL + 'account', this.getCorrectHeader());
   }
 
+  createAccount(acc: Account): any {
+    console.log('nao?');
+    return this.http.post(this.baseURL + 'create-account', acc, this.getCorrectHeader());
+  }
+
+  getAccountAddresses(): Observable<Address[]> {
+    let url = this.baseURL + 'addresses';
+    return this.http.get<Address[]>(url, this.getCorrectHeader());
+  }
+
+
+
+  /* -- helper functions -- */
   getCorrectHeader(): { headers: HttpHeaders} {
     if (this.userService.token) {
       return {

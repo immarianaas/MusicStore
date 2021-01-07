@@ -1,9 +1,20 @@
 <div *ngIf="account">
   <p>{{account.user.username}}</p>
   <p>{{account.user.password}}</p>
+  <p>{{account.name}}</p>
   <p>{{account.gender}}</p>
   <p>{{account.role}}</p>
 
+  <h4>My Addresses:</h4>
+  <div *ngFor="let a of addrs">
+    <h5>Address 1: </h5>
+    <p>{{a.street}}</p>
+    <p>{{a.code}}</p>
+    <p>{{a.country}}</p>
+    <p>{{a.door}}</p>
+    <p>{{a.city}}</p>
+
+  </div>
 </div>
 
 <div *ngIf="!account">Not logged in...</div>

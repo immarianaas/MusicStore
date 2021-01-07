@@ -33,11 +33,13 @@ class ItemListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemList
         fields = ( 'id', 'type', 'items', 'person' )
+        depth = 3
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ( 'id', 'street', 'city', 'code', 'country', 'door', 'person' )
+        fields = '__all__'
+        # fields = ( 'id', 'street', 'city', 'code', 'country', 'door', 'person' )
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

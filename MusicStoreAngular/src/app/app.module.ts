@@ -14,6 +14,7 @@ import { NoPathExceptionComponent } from './no-path-exception/no-path-exception.
 import {UserService} from './user.service';
 import { LoginComponent } from './login/login.component';
 import { AccountInfoComponent } from './account-info/account-info.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AccountInfoComponent } from './account-info/account-info.component';
     NoPathExceptionComponent,
     LoginComponent,
     AccountInfoComponent,
+    WishlistComponent,
   ],
   imports: [
     BrowserModule,
