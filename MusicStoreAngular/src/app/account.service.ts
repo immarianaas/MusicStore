@@ -30,6 +30,10 @@ export class AccountService {
     return this.http.get<Address[]>(url, this.getCorrectHeader());
   }
 
+  createAddress(addr: Address): any {
+    return this.http.post<Address>(this.baseURL+'create-address', addr, this.getCorrectHeader())
+  }
+
 
 
   /* -- helper functions -- */

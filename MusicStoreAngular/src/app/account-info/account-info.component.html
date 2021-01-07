@@ -7,14 +7,103 @@
 
   <h4>My Addresses:</h4>
   <div *ngFor="let a of addrs">
-    <h5>Address 1: </h5>
+    <h5>Address: </h5>
     <p>{{a.street}}</p>
     <p>{{a.code}}</p>
     <p>{{a.country}}</p>
     <p>{{a.door}}</p>
     <p>{{a.city}}</p>
+  </div>
+  <button (click)="addAddress()">add a new address</button>
+
+  <!-- add new address form -->
+  <div *ngIf="adding_addr">
+    <!-- street -->
+    <div>
+      <label>Street:</label>
+      <input type="text" [(ngModel)]="new_addr.street">
+      <span *ngFor="let error of errors['street']"> {{error}} </span>
+    </div>
+
+    <!-- door number -->
+    <div>
+      <label>Door number:</label>
+      <input type="text" [(ngModel)]="new_addr.door">
+      <span *ngFor="let error of errors['door']"> {{error}} </span>
+    </div>
+
+    <!-- city -->
+    <div>
+      <label>City:</label>
+      <input type="text" [(ngModel)]="new_addr.city">
+      <span *ngFor="let error of errors['city']"> {{error}} </span>
+    </div>
+
+    <!-- post code -->
+    <div>
+      <label>Post code:</label>
+      <input type="text" [(ngModel)]="new_addr.code">
+      <span *ngFor="let error of errors['code']"> {{error}} </span>
+    </div>
+
+    <!-- country -->
+    <div>
+      <label>Country:</label>
+      <!--<input type="text" [(ngModel)]="new_addr.country">-->
+      <select [(ngModel)]="new_addr.country">
+        <option value="" selected disabled>select an option</option>
+        <optgroup label="Africa">
+          <option *ngFor="let c of COUNTRIES['Africa']" value="{{c[0]}}">{{c[1]}}</option>
+        </optgroup>
+        <optgroup label="America">
+          <option *ngFor="let c of COUNTRIES['America']" value="{{c[0]}}">{{c[1]}}</option>
+        </optgroup>
+        <optgroup label="Asia">
+          <option *ngFor="let c of COUNTRIES['Asia']" value="{{c[0]}}">{{c[1]}}</option>
+        </optgroup>
+        <optgroup label="Europe">
+          <option *ngFor="let c of COUNTRIES['Europe']" value="{{c[0]}}">{{c[1]}}</option>
+        </optgroup>
+        <optgroup label="Oceania">
+          <option *ngFor="let c of COUNTRIES['Oceania']" value="{{c[0]}}">{{c[1]}}</option>
+        </optgroup>
+      </select>
+      <!-- fim do select para os paises -->
+
+      <span *ngFor="let error of errors['country']"> {{error}} </span>
+    </div>
+
+    <span *ngFor="let error of errors['others']"> {{error}} </span>
+
+    <!-- save address -->
+    <button (click)="saveNewAddress()">save address</button>
+    <button (click)="cancel()">cancel</button>
+
+
 
   </div>
 </div>
 
 <div *ngIf="!account">Not logged in...</div>
+
+<!--
+<select>
+  <option value="" selected hidden disabled>select an option</option>
+  <optgroup label="Africa">
+    <option *ngFor="let c of COUNTRIES['Africa']" value="{{c[0]}}">{{c[1]}}</option>
+  </optgroup>
+  <optgroup label="America">
+    <option *ngFor="let c of COUNTRIES['America']" value="{{c[0]}}">{{c[1]}}</option>
+  </optgroup>
+  <optgroup label="Asia">
+    <option *ngFor="let c of COUNTRIES['Asia']" value="{{c[0]}}">{{c[1]}}</option>
+  </optgroup>
+  <optgroup label="Europe">
+    <option *ngFor="let c of COUNTRIES['Europe']" value="{{c[0]}}">{{c[1]}}</option>
+  </optgroup>
+  <optgroup label="Oceania">
+    <option *ngFor="let c of COUNTRIES['Oceania']" value="{{c[0]}}">{{c[1]}}</option>
+  </optgroup>
+</select>
+
+-->

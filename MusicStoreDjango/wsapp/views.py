@@ -116,13 +116,13 @@ def get_users_account(request):
 def create_account(request):
     recv = request.data
 
-
     try:
         print('here')
-        u = models.User.objects.create_user(recv['user']['username'], password=recv['user']['password'])
 
         personser = PersonSerializer(data=request.data)
         if personser.is_valid():
+            u = models.User.objects.create_user(recv['user']['username'], password=recv['user']['password'])
+
             name = personser.validated_data['name']
             gen = personser.validated_data['gender']
             cont = personser.validated_data['contact']
@@ -151,6 +151,19 @@ def get_my_addresses(request):
 
 @api_view(['POST'])
 def add_address(request): # yet TODO
+    recv = request.data
+    ser = AddressSerializer(data=recv)
+    print(recv)
+    print(ser)
+    if ser.is_valid():
+        street = ser.validated_data['street']
+        city = ser.validated_data['city']
+        code = ser.validated_data['code']
+        country = ser.validated_data['country']
+        door = ser.validated_data['door']
+        a = Address.objects.create(street=street, city=city, code=code, country=country, door=door, person=Person.objects.get(user = request.user))
+        return Response(AddressSerializer(a).data, status=status.HTTP_201_CREATED)
+
     '''
     if 'POST' in request.method:
         form = AddressForm(request.POST)
@@ -168,4 +181,4 @@ def add_address(request): # yet TODO
 
     form = AddressForm()
     '''
-    pass
+    return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)

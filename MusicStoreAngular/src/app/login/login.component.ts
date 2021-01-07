@@ -3,7 +3,6 @@ import {UserService} from '../user.service';
 import { User } from '../user';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
-import {isBoolean} from 'util';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   /* object representing user */
   public user: User;
-  private creating_account: boolean;
+  public creating_account: boolean;
   public account: Account;
   public errors: any = [];
 
@@ -64,7 +63,7 @@ export class LoginComponent implements OnInit {
   save_new_account(): void {
     this.errors = []
 
-    if (this.is_everything_filled_in()) {
+    if (this.is_everything_correct()) {
       // this.error = 'All fields must be filled!';
       this.accService.createAccount(this.account).subscribe(
         res => {
@@ -93,7 +92,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  is_everything_filled_in(): boolean {
+  is_everything_correct(): boolean {
     let is_false: boolean = false
 
     if (!this.user.username || this.user.username.trim().length == 0) {
