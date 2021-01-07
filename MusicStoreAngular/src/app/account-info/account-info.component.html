@@ -1,9 +1,22 @@
 <div *ngIf="account">
   <p>{{account.user.username}}</p>
   <p>{{account.user.password}}</p>
-  <p>{{account.name}}</p>
-  <p>{{account.gender}}</p>
-  <p>{{account.role}}</p>
+
+  <label>name:</label>
+  <input type="text" [readOnly]="!isEditing('account')" [(ngModel)]="account.name">
+  <br>
+  <label>Contact:</label>
+  <input type="text" [readOnly]="!isEditing('account')" [(ngModel)]="account.contact">
+  <br>
+  <label>Gender:</label>
+  <select id="gender" [disabled]="!isEditing('account')" [(ngModel)]="account.gender" >
+    <option value="F">Female</option>
+    <option value="M">Male</option>
+    <option value="O">Other / Rather not say</option>
+  </select>
+  <button *ngIf="!isEditing('account')" (click)="editAccountInfo()">edit personal info</button>
+  <button *ngIf="isEditing('account')" (click)="saveEditedAccount()">save edits</button>
+  <button *ngIf="isEditing('account')" (click)="cancelEditingAccount()">cancel edits</button>
 
   <h4>My Addresses:</h4>
   <div *ngFor="let a of addrs">
@@ -14,7 +27,7 @@
     <p>{{a.door}}</p>
     <p>{{a.city}}</p>
   </div>
-  <button (click)="addAddress()">add a new address</button>
+  <button *ngIf="!adding_addr" (click)="addAddress()">add a new address</button>
 
   <!-- add new address form -->
   <div *ngIf="adding_addr">

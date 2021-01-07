@@ -34,8 +34,6 @@ export class AccountService {
     return this.http.post<Address>(this.baseURL+'create-address', addr, this.getCorrectHeader())
   }
 
-
-
   /* -- helper functions -- */
   getCorrectHeader(): { headers: HttpHeaders} {
     if (this.userService.token) {

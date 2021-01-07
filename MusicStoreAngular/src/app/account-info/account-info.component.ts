@@ -8,6 +8,7 @@ import { Account } from '../account';
 import { Address } from '../address';
 
 import { COUNTRIES } from '../COUNTRIES';
+import {isBoolean} from 'util';
 
 @Component({
   selector: 'app-account-info',
@@ -22,40 +23,57 @@ export class AccountInfoComponent implements OnInit {
   new_addr: Address;
   errors: any[] = [];
   COUNTRIES: any = COUNTRIES;
+  editing: Map<string, boolean>;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private userService: UserService,
     private accountService: AccountService
-  ) { this.adding_addr=false; }
+  ) {
+    this.adding_addr=false;
+    this.editing = new Map<string, boolean>();
+  }
 
   ngOnInit(): void {
     this.getAccountInfo();
   }
 
   getAccountInfo(): void {
-    this.accountService.getAccountInfo().subscribe(user => this.account = user);
+    this.getAccountDetails()
     this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs);
+  }
+
+  getAccountDetails(): void {
+    this.accountService.getAccountInfo().subscribe(user => this.account = user);
+  }
+
+  editAccountInfo(): void {
+    this.editing.set('account', true);
+  }
+
+  saveEditedAccount(): void {
+
+  }
+
+  cancelEditingAccount(): void {
+    this.editing.set('account', false);
+    this.getAccountDetails();
+  }
+
+
+  isEditing(field: string) {
+    return (this.editing.has(field) && this.editing.get(field))
   }
 
   addAddress(): void {
     this.adding_addr = true;
-    /*
-    this.new_addr = {
-      street: '',
-      city: '',
-      code: '',
-      country: '',
-      door: null,
-      person: null
-    };*/
     this.new_addr = new Address();
   }
 
   saveNewAddress(): void {
     this.errors = [];
-    if (this.is_everything_correct()) {
+    if (this.is_everything_correct_address()) {
       console.log('guardando....... ...');
       this.accountService.createAddress(this.new_addr).subscribe(
         data => {
@@ -77,7 +95,7 @@ export class AccountInfoComponent implements OnInit {
 
 
   /* --- helper functions --- */
-  is_everything_correct(): boolean {
+  is_everything_correct_address(): boolean {
     let is_false: boolean = false
 
     if (!this.new_addr.street || this.new_addr.street.trim().length == 0) {
