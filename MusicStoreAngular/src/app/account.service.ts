@@ -27,12 +27,12 @@ export class AccountService {
   }
 
   getAccountAddresses(): Observable<Address[]> {
-    let url = this.baseURL + 'addresses';
+    const url = this.baseURL + 'addresses';
     return this.http.get<Address[]>(url, this.getCorrectHeader());
   }
 
   createAddress(addr: Address): any {
-    return this.http.post<Address>(this.baseURL+'create-address', addr, this.getCorrectHeader())
+    return this.http.post<Address>(this.baseURL + 'create-address', addr, this.getCorrectHeader());
   }
 
   /* -- helper functions -- */
@@ -41,7 +41,7 @@ export class AccountService {
       return {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': 'JWT ' + this.userService.token
+          Authorization: 'JWT ' + this.userService.token
         })
       };
 
@@ -55,5 +55,15 @@ export class AccountService {
     return this.http.get<ItemList>( this.baseURL + 'shoppingcart', this.getCorrectHeader());
   }
 
+  incItemAtCart(idItemqt: number): Observable<any> {
+    return this.http.put(this.baseURL + 'shoppingcart/inc', idItemqt, this.getCorrectHeader());
+  }
 
+  decItemAtCart(idItemqt: number): Observable<any> {
+    return this.http.put(this.baseURL + 'shoppingcart/dec', idItemqt, this.getCorrectHeader());
+  }
+
+  removeItemAtCart(idItemqt: number): Observable<any> {
+    return this.http.put(this.baseURL + 'shoppingcart/rem', idItemqt, this.getCorrectHeader());
+  }
 }

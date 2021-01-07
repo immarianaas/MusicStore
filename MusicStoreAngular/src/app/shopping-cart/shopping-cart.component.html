@@ -18,7 +18,7 @@
               <div class="row">{{itemqt.item.instrument.name}}</div>
             </div>
             <div class="col"> <button (click)="decItem(i)">-</button><a class="border">{{itemqt.quantity}}</a><button (click)="incItem(i)">+</button> </div>
-            <div class="col">&euro; {{itemqt.item.price}} <span class="close">&#10005;</span></div>
+            <div class="col">&euro; {{itemqt.item.price}} <span (click)="removeItem(i)" class="close">&#10005;</span></div>
           </div>
         </div>
         <div class="back-to-shop"><a routerLink="/"><span class="text-muted">Back to shop</span></a></div>
@@ -38,7 +38,7 @@
         <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
           <div class="col">TOTAL PRICE</div>
           <div class="col text-right">&euro; {{total}}</div>
-        </div> <button class="btn">PLASE ORDER</button>
+        </div> <button routerLink="/placeorder" class="btn">PLACE ORDER</button>
       </div>
     </div>
   </div>

@@ -31,6 +31,7 @@ export class ShoppingCartComponent implements OnInit {
     const item = this.itemList.items[index];
     item.quantity += 1;
     this.total = this.getTotal(this.itemList);
+    this.accountService.incItemAtCart(item.id).subscribe();
   }
 
   decItem(index: number): void {
@@ -40,6 +41,14 @@ export class ShoppingCartComponent implements OnInit {
       this.itemList.items.splice(index, 1);
     }
     this.total = this.getTotal(this.itemList);
+    this.accountService.decItemAtCart(item.id).subscribe();
+  }
+
+  removeItem(index: number): void {
+    const item = this.itemList.items[index];
+    this.itemList.items.splice(index, 1);
+    this.total = this.getTotal(this.itemList);
+    this.accountService.removeItemAtCart(item.id).subscribe();
   }
 
   getShoppingCart(): void {
