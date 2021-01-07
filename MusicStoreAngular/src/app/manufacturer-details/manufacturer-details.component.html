@@ -16,46 +16,8 @@
       </div>
 
       <div class="col-lg-10 col-md-9 col-sm-12">
-
-      <app-items [manufacturer_id]="manufacturer.id"></app-items>
-
-      <div *ngIf="2==3">
-        <!-- só meti isto q é pra "esconder" o que vem a seguir! -->
-        <!-- que provavelmente vai ser pra tirar -->
-        <section class="cards-wrapper" *ngIf="instruments">
-          <h5 *ngIf="instruments?.length == 0" style="text-align: center">No products associated, yet.</h5>
-          <div *ngFor="let item of instruments" class="card-grid-space">
-            <div class="num">{{ item.instrument.name }}</div>
-            <a class="card-instruments" routerLink="/instruments/{{ item.instrument.id }}"
-               style="--bg-img: url({{ item.instrument.image }})">
-              <div>
-                <h1>{{ item.price }}$</h1>
-                <p>Category: {{ item.instrument.category }}</p>
-                <p>Description : {{ item.instrument.description }}</p>
-                <!--{% if not admin %}-->
-                <div class="tags">
-                  <form action="" method="post">
-                    <div class="form-inputs-instruments">
-                      <input type="hidden" name="id" value="{{ item.instrument.id }}">
-                      <input class="tag" type="submit" name="purchase" value="Buy">
-                      <!--{% if p.2 %}-->
-                      <input class="tag" type="submit" name="rem_wishlist"
-                             value="Remove from wishlist">
-                      <!--{% else %}-->
-                      <input class="tag" type="submit" name="add_wishlist"
-                             value="Add to wishlist">
-                      <!--{% endif %}-->
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </a>
-          </div>
-        </section>
+        <app-items [manufacturer_id]="manufacturer.id"></app-items>
       </div>
-      </div>
-
-
 
     </div>
   </div>

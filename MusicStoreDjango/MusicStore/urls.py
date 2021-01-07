@@ -70,6 +70,7 @@ urlpatterns = [
 
     # account related:
     path('ws/account', wsviews.get_users_account, name='get_users_account'),
+    path('ws/shoppingcart', wsviews.get_shopping_cart, name='get_shopping_cart'),
     path('ws/create-account', wsviews.create_account, name='create_account_api'),
     path('ws/addresses', wsviews.get_my_addresses, name='get_my_addresses'),
     path('ws/create-address', wsviews.add_address, name='add_address'),

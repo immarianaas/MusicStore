@@ -111,7 +111,14 @@ def get_users_account(request):
     p = get_curr_person_object(request)
     return Response(PersonSerializer(p).data)
 
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_shopping_cart(request):
+    person = Person.objects.get(user=request.user)
 
+    item_lt = ItemList.objects.get(person=person, type='shoppingcart')
+    return Response(ItemListSerializer(item_lt).data)
+  
 @api_view(['POST'])
 def create_account(request):
     recv = request.data
