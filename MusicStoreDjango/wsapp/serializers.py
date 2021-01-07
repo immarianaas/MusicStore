@@ -28,11 +28,13 @@ class ItemQuantitySerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemQuantity
         fields = ( 'id', 'item', 'quantity' )
+        depth = 3
 
 class ItemListSerializer(serializers.ModelSerializer):
+    items = ItemQuantitySerializer(many=True, read_only=True)
     class Meta:
         model = ItemList
-        fields = ( 'id', 'type', 'items', 'person' )
+        fields = '__all__'
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:

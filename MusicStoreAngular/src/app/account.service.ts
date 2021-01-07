@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Account } from './account';
 import {UserService} from './user.service';
+import {ItemList} from './itemList';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,10 @@ export class AccountService {
     return { headers: new HttpHeaders(
         {'Content-Type': 'application/json'}
       )};
+  }
+
+  getShoppingCart(): Observable<ItemList> {
+    return this.http.get<ItemList>( this.baseURL + 'shoppingcart', this.getCorrectHeader());
   }
 
 

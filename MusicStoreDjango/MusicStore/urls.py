@@ -68,4 +68,5 @@ urlpatterns = [
     path('ws/items/<int:id>', wsviews.get_item_by_id, name='get_item_by_id'),
     path('ws/purchase', wsviews.purchase, name='purchase'),
     path('ws/account', wsviews.get_users_account, name='get_users_account'),
+    path('ws/shoppingcart', wsviews.get_shopping_cart, name='get_shopping_cart'),
 ]
