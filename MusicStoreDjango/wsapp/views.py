@@ -13,6 +13,7 @@ from wsapp.serializers import *
 from django.contrib.auth import models
 from django.core.exceptions import ObjectDoesNotExist
 
+import json
 # Create your views here.
 
 @api_view(['GET'])
@@ -100,7 +101,7 @@ def add_to_list(list_type, person, item):
 
     return
   
-def get_curr_person_object(request):
+def get_curr_person_object(request):    #     person = Person.objects.get(user=request.user)
     u = models.User.objects.get(pk=request.user.id)
     return Person.objects.get(user=u)
 
@@ -117,3 +118,74 @@ def get_shopping_cart(request):
 
     item_lt = ItemList.objects.get(person=person, type='shoppingcart')
     return Response(ItemListSerializer(item_lt).data)
+  
+@api_view(['POST'])
+def create_account(request):
+    recv = request.data
+
+    try:
+        print('here')
+
+        personser = PersonSerializer(data=request.data)
+        if personser.is_valid():
+            u = models.User.objects.create_user(recv['user']['username'], password=recv['user']['password'])
+
+            name = personser.validated_data['name']
+            gen = personser.validated_data['gender']
+            cont = personser.validated_data['contact']
+            role = personser.validated_data['role']
+            Person.objects.create(name=name, gender=gen, contact=cont, user=u, role=role)
+            return Response(personser.data, status=status.HTTP_201_CREATED)
+
+    except Exception as err:
+        print(err.args)
+        return Response(err.__str__(), status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(personser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_my_addresses(request):
+    acc = Person.objects.get(user=request.user)
+    try:
+        addrs = Address.objects.filter(person=acc).all()
+    except ObjectDoesNotExist :
+        addrs = []
+        #return []
+    return Response(AddressSerializer(addrs, many=True).data)
+
+
+
+@api_view(['POST'])
+def add_address(request): # yet TODO
+    recv = request.data
+    ser = AddressSerializer(data=recv)
+    print(recv)
+    print(ser)
+    if ser.is_valid():
+        street = ser.validated_data['street']
+        city = ser.validated_data['city']
+        code = ser.validated_data['code']
+        country = ser.validated_data['country']
+        door = ser.validated_data['door']
+        a = Address.objects.create(street=street, city=city, code=code, country=country, door=door, person=Person.objects.get(user = request.user))
+        return Response(AddressSerializer(a).data, status=status.HTTP_201_CREATED)
+
+    '''
+    if 'POST' in request.method:
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            addr = form.save()
+            if temp_addr:
+                addr.person = None
+                addr.save()
+                #if 'temp_addr' not in request.session: #here
+                request.session['temp_addr'] = []
+                request.session['temp_addr'].append(addr.id)
+                print(request.session['temp_addr'])
+                return redirect('/account/placeorder')
+            return redirect('/account/')
+
+    form = AddressForm()
+    '''
+    return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)

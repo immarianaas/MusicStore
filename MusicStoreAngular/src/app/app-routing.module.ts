@@ -10,6 +10,7 @@ import {NoPathExceptionComponent} from './no-path-exception/no-path-exception.co
 import {LoginComponent} from './login/login.component';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
+import {WishlistComponent} from './wishlist/wishlist.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/instruments', pathMatch: 'full'},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'account', component: AccountInfoComponent},
   {path: 'shoppingcart', component: ShoppingCartComponent},
+  {path: 'wishlist', component: WishlistComponent},
 
   {path: '**', component: NoPathExceptionComponent},
 
