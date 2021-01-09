@@ -1,1 +1,8 @@
 <p>wishlist works!</p>
+
+<div *ngIf="wishlist">
+  <div *ngFor="let w of wishlist.items">
+    <a routerLink="/instruments/{{w.item.id}}">-> {{ w.item.instrument.name }}</a>
+    <button (click)="removeItem(w.id)">remove</button>
+  </div>
+</div>
