@@ -143,6 +143,48 @@ def get_shopping_cart(request):
     item_lt = ItemList.objects.get(person=person, type='shoppingcart')
     return Response(ItemListSerializer(item_lt).data)
 
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
+def increment_item_at_cart(request):
+    try:
+        itemqt = ItemQuantity.objects.get(id=request.data)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    itemqt.quantity +=1
+    itemqt.save()
+
+    return Response(status=status.HTTP_202_ACCEPTED)
+
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
+def decrement_item_at_cart(request):
+    try:
+        itemqt = ItemQuantity.objects.get(id=request.data)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    itemqt.quantity -= 1;
+    if itemqt.quantity > 0:
+        itemqt.save()
+    else:
+        itemqt.delete()
+
+    return Response(status=status.HTTP_202_ACCEPTED)
+
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
+def remove_item_at_cart(request):
+
+    try:
+        itemqt = ItemQuantity.objects.get(id=request.data)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    itemqt.delete()
+
+    return Response(status=status.HTTP_202_ACCEPTED)
+  
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def get_wishlist(request):
@@ -152,7 +194,6 @@ def get_wishlist(request):
         # lista = []
 
     return Response(ItemListSerializer(lista).data)
-
 
 @api_view(['POST'])
 def create_account(request):
