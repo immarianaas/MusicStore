@@ -1,0 +1,14 @@
+
+/deep/ .my-snack-bar {
+  background-color: mintcream;
+  color: black;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+::ng-deep .my-snack-bar button {
+  background-color: #1abc9c;
+  color: white;
+}
+
+/* --- ^^ cenas pra snack-bar ^^ --- */
