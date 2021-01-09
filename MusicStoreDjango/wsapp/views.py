@@ -118,15 +118,15 @@ def get_curr_person_object(request):    #     person = Person.objects.get(user=r
     u = models.User.objects.get(pk=request.user.id)
     return Person.objects.get(user=u)
 
-@api_view(['DELETE'])
-def rem_from_wishlist(request, id):
-    # id -> item_qty_id
+@api_view(['PUT'])
+def rem_from_wishlist(request):
+    # id (request.data) -> item_qty_id
     try:
-        item_qty = ItemQuantity.objects.get(pk=id)
-    except Exception:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        item_qty = ItemQuantity.objects.get(pk=request.data)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
     item_qty.delete()
-    return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_202_ACCEPTED)
 
 
 @api_view(['GET'])

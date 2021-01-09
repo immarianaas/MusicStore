@@ -1,0 +1,11 @@
+/deep/ .my-snack-bar {
+  background-color: lightsteelblue;
+  color: black;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+/deep/ .my-snack-bar button {
+  background-color: palevioletred;
+  color: white;
+}

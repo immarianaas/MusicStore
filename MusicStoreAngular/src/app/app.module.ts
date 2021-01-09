@@ -17,6 +17,10 @@ import { AccountInfoComponent } from './account-info/account-info.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,9 +38,15 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
-  providers: [UserService],
+  providers: [
+    UserService,
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    useValue: { appearance: 'fill' } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

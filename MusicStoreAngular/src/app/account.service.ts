@@ -64,15 +64,15 @@ export class AccountService {
   decItemAtCart(idItemqt: number): Observable<any> {
     return this.http.put(this.baseURL + 'shoppingcart/dec', idItemqt, this.getCorrectHeader());
   }
-  
+
   getWishlist(): Observable<ItemList> {
     return this.http.get<ItemList>(this.baseURL+'wishlist', this.getCorrectHeader());
   }
 
   removeItemWishlist(item_qty_id: number): any {
     // nota: n faço mm ideia qual dos metodos é aqui...
-    let url = this.baseURL + 'rem-from-wishlist/' + item_qty_id;
-    return this.http.delete(url, this.getCorrectHeader());
+    let url = this.baseURL + 'wishlist/rem';
+    return this.http.put(url,  item_qty_id, this.getCorrectHeader());
   }
 
   removeItemAtCart(idItemqt: number): Observable<any> {

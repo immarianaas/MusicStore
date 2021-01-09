@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
 
+/deep/ .my-snack-bar {
+  background-color: lightsteelblue;
+  color: black;
+
+}
+/deep/ .my-snack-bar button {
+  background-color: palevioletred;
+  color: white;
+}
+
+
 .main {
   margin-top: 1rem;
 }
@@ -178,3 +189,6 @@
     max-width: calc(100vw - 4rem);
   }
 }
+
+
+

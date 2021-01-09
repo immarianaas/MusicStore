@@ -1,5 +1,7 @@
 <div class="container main">
   <section class="cards-wrapper">
+    <!--<button (click)="openSnackBar()">open snack-bar</button> (so pra testes)-->
+
     <div class="card-grid-space" *ngFor="let manufacturer of manufacturers">
       <a class="card-instruments" routerLink="/manufacturers/{{manufacturer.id}}"
          style="--bg-img: url({{ manufacturer.logo }})">

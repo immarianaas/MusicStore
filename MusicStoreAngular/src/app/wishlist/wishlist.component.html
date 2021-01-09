@@ -1,8 +1,20 @@
-<p>wishlist works!</p>
-
+<div *ngIf="!wishlist">
+  ñ logado..
+</div>
 <div *ngIf="wishlist">
+  <h2>wishlist</h2>
+
+  <!-- ja passa p/ true/false automaticamente assim! -->
+  <input type="checkbox" id="remWhenBought" [(ngModel)]="remWhenBought">
+  <label for="remWhenBought">Remove when added to shopping cart</label>
+
   <div *ngFor="let w of wishlist.items">
     <a routerLink="/instruments/{{w.item.id}}">-> {{ w.item.instrument.name }}</a>
     <button (click)="removeItem(w.id)">remove</button>
+    <button (click)="addToShoppingCart(w)">add to shopping cart</button>
+
+  </div>
+  <div *ngIf="wishlist.items.length == 0">
+    <p>This looks empty...</p>
   </div>
 </div>

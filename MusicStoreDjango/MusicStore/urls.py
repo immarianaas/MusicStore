@@ -79,5 +79,5 @@ urlpatterns = [
     path('ws/create-address', wsviews.add_address, name='add_address'),
     path('ws/wishlist', wsviews.get_wishlist, name='get_wishlist'),
     path('ws/add-to-wishlist', wsviews.add_to_wishlist, name='add_to_wishlist'),
-    path('ws/rem-from-wishlist/<int:id>', wsviews.rem_from_wishlist, name='rem_from_wishlist')
+    path('ws/wishlist/rem', wsviews.rem_from_wishlist, name='rem_from_wishlist'),
 ]
