@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // just for a test. probably to remove later:
 import { UserService } from './user.service';
+import {ItemQuantity} from './ItemQuantity';
 
 
 const httpOptions = {
@@ -60,6 +61,10 @@ export class ItemService {
   purchaseItem(id: number): Observable<any> {
     const url = this.baseURL + 'purchase';
     return this.http.post(url, id, this.getCorrectHeader());
+  }
+
+  addToWishList(id: number): any { // TODO in django
+    return this.http.post(this.baseURL+'add-to-wishlist', id, this.getCorrectHeader());
   }
 
 }

@@ -5,6 +5,8 @@ import { Account } from './account';
 import {UserService} from './user.service';
 import {ItemList} from './itemList';
 import {Address} from './address';
+import {Item} from './item';
+import {ItemQuantity} from './ItemQuantity';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +56,18 @@ export class AccountService {
   getShoppingCart(): Observable<ItemList> {
     return this.http.get<ItemList>( this.baseURL + 'shoppingcart', this.getCorrectHeader());
   }
+
+  getWishlist(): Observable<ItemList> {
+    return this.http.get<ItemList>(this.baseURL+'wishlist', this.getCorrectHeader());
+  }
+
+  removeItemWishlist(item_qty_id: number): any {
+    // nota: n faço mm ideia qual dos metodos é aqui...
+    let url = this.baseURL + 'rem-from-wishlist/' + item_qty_id;
+    return this.http.delete(url, this.getCorrectHeader());
+  }
+
+
 
 
 }

@@ -53,7 +53,8 @@ export class ItemsComponent implements OnInit {
   }
 
   addWishlist(id: number): void {
-    console.log(id);
+    if (!this.authService.isLogged()) return;
+    this.itemService.addToWishList(id).subscribe();
   }
 
 }

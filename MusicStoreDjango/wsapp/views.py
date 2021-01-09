@@ -76,6 +76,19 @@ def purchase(request):
     ser = ItemSerializer(item)
     return Response(ser.data, status=status.HTTP_201_CREATED)
 
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def add_to_wishlist(request):
+    person = Person.objects.get(user=request.user)
+    item = Item.objects.get(pk=request.data)
+    if is_item_in_list('wishlist', item, person):
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    add_to_list('wishlist', person, item)
+    ser = ItemSerializer(item)
+    return Response(ser.data, status=status.HTTP_201_CREATED)
+
+
 def is_item_in_list(list_type, item, user):
     try:
         il = ItemList.objects.get(type=list_type, person=user, items__item=item)
@@ -105,6 +118,17 @@ def get_curr_person_object(request):    #     person = Person.objects.get(user=r
     u = models.User.objects.get(pk=request.user.id)
     return Person.objects.get(user=u)
 
+@api_view(['DELETE'])
+def rem_from_wishlist(request, id):
+    # id -> item_qty_id
+    try:
+        item_qty = ItemQuantity.objects.get(pk=id)
+    except Exception:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    item_qty.delete()
+    return Response(status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def get_users_account(request):
@@ -118,7 +142,18 @@ def get_shopping_cart(request):
 
     item_lt = ItemList.objects.get(person=person, type='shoppingcart')
     return Response(ItemListSerializer(item_lt).data)
-  
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_wishlist(request):
+    # try:
+    lista = ItemList.objects.get(person=Person.objects.get(user=request.user), type='wishlist')
+    # except ObjectDoesNotExist:
+        # lista = []
+
+    return Response(ItemListSerializer(lista).data)
+
+
 @api_view(['POST'])
 def create_account(request):
     recv = request.data
@@ -189,3 +224,5 @@ def add_address(request): # yet TODO
     form = AddressForm()
     '''
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
