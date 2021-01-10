@@ -217,11 +217,12 @@ def get_wishlist(request):
 @api_view(['POST'])
 def create_account(request):
     recv = request.data
-
+    print(recv)
+    del recv['user']['date_joined']
     try:
         print('here')
 
-        personser = PersonSerializer(data=request.data)
+        personser = PersonSerializer(data=recv)
         if personser.is_valid():
             u = models.User.objects.create_user(recv['user']['username'], password=recv['user']['password'])
 
