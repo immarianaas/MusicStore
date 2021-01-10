@@ -124,11 +124,11 @@
         </td>
         <td>
           <button *ngIf="canEdit == -1" mat-icon-button aria-label="Save new address" (click)="editAddress(i)"><span class="material-icons">create</span></button>
-          <div *ngIf="canEdit == i && !adding_addr">
+          <div *ngIf="canEdit == i && !addingAddr">
             <button mat-icon-button aria-label="Cancel operation" (click)="cancelEditAddress()"><span class="material-icons">close</span></button>
             <button mat-icon-button aria-label="Save address" (click)="saveEditAddress()"><span class="material-icons">done</span></button> <!-- TODO fazer func -->
           </div>
-          <div *ngIf="canEdit == i && adding_addr">
+          <div *ngIf="canEdit == i && addingAddr">
             <button mat-icon-button aria-label="Cancel operation" (click)="cancel()"><span class="material-icons">close</span></button>
             <button mat-icon-button aria-label="Save address" (click)="saveNewAddress()"><span class="material-icons">done</span></button>
           </div>
@@ -154,26 +154,4 @@
   </div>
 </div>
 
-<div class="container" style="text-align: center" *ngIf="!account"><p>Not logged in...</p></div>
-
-<!--
-<select>
-  <option value="" selected hidden disabled>select an option</option>
-  <optgroup label="Africa">
-    <option *ngFor="let c of COUNTRIES['Africa']" value="{{c[0]}}">{{c[1]}}</option>
-  </optgroup>
-  <optgroup label="America">
-    <option *ngFor="let c of COUNTRIES['America']" value="{{c[0]}}">{{c[1]}}</option>
-  </optgroup>
-  <optgroup label="Asia">
-    <option *ngFor="let c of COUNTRIES['Asia']" value="{{c[0]}}">{{c[1]}}</option>
-  </optgroup>
-  <optgroup label="Europe">
-    <option *ngFor="let c of COUNTRIES['Europe']" value="{{c[0]}}">{{c[1]}}</option>
-  </optgroup>
-  <optgroup label="Oceania">
-    <option *ngFor="let c of COUNTRIES['Oceania']" value="{{c[0]}}">{{c[1]}}</option>
-  </optgroup>
-</select>
-
--->
+<div class="container" style="text-align: center" *ngIf="!account"><p>Not logged in...</p></div> <!-- TODO melhorar html -->

@@ -28,6 +28,10 @@ export class AccountService {
     return this.http.post(this.baseURL + 'create-account', acc, this.getCorrectHeader());
   }
 
+  updateAccount(acc: Account): Observable<any> {
+    return this.http.put(this.baseURL + 'updateaccount', acc, this.getCorrectHeader());
+  }
+
   getAccountAddresses(): Observable<Address[]> {
     const url = this.baseURL + 'addresses';
     return this.http.get<Address[]>(url, this.getCorrectHeader());
@@ -66,12 +70,12 @@ export class AccountService {
   }
 
   getWishlist(): Observable<ItemList> {
-    return this.http.get<ItemList>(this.baseURL+'wishlist', this.getCorrectHeader());
+    return this.http.get<ItemList>(this.baseURL + 'wishlist', this.getCorrectHeader());
   }
 
   removeItemWishlist(item_qty_id: number): any {
     // nota: n faço mm ideia qual dos metodos é aqui...
-    let url = this.baseURL + 'wishlist/rem';
+    const url = this.baseURL + 'wishlist/rem';
     return this.http.put(url,  item_qty_id, this.getCorrectHeader());
   }
 

@@ -135,6 +135,25 @@ def get_users_account(request):
     p = get_curr_person_object(request)
     return Response(PersonSerializer(p).data)
 
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
+def update_account(request):
+    id = request.data['id']
+    try:
+        person = Person.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    ser = PersonUpdateSerializer(data=request.data)
+    if ser.is_valid():
+        person.name = ser.validated_data['name']
+        person.contact = ser.validated_data['contact']
+        person.gender = ser.validated_data['gender']
+        person.save()
+        return Response(ser.data)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def get_shopping_cart(request):

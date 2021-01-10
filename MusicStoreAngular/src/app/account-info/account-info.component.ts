@@ -59,7 +59,8 @@ export class AccountInfoComponent implements OnInit {
   }
 
   saveEditedAccount(): void {
-
+    this.accountService.updateAccount(this.account).subscribe();
+    this.editing.set('account', false);
   }
 
   cancelEditingAccount(): void {
@@ -80,7 +81,7 @@ export class AccountInfoComponent implements OnInit {
 
   saveNewAddress(): void {
     this.errors = [];
-    if (this.is_everything_correct_address()) {
+    if (this.is_everything_correct_address(this.addrs[this.canEdit])) {
       console.log('guardando....... ...');
       this.accountService.createAddress(this.addrs[this.canEdit]).subscribe(
         data => {
@@ -119,34 +120,34 @@ export class AccountInfoComponent implements OnInit {
   }
 
   /* --- helper functions --- */
-  is_everything_correct_address(): boolean {
+  is_everything_correct_address(new_addr: Address): boolean {
     let is_false = false;
 
-    if (!this.new_addr.street || this.new_addr.street.trim().length == 0) {
-      this.errors['street'] = ['this field cannot be empty']
+    if (!new_addr.street || new_addr.street.trim().length === 0) {
+      this.errors['street'] = ['this field cannot be empty'];
       is_false = true;
     }
 
-    if (!this.new_addr.code || this.new_addr.code.trim().length == 0) {
+    if (!new_addr.code || new_addr.code.trim().length === 0) {
       this.errors['code'] = ['this field cannot be empty'];
       is_false = true;
     }
 
-    if (!this.new_addr.country || this.new_addr.country.trim().length == 0) {
+    if (!new_addr.country || new_addr.country.trim().length === 0) {
       this.errors['country'] = ['this field cannot be empty'];
       is_false = true;
     }
 
-    if (!this.new_addr.door) {
+    if (!new_addr.door) {
       this.errors['door'] = ['this field cannot be empty'];
-      is_false = true
+      is_false = true;
       //} else if (!(typeof this.account.contact == "number")){
-    } else if (isNaN(this.new_addr.door)){
+    } else if (isNaN(new_addr.door)){
       this.errors['door'] = ['this field must contain only digits'];
       is_false = true;
     }
 
-    if (!this.new_addr.city) {
+    if (!new_addr.city) {
       this.errors['city'] = ['this field cannot be empty']; //['an option must be chosen'];
       is_false = true;
     }

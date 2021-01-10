@@ -23,6 +23,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = auth_models.User
         fields = ('username', 'is_staff', 'date_joined')
 
+class PersonUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ('name', 'contact', 'gender')
+
 class PersonSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
