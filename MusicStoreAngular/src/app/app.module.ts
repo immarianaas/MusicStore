@@ -20,6 +20,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -34,14 +35,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ShoppingCartComponent,
     WishlistComponent,
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatSnackBarModule,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatSnackBarModule,
+        BrowserAnimationsModule,
+        MatPaginatorModule
+    ],
   providers: [
     UserService,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,

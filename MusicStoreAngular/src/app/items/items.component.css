@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
 @import  "../snack-bar.css";
+@import "../paginator.css";
 
 .main {
   margin-top: 1rem;

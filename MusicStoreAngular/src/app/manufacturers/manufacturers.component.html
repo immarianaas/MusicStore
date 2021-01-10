@@ -2,7 +2,7 @@
   <section class="cards-wrapper">
     <!--<button (click)="openSnackBar()">open snack-bar</button> (so pra testes)-->
 
-    <div class="card-grid-space" *ngFor="let manufacturer of manufacturers">
+    <div class="card-grid-space" *ngFor="let manufacturer of activePageDataChunk">
       <a class="card-instruments" routerLink="/manufacturers/{{manufacturer.id}}"
          style="--bg-img: url({{ manufacturer.logo }})">
         <div>
@@ -11,5 +11,18 @@
         </div>
       </a>
     </div>
+
+
   </section>
+
+  <div class="container">
+    <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChanged($event)"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
 </div>
