@@ -63,8 +63,12 @@ export class ItemService {
     return this.http.post(url, id, this.getCorrectHeader());
   }
 
-  addToWishList(id: number): any { // TODO in django
-    return this.http.post(this.baseURL+'add-to-wishlist', id, this.getCorrectHeader());
+  addToWishList(item_id: number): any {
+    return this.http.post(this.baseURL+'add-to-wishlist', item_id, this.getCorrectHeader());
+  }
+
+  checkIfInWishlist(item_id: number): Observable<boolean> {
+    return this.http.get<boolean>(this.baseURL+'in-wishlist/'+item_id, this.getCorrectHeader());
   }
 
 }
