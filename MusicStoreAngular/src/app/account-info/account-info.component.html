@@ -97,6 +97,78 @@
   </div>
 </div>
 
+<div class="container emp-profile" *ngIf="account">
+    <div class="row">
+
+      <div class="col-md-10">
+        <div class="profile-head">
+          <h5>
+            {{account.name}}
+          </h5>
+          <h6>
+            Our favourite <span *ngIf="!account.user.isStaff">client</span><span *ngIf="account.user.isStaff">admin</span>
+          </h6>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <p style="color: black">Name</p>
+              </div>
+              <div class="col-md-6">
+                <p>{{account.name}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p style="color: black">Email</p>
+              </div>
+              <div class="col-md-6">
+                <p>{{account.user.username}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p style="color: black">Phone</p>
+              </div>
+              <div class="col-md-6">
+                <p>{{account.contact}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p style="color: black">Gender</p>
+              </div>
+              <div class="col-md-6">
+                <p>{{account.gender}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p style="color: black">Date Joined</p>
+              </div>
+              <div class="col-md-6">
+                <p>{{account.user.dateJoined}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
 <div *ngIf="!account">Not logged in...</div>
 
 <!--

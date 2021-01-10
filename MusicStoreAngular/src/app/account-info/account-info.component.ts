@@ -8,7 +8,6 @@ import { Account } from '../account';
 import { Address } from '../address';
 
 import { COUNTRIES } from '../COUNTRIES';
-import {isBoolean} from 'util';
 
 @Component({
   selector: 'app-account-info',
@@ -31,7 +30,7 @@ export class AccountInfoComponent implements OnInit {
     private userService: UserService,
     private accountService: AccountService
   ) {
-    this.adding_addr=false;
+    this.adding_addr = false;
     this.editing = new Map<string, boolean>();
   }
 
@@ -40,7 +39,7 @@ export class AccountInfoComponent implements OnInit {
   }
 
   getAccountInfo(): void {
-    this.getAccountDetails()
+    this.getAccountDetails();
     this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs);
   }
 
@@ -62,8 +61,8 @@ export class AccountInfoComponent implements OnInit {
   }
 
 
-  isEditing(field: string) {
-    return (this.editing.has(field) && this.editing.get(field))
+  isEditing(field: string): boolean {
+    return (this.editing.has(field) && this.editing.get(field));
   }
 
   addAddress(): void {
@@ -90,27 +89,27 @@ export class AccountInfoComponent implements OnInit {
   }
 
   cancel(): void {
-    this.adding_addr= false;
+    this.adding_addr = false;
   }
 
 
   /* --- helper functions --- */
   is_everything_correct_address(): boolean {
-    let is_false: boolean = false
+    let is_false = false;
 
     if (!this.new_addr.street || this.new_addr.street.trim().length == 0) {
       this.errors['street'] = ['this field cannot be empty']
-      is_false = true
+      is_false = true;
     }
 
     if (!this.new_addr.code || this.new_addr.code.trim().length == 0) {
       this.errors['code'] = ['this field cannot be empty'];
-      is_false = true
+      is_false = true;
     }
 
     if (!this.new_addr.country || this.new_addr.country.trim().length == 0) {
       this.errors['country'] = ['this field cannot be empty'];
-      is_false = true
+      is_false = true;
     }
 
     if (!this.new_addr.door) {
@@ -119,12 +118,12 @@ export class AccountInfoComponent implements OnInit {
       //} else if (!(typeof this.account.contact == "number")){
     } else if (isNaN(this.new_addr.door)){
       this.errors['door'] = ['this field must contain only digits'];
-      is_false = true
+      is_false = true;
     }
 
     if (!this.new_addr.city) {
       this.errors['city'] = ['this field cannot be empty']; //['an option must be chosen'];
-      is_false = true
+      is_false = true;
     }
     return !is_false;
   }
