@@ -1,6 +1,38 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
 @import  "../snack-bar.css";
 
+/*@import "~@angular/material/prebuilt-themes/indigo-pink.css" */
+ @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+/*
+::ng-deep .mat-select-panel {
+  width: 5px;
+  background-color: #e67e22;
+}
+::ng-deep .mat-select-content{
+  width:2000px;
+  background-color: red;
+  font-size: 10px;
+}
+*/
+
+/*
+::ng-deep .mat-paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 56px;
+  padding: 0 8px;
+  flex-wrap: wrap-reverse;
+  width: 100%;
+  background-color: #ff4cc6;
+}
+*/
+
+
+
+
+
 .main {
   margin-top: 1rem;
 }

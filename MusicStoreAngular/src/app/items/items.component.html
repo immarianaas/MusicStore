@@ -1,6 +1,8 @@
 <section>
   <section class="cards-wrapper">
-    <div class="card-grid-space" *ngFor="let item of items">
+
+    <div class="card-grid-space" *ngFor="let item of activePageDataChunk">
+
       <div class="num">{{ item.instrument.name }}</div>
         <a class="card-instruments" routerLink="/instruments/{{item.id}}"
            style="--bg-img: url({{ item.instrument.image }})">
@@ -21,7 +23,20 @@
           <button (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
           -->
         </div>
-      </div>
+
+    </div>
+
+    <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChanged($event)"
+      showFirstLastButtons
+      
+    >
+    </mat-paginator>
+
   </section>
+
 </section>
 

@@ -7,9 +7,13 @@ import {Router} from '@angular/router';
 import {AuthGuardService} from '../auth-guard.service';
 import {Location} from '@angular/common';
 import {Manufacturer} from '../manufacturer';
+import {AccountService} from '../account.service';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {AccountService} from '../account.service';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
+import {MatFormFieldAppearance} from '@angular/material/form-field';
+
 // import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
@@ -18,6 +22,27 @@ import {AccountService} from '../account.service';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
+  // MapPaginator inputs
+  length: number;//  = 100;
+  pageSize: number = 6;
+  @Input() pageSizeOptions: number[] = [6, 12, 18, 24];
+
+  formFieldAppearance: MatFormFieldAppearance;
+  pageEvent: PageEvent;
+  activePageDataChunk = []
+
+  setPageSizeOptions(setPageSizeOptionsInput: string){
+    //if (setPageSizeOptionsInput) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    //}
+  }
+
+  onPageChanged(e) {
+    let firstCut = e.pageIndex * e.pageSize;
+    let secondCut = firstCut+ e.pageSize;
+    this.activePageDataChunk = this.items.slice(firstCut, secondCut);
+  }
+
   items: Item[];
   // instr: Instrument;
   @Input() manufacturer_id: number;
@@ -36,7 +61,6 @@ export class ItemsComponent implements OnInit {
       this.getItems();
     else
       this.getItemsByManufacturer();
-
     this.fillMapIsInWishlist();
   }
 
@@ -48,6 +72,8 @@ export class ItemsComponent implements OnInit {
     this.itemService.getItems().subscribe(
       items => {
         this.items = items;
+        this.length = items.length;
+        this.activePageDataChunk = this.items.slice(0, this.pageSize);
       }
     );
   }
