@@ -21,6 +21,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
+import { PlaceOrderComponent } from './place-order/place-order.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
@@ -35,6 +36,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     AccountInfoComponent,
     ShoppingCartComponent,
     WishlistComponent,
+    PlaceOrderComponent,
   ],
     imports: [
         BrowserModule,

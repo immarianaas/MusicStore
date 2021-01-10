@@ -21,7 +21,7 @@ class ItemSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = auth_models.User
-        fields = ('username', 'is_staff', 'date_joined')
+        fields = ('username', 'date_joined')
 
 class PersonUpdateSerializer(serializers.ModelSerializer):
     class Meta:

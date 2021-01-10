@@ -29,6 +29,13 @@ export class LoginComponent implements OnInit {
     this.boolLogin = true;
     this.boolCreate = false;
 
+  }
+
+  ngOnInit(): void {
+    this.user = {
+      username: '',
+      password: '', date_joined : ''
+    };
     this.account = {
       user: this.user,
       id: 0,
@@ -37,18 +44,12 @@ export class LoginComponent implements OnInit {
       contact: null,
       role: 'C' // C for customer
     };
-  }
-
-  ngOnInit(): void {
-    this.user = {
-      username: '',
-      password: '', date_joined : '', is_staff : false
-    };
+    console.log(this.account);
   }
 
 
   login(): void {
-    this.userService.login({username : this.user.username, password: this.user.password, date_joined : '', is_staff : false});
+    this.userService.login({username : this.user.username, password: this.user.password, date_joined : ''});
   }
 
   redirectHome(): void {
@@ -79,7 +80,7 @@ export class LoginComponent implements OnInit {
     this.creating_account = true;
     this.user = {
       username: '',
-      password: '', date_joined : '', is_staff : false
+      password: '', date_joined : ''
     };
     this.account = {
       user: this.user,
@@ -93,7 +94,7 @@ export class LoginComponent implements OnInit {
 
   save_new_account(): void {
     this.errors = [];
-
+    console.log(this.account);
     if (this.is_everything_correct()) {
       // this.error = 'All fields must be filled!';
       this.accService.createAccount(this.account).subscribe(
@@ -122,7 +123,7 @@ export class LoginComponent implements OnInit {
     this.creating_account = false;
     this.user = {
       username: '',
-      password: '', date_joined : '', is_staff : false
+      password: '', date_joined : ''
     };
   }
 
