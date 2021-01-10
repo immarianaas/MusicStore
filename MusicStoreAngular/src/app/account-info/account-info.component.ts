@@ -18,11 +18,12 @@ export class AccountInfoComponent implements OnInit {
 
   account: Account;
   addrs: Address[] = [];
-  adding_addr: boolean;
-  new_addr: Address;
+  addingAddr: boolean;
   errors: any[] = [];
   COUNTRIES: any = COUNTRIES;
   editing: Map<string, boolean>;
+
+  canEdit: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,8 +31,10 @@ export class AccountInfoComponent implements OnInit {
     private userService: UserService,
     private accountService: AccountService
   ) {
-    this.adding_addr = false;
+    this.addingAddr = false;
     this.editing = new Map<string, boolean>();
+
+    this.canEdit = -1;
   }
 
   ngOnInit(): void {
@@ -40,6 +43,10 @@ export class AccountInfoComponent implements OnInit {
 
   getAccountInfo(): void {
     this.getAccountDetails();
+    this.getAccountAddresses();
+  }
+
+  getAccountAddresses(): void {
     this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs);
   }
 
@@ -66,18 +73,19 @@ export class AccountInfoComponent implements OnInit {
   }
 
   addAddress(): void {
-    this.adding_addr = true;
-    this.new_addr = new Address();
+    this.addrs.push(new Address());
+    this.canEdit = this.addrs.length - 1;
+    this.addingAddr = true;
   }
 
   saveNewAddress(): void {
     this.errors = [];
     if (this.is_everything_correct_address()) {
       console.log('guardando....... ...');
-      this.accountService.createAddress(this.new_addr).subscribe(
+      this.accountService.createAddress(this.addrs[this.canEdit]).subscribe(
         data => {
-          this.addrs.push(data);
-          this.adding_addr = false;
+          // this.addrs.push(data);
+          this.addingAddr = false;
         },
         err => {
           this.errors = err.error;
@@ -86,12 +94,29 @@ export class AccountInfoComponent implements OnInit {
       );
 
     }
+    this.canEdit = -1;
+    this.addingAddr = false;
   }
 
   cancel(): void {
-    this.adding_addr = false;
+    this.canEdit = -1;
+    this.addrs.splice(-1, 1);
+    this.addingAddr = false;
   }
 
+  editAddress(index: number): void {
+    this.canEdit = index;
+  }
+
+  cancelEditAddress(): void {
+    this.canEdit = -1;
+    this.getAccountAddresses();
+  }
+
+  saveEditAddress(): void {
+    console.log('Por fazer');
+    // TODO
+  }
 
   /* --- helper functions --- */
   is_everything_correct_address(): boolean {

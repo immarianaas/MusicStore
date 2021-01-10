@@ -42,13 +42,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.user = {
       username: '',
-      password: '', date_joined : '', isStaff : false
+      password: '', date_joined : '', is_staff : false
     };
   }
 
 
   login(): void {
-    this.userService.login({username : this.user.username, password: this.user.password, date_joined : '', isStaff : false});
+    this.userService.login({username : this.user.username, password: this.user.password, date_joined : '', is_staff : false});
   }
 
   redirectHome(): void {
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
     this.creating_account = true;
     this.user = {
       username: '',
-      password: '', date_joined : '', isStaff : false
+      password: '', date_joined : '', is_staff : false
     };
     this.account = {
       user: this.user,
@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
     this.creating_account = false;
     this.user = {
       username: '',
-      password: '', date_joined : '', isStaff : false
+      password: '', date_joined : '', is_staff : false
     };
   }
 

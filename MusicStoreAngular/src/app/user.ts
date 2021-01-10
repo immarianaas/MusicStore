@@ -8,13 +8,13 @@ export class User {
   username: string;
   password: string;
   date_joined: string;
-  isStaff: boolean;
+  is_staff: boolean;
 
-  constructor(username: string, password: string, date_joined: string, isStaff: boolean) {
+  constructor(username: string, password: string, date_joined: string, is_staff: boolean) {
     this.username = username;
     this.password = password;
-    this.isStaff = isStaff;
-    this.date_joined = dateJoined;
+    this.is_staff = is_staff;
+    this.date_joined = date_joined;
   }
 
 }
