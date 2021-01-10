@@ -8,7 +8,6 @@ import { Account } from '../account';
 import { Address } from '../address';
 
 import { COUNTRIES } from '../COUNTRIES';
-import {isBoolean} from 'util';
 
 @Component({
   selector: 'app-account-info',
@@ -19,11 +18,12 @@ export class AccountInfoComponent implements OnInit {
 
   account: Account;
   addrs: Address[] = [];
-  adding_addr: boolean;
-  new_addr: Address;
+  addingAddr: boolean;
   errors: any[] = [];
   COUNTRIES: any = COUNTRIES;
   editing: Map<string, boolean>;
+
+  canEdit: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,8 +31,10 @@ export class AccountInfoComponent implements OnInit {
     private userService: UserService,
     private accountService: AccountService
   ) {
-    this.adding_addr=false;
+    this.addingAddr = false;
     this.editing = new Map<string, boolean>();
+
+    this.canEdit = -1;
   }
 
   ngOnInit(): void {
@@ -40,8 +42,14 @@ export class AccountInfoComponent implements OnInit {
   }
 
   getAccountInfo(): void {
-    this.getAccountDetails()
-    this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs);
+    this.getAccountDetails();
+    this.getAccountAddresses();
+  }
+
+  getAccountAddresses(): void {
+    this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs,
+                              err => console.log('ERROR: ' + err),
+                            () => console.log(this.addrs));
   }
 
   getAccountDetails(): void {
@@ -53,7 +61,8 @@ export class AccountInfoComponent implements OnInit {
   }
 
   saveEditedAccount(): void {
-
+    this.accountService.updateAccount(this.account).subscribe();
+    this.editing.set('account', false);
   }
 
   cancelEditingAccount(): void {
@@ -62,69 +71,83 @@ export class AccountInfoComponent implements OnInit {
   }
 
 
-  isEditing(field: string) {
-    return (this.editing.has(field) && this.editing.get(field))
+  isEditing(field: string): boolean {
+    return (this.editing.has(field) && this.editing.get(field));
   }
 
   addAddress(): void {
-    this.adding_addr = true;
-    this.new_addr = new Address();
+    this.addrs.push(new Address());
+    this.canEdit = this.addrs.length - 1;
+    this.addingAddr = true;
   }
 
   saveNewAddress(): void {
     this.errors = [];
-    if (this.is_everything_correct_address()) {
-      console.log('guardando....... ...');
-      this.accountService.createAddress(this.new_addr).subscribe(
-        data => {
-          this.addrs.push(data);
-          this.adding_addr = false;
-        },
-        err => {
-          this.errors = err.error;
-          //this.errors['others'] = [JSON.stringify(err)];
-        }
-      );
-
+    if (this.is_everything_correct_address(this.addrs[this.canEdit])) {
+      this.accountService.createAddress(this.addrs[this.canEdit]).subscribe();
     }
+    this.canEdit = -1;
+    this.addingAddr = false;
+  }
+
+  deleteAddress(index: number): void {
+    this.accountService.deleteAddress(this.addrs[index].id).subscribe( () => this.addrs.splice(index, 1),
+                                                                err => console.log('ERRO: ' + err));
   }
 
   cancel(): void {
-    this.adding_addr= false;
+    this.canEdit = -1;
+    this.addrs.splice(-1, 1);
+    this.addingAddr = false;
   }
 
+  editAddress(index: number): void {
+    this.canEdit = index;
+  }
+
+  cancelEditAddress(): void {
+    this.canEdit = -1;
+    this.getAccountAddresses();
+  }
+
+  saveEditAddress(): void {
+    if (this.addrs[this.canEdit]) {
+      console.log(this.addrs[this.canEdit]);
+      this.accountService.updateAddress(this.addrs[this.canEdit]).subscribe(() => this.canEdit = -1);
+    }
+  }
 
   /* --- helper functions --- */
-  is_everything_correct_address(): boolean {
-    let is_false: boolean = false
+  is_everything_correct_address(new_addr: Address): boolean {
+    let is_false = false;
 
-    if (!this.new_addr.street || this.new_addr.street.trim().length == 0) {
-      this.errors['street'] = ['this field cannot be empty']
-      is_false = true
+    if (!new_addr.street || new_addr.street.trim().length === 0) {
+      this.errors['street'] = ['this field cannot be empty'];
+      is_false = true;
     }
 
-    if (!this.new_addr.code || this.new_addr.code.trim().length == 0) {
+    if (!new_addr.code || new_addr.code.trim().length === 0) {
       this.errors['code'] = ['this field cannot be empty'];
-      is_false = true
+      is_false = true;
     }
 
-    if (!this.new_addr.country || this.new_addr.country.trim().length == 0) {
+    if (!new_addr.country || new_addr.country.trim().length === 0) {
       this.errors['country'] = ['this field cannot be empty'];
-      is_false = true
+      is_false = true;
     }
 
-    if (!this.new_addr.door) {
+    if (!new_addr.door) {
       this.errors['door'] = ['this field cannot be empty'];
-      is_false = true
+      is_false = true;
       //} else if (!(typeof this.account.contact == "number")){
-    } else if (isNaN(this.new_addr.door)){
+    } else if (isNaN(new_addr.door)){
       this.errors['door'] = ['this field must contain only digits'];
-      is_false = true
+      is_false = true;
     }
 
-    if (!this.new_addr.city) {
+    if (!new_addr.city) {
       this.errors['city'] = ['this field cannot be empty']; //['an option must be chosen'];
-      is_false = true
+      is_false = true;
     }
     return !is_false;
   }

@@ -70,6 +70,7 @@ urlpatterns = [
 
     # account related:
     path('ws/account', wsviews.get_users_account, name='get_users_account'),
+    path('ws/updateaccount', wsviews.update_account, name='update_account '),
     path('ws/shoppingcart', wsviews.get_shopping_cart, name='get_shopping_cart'),
     path('ws/shoppingcart/inc', wsviews.increment_item_at_cart, name='increment_item_at_cart'),
     path('ws/shoppingcart/dec', wsviews.decrement_item_at_cart, name='decrement_item_at_cart'),
@@ -77,6 +78,8 @@ urlpatterns = [
     path('ws/create-account', wsviews.create_account, name='create_account_api'),
     path('ws/addresses', wsviews.get_my_addresses, name='get_my_addresses'),
     path('ws/create-address', wsviews.add_address, name='add_address'),
+    path('ws/updateaddress', wsviews.update_address, name='update_address'),
+    path('ws/deleteaddress/<int:id>', wsviews.delete_address, name='delete_address'),
     path('ws/wishlist', wsviews.get_wishlist, name='get_wishlist'),
     path('ws/add-to-wishlist', wsviews.add_to_wishlist, name='add_to_wishlist'),
     path('ws/wishlist/rem', wsviews.rem_from_wishlist, name='rem_from_wishlist'),

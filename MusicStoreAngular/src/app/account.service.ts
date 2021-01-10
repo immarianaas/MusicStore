@@ -23,9 +23,13 @@ export class AccountService {
     return this.http.get<Account>(this.baseURL + 'account', this.getCorrectHeader());
   }
 
-  createAccount(acc: Account): any {
+  createAccount(acc: Account): Observable<any> {
     console.log('nao?');
     return this.http.post(this.baseURL + 'create-account', acc, this.getCorrectHeader());
+  }
+
+  updateAccount(acc: Account): Observable<any> {
+    return this.http.put(this.baseURL + 'updateaccount', acc, this.getCorrectHeader());
   }
 
   getAccountAddresses(): Observable<Address[]> {
@@ -33,8 +37,16 @@ export class AccountService {
     return this.http.get<Address[]>(url, this.getCorrectHeader());
   }
 
-  createAddress(addr: Address): any {
+  createAddress(addr: Address): Observable<any> {
     return this.http.post<Address>(this.baseURL + 'create-address', addr, this.getCorrectHeader());
+  }
+
+  deleteAddress(id: number): Observable<any> {
+    return this.http.delete(this.baseURL + 'deleteaddress/' + id, this.getCorrectHeader());
+  }
+
+  updateAddress(addr: Address): Observable<any> {
+    return this.http.put(this.baseURL + 'updateaddress', addr, this.getCorrectHeader());
   }
 
   /* -- helper functions -- */
@@ -66,12 +78,12 @@ export class AccountService {
   }
 
   getWishlist(): Observable<ItemList> {
-    return this.http.get<ItemList>(this.baseURL+'wishlist', this.getCorrectHeader());
+    return this.http.get<ItemList>(this.baseURL + 'wishlist', this.getCorrectHeader());
   }
 
-  removeItemWishlist(item_qty_id: number): any {
-    //let url = this.baseURL + 'wishlist/rem';
-    let url = this.baseURL + 'wishlist/rem';
+
+  removeItemWishlist(item_qty_id: number): Observable<any> {
+    const url = this.baseURL + 'wishlist/rem';
     return this.http.put(url,  item_qty_id, this.getCorrectHeader());
   }
 
