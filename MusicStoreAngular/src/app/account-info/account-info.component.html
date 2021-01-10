@@ -101,7 +101,7 @@
         <td><input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.code" /></td>
         <td>
           <select style="color: black" [disabled]="i != canEdit" [(ngModel)]="add.country">
-            <option value="" [selected]="canEdit != -1">Select an option</option>
+            <option value="" [selected]="canEdit != -1 && i == canEdit">Select an option</option>
             <optgroup label="Africa">
               <option *ngFor="let c of COUNTRIES['Africa']" [selected]="add.country == c[0]" value="{{c[0]}}">{{c[1]}}</option>
             </optgroup>
@@ -123,7 +123,10 @@
           <input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.door" />
         </td>
         <td>
-          <button *ngIf="canEdit == -1" mat-icon-button aria-label="Save new address" (click)="editAddress(i)"><span class="material-icons">create</span></button>
+          <div *ngIf="canEdit == -1">
+            <button mat-icon-button aria-label="Save new address" (click)="editAddress(i)"><span class="material-icons">create</span></button>
+            <button mat-icon-button aria-label="Delete address" (click)="deleteAddress(i)"><span class="material-icons">delete_forever</span></button>
+          </div>
           <div *ngIf="canEdit == i && !addingAddr">
             <button mat-icon-button aria-label="Cancel operation" (click)="cancelEditAddress()"><span class="material-icons">close</span></button>
             <button mat-icon-button aria-label="Save address" (click)="saveEditAddress()"><span class="material-icons">done</span></button> <!-- TODO fazer func -->

@@ -47,7 +47,9 @@ export class AccountInfoComponent implements OnInit {
   }
 
   getAccountAddresses(): void {
-    this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs);
+    this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs,
+                              err => console.log('ERROR: ' + err),
+                            () => console.log(this.addrs));
   }
 
   getAccountDetails(): void {
@@ -82,21 +84,15 @@ export class AccountInfoComponent implements OnInit {
   saveNewAddress(): void {
     this.errors = [];
     if (this.is_everything_correct_address(this.addrs[this.canEdit])) {
-      console.log('guardando....... ...');
-      this.accountService.createAddress(this.addrs[this.canEdit]).subscribe(
-        data => {
-          // this.addrs.push(data);
-          this.addingAddr = false;
-        },
-        err => {
-          this.errors = err.error;
-          //this.errors['others'] = [JSON.stringify(err)];
-        }
-      );
-
+      this.accountService.createAddress(this.addrs[this.canEdit]).subscribe();
     }
     this.canEdit = -1;
     this.addingAddr = false;
+  }
+
+  deleteAddress(index: number): void {
+    this.accountService.deleteAddress(this.addrs[index].id).subscribe( () => this.addrs.splice(index, 1),
+                                                                err => console.log('ERRO: ' + err));
   }
 
   cancel(): void {
@@ -115,8 +111,10 @@ export class AccountInfoComponent implements OnInit {
   }
 
   saveEditAddress(): void {
-    console.log('Por fazer');
-    // TODO
+    if (this.addrs[this.canEdit]) {
+      console.log(this.addrs[this.canEdit]);
+      this.accountService.updateAddress(this.addrs[this.canEdit]).subscribe(() => this.canEdit = -1);
+    }
   }
 
   /* --- helper functions --- */

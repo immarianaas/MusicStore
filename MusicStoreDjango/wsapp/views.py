@@ -249,7 +249,35 @@ def get_my_addresses(request):
         #return []
     return Response(AddressSerializer(addrs, many=True).data)
 
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated, ))
+def delete_address(request, id):
+    try:
+        address = Address.objects.get(id=id);
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
+    address.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
+def update_address(request):
+    id = request.data['id']
+    try:
+        address = Address.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    ser = AddressSerializer(data=request.data)
+    if ser.is_valid():
+        address.street = ser.validated_data['street']
+        address.city = ser.validated_data['city']
+        address.code = ser.validated_data['code']
+        address.country = ser.validated_data['country']
+        address.door = ser.validated_data['door']
+        address.save()
+        return Response(ser.data, status=status.HTTP_202_ACCEPTED)
+    return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def add_address(request): # yet TODO
