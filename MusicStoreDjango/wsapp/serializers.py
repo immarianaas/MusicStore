@@ -18,11 +18,16 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = ('id', 'instrument', 'price' )
         depth=2
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = auth_models.User
+        fields = ('username', 'is_staff', 'date_joined')
+
 class PersonSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Person
-        fields = ( 'id', 'name', 'user', 'gender', 'contact', 'role' )
-        depth = 1
+        fields = '__all__'
 
 class ItemQuantitySerializer(serializers.ModelSerializer):
     class Meta:
