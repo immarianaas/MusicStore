@@ -28,7 +28,7 @@ export class ItemsComponent implements OnInit {
   pageSizeOptions: number[] = [6, 12, 18, 24];
 
   pageEvent: PageEvent;
-  activePageDataChunk = []
+  activePageDataChunk = [];
 
   setPageSizeOptions(setPageSizeOptionsInput: string){
     //if (setPageSizeOptionsInput) {
@@ -38,7 +38,7 @@ export class ItemsComponent implements OnInit {
 
   onPageChanged(e) {
     let firstCut = e.pageIndex * e.pageSize;
-    let secondCut = firstCut+ e.pageSize;
+    let secondCut = firstCut + e.pageSize;
     this.activePageDataChunk = this.items.slice(firstCut, secondCut);
   }
 

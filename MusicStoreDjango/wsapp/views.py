@@ -12,6 +12,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from wsapp.serializers import *
 from django.contrib.auth import models
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime
 
 import json
 # Create your views here.
@@ -176,8 +177,11 @@ def update_account(request):
 @permission_classes((IsAuthenticated, ))
 def get_shopping_cart(request):
     person = Person.objects.get(user=request.user)
+    try:
+        item_lt = ItemList.objects.get(person=person, type='shoppingcart')
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    item_lt = ItemList.objects.get(person=person, type='shoppingcart')
     return Response(ItemListSerializer(item_lt).data)
 
 @api_view(['PUT'])
@@ -225,10 +229,10 @@ def remove_item_at_cart(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def get_wishlist(request):
-    # try:
-    lista = ItemList.objects.get(person=Person.objects.get(user=request.user), type='wishlist')
-    # except ObjectDoesNotExist:
-        # lista = []
+    try:
+        lista = ItemList.objects.get(person=Person.objects.get(user=request.user), type='wishlist')
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     return Response(ItemListSerializer(lista).data)
 
@@ -323,3 +327,25 @@ def check_if_in_wishlist(requests, item_id):
         return Response(False)
     print('vai dar true..')
     return Response(True)
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def place_order(request):
+    person = Person.objects.get(user=request.user)
+
+    prod_list = ItemList.objects.get(person=person, type='shoppingcart')
+    prod_list.type = 'order'
+    prod_list.save()
+
+    try:
+        Order.objects.create(
+            person=person,
+            delivery_address_id=request.data['address'],
+            payment_method=request.data['payment'],
+            order_status='PROC',
+            list=prod_list,
+            payment_time=datetime.now()
+        )
+    except Exception:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response(status=status.HTTP_200_OK)

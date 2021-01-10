@@ -10,10 +10,11 @@ import {AccountService} from '../account.service';
 export class ShoppingCartComponent implements OnInit {
   itemList: ItemList;
   total: string;
+  emptyShoppingCart: boolean;
 
   constructor(
     private accountService: AccountService
-  ) { }
+  ) { this.emptyShoppingCart = false;}
 
   ngOnInit(): void {
     this.getShoppingCart();
@@ -51,9 +52,18 @@ export class ShoppingCartComponent implements OnInit {
     this.accountService.removeItemAtCart(item.id).subscribe();
   }
 
+  checkNoShoppingCart(responseStatus: number): void {
+    if (responseStatus === 404) {
+      this.emptyShoppingCart = true;
+    } else {
+      this.emptyShoppingCart = false;
+    }
+  }
+
   getShoppingCart(): void {
     this.accountService.getShoppingCart().subscribe(
-      itemList => {this.itemList = itemList; this.total = this.getTotal(itemList); });
+      itemList => {this.itemList = itemList; this.total = this.getTotal(itemList); },
+        response => this.checkNoShoppingCart(response.status));
   }
 
 }

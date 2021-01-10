@@ -45,7 +45,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
         AppRoutingModule,
         MatSnackBarModule,
         BrowserAnimationsModule,
-        MatButtonModule
+        MatButtonModule,
         MatPaginatorModule
     ],
   providers: [
