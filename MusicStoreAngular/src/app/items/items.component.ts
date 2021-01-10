@@ -83,7 +83,13 @@ export class ItemsComponent implements OnInit {
 
 
   getItemsByManufacturer(): void {
-    this.itemService.getItemsByManufacturer(this.manufacturer_id).subscribe(items => this.items = items);
+    this.itemService.getItemsByManufacturer(this.manufacturer_id).subscribe(
+      items => {
+        this.items = items;
+        this.length = items.length;
+        this.activePageDataChunk = this.items.slice(0, this.pageSize);
+
+      });
   }
 
   purchase(id: number): void {
