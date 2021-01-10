@@ -1,6 +1,7 @@
 <section>
-  <section class="cards-wrapper">
+  <section>
 
+  <div class="cards-wrapper">
     <div class="card-grid-space" *ngFor="let item of activePageDataChunk">
 
       <div class="num">{{ item.instrument.name }}</div>
@@ -23,19 +24,20 @@
           <button (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
           -->
         </div>
+    </div>
 
     </div>
 
+    <div class="container">
     <mat-paginator
       [length]="length"
       [pageSize]="pageSize"
       [pageSizeOptions]="pageSizeOptions"
       (page)="onPageChanged($event)"
       showFirstLastButtons
-      
     >
     </mat-paginator>
-
+    </div>
   </section>
 
 </section>

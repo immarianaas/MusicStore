@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
 @import  "../snack-bar.css";
 
-/*@import "~@angular/material/prebuilt-themes/indigo-pink.css" */
+/*@import "~@angular/material/prebuilt-themes/indigo-pink.css"
  @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 /*
@@ -16,18 +16,29 @@
 }
 */
 
-/*
+
 ::ng-deep .mat-paginator-container {
-  display: flex;
+  /*display: flex;
   align-items: center;
   justify-content: flex-start;
   min-height: 56px;
   padding: 0 8px;
   flex-wrap: wrap-reverse;
   width: 100%;
-  background-color: #ff4cc6;
+  background-color: mintcream; */
+  display: block;
+  align-self: center;
+  vertical-align: middle;
+
 }
-*/
+::ng-deep .mat-paginator {
+  border-radius: 7px;
+  background-color: #1abc9c;
+  margin: 30px;
+  text-align: center;
+  vertical-align: middle;
+  height: 50px;
+}
 
 
 

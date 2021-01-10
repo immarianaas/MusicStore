@@ -24,10 +24,9 @@ import {MatFormFieldAppearance} from '@angular/material/form-field';
 export class ItemsComponent implements OnInit {
   // MapPaginator inputs
   length: number;//  = 100;
-  pageSize: number = 6;
-  @Input() pageSizeOptions: number[] = [6, 12, 18, 24];
+  pageSize = 6;
+  pageSizeOptions: number[] = [6, 12, 18, 24];
 
-  formFieldAppearance: MatFormFieldAppearance;
   pageEvent: PageEvent;
   activePageDataChunk = []
 
