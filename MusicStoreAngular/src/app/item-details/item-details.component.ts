@@ -61,7 +61,6 @@ export class ItemDetailsComponent implements OnInit {
     this.accService.removeItemWishlistItemId(this.item.id).subscribe();
     this.openSnackBar('Item removed from your wishlist!')
     this.isInWishlist = false;
-
   }
 
   isItemInWishlist(): void {

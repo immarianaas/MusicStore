@@ -13,7 +13,13 @@
         </a>
         <div class="btn-items">
           <button (click)="purchase(item.instrument.id)" class="btn-item btn">Buy</button>
+          <button  *ngIf="!isInWishlist.has(item.id) || !isInWishlist.get(item.id)" (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
+          <button *ngIf="isInWishlist.has(item.id) && isInWishlist.get(item.id)" (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist</button>
+
+          <!--
+          <button (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist</button>
           <button (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
+          -->
         </div>
       </div>
   </section>

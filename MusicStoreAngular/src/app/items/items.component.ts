@@ -9,6 +9,7 @@ import {Location} from '@angular/common';
 import {Manufacturer} from '../manufacturer';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {AccountService} from '../account.service';
 // import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
@@ -20,9 +21,11 @@ export class ItemsComponent implements OnInit {
   items: Item[];
   // instr: Instrument;
   @Input() manufacturer_id: number;
+  isInWishlist: Map<number, boolean> = new Map<number, boolean>();
 
   constructor(private itemService: ItemService,
               private instrService: InstrumentService,
+              private accService: AccountService,
               private authService: AuthGuardService,
               private location: Location,
               private snackBar: MatSnackBar
@@ -34,6 +37,7 @@ export class ItemsComponent implements OnInit {
     else
       this.getItemsByManufacturer();
 
+    this.fillMapIsInWishlist();
   }
 
   goBack(): void {
@@ -49,7 +53,6 @@ export class ItemsComponent implements OnInit {
   }
 
   openSnackBar(message: string): void {
-    // this.snackBar.open(message, 'Ok', {duration: 5000, panelClass: ['my-snack-bar'], horizontalPosition:'center', verticalPosition: 'top'} );
     this.snackBar.open(message, 'Ok', {duration: 5000, panelClass: ['my-snack-bar']} );
   }
 
@@ -70,6 +73,28 @@ export class ItemsComponent implements OnInit {
     if (!this.authService.isLogged()) return;
     this.itemService.addToWishList(id).subscribe();
     this.openSnackBar('Item added to wishlist!');
+    this.isInWishlist.set(id, true);
+  }
+
+  remWishList(id: number): void {
+    this.accService.removeItemWishlistItemId(id).subscribe();
+    this.openSnackBar('Item removed from your wishlist!')
+    this.isInWishlist.set(id, false);
+  }
+
+  fillMapIsInWishlist(): void {
+    // 1o, get wishlist:
+    this.accService.getWishlist().subscribe(
+      data => {
+        for (let w of data.items) {
+          this.isInWishlist.set(w.item.id, true);
+        }
+        console.log('map is set');
+        //this.wishlist = data;
+
+      }
+    );
+
   }
 
 }
