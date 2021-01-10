@@ -39,16 +39,20 @@ export class UserService {
     console.log('login ended' + this.toString());
   }
 
+
   public refreshToken(): void {
     this.http.post(this.baseURL + 'token-refresh/', JSON.stringify({token: this.token}), httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
+        console.log('DATA: '+data);
       },
       err => {
         this.errors = err['error'];
+        console.log('ERRORS: ' + JSON.stringify(this.errors));
       }
     );
   }
+
 
 
   public logout(): void {
@@ -69,6 +73,12 @@ export class UserService {
 
     this.tokenExpires = new Date(tokenDecoded.exp * 1000);
     this.username = tokenDecoded.username;
+  }
+
+  existsButExpired(): boolean {
+    if (!this.tokenExpires) return false;
+    const now = new Date();
+    return now.getTime() > this.tokenExpires.getTime();
   }
 
   toString(): string {

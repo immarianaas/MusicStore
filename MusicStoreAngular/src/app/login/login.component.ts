@@ -164,5 +164,9 @@ export class LoginComponent implements OnInit {
     return !is_false;
   }
 
+  isTokenExpired() : boolean {
+    return this.userService.existsButExpired();
+  }
+
 
 }

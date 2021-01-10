@@ -120,6 +120,24 @@ def get_curr_person_object(request):    #     person = Person.objects.get(user=r
 
 @api_view(['PUT'])
 def rem_from_wishlist(request):
+    person = Person.objects.get(user=request.user)
+    item = Item.objects.get(pk=request.data)
+    if 'item_id' in request.GET and request.GET['item_id'] == 'true':
+        # tenho de ir buscar o item_qty correspondente...
+        print('entrou no item_id')
+        try:
+            il = ItemList.objects.get(type='wishlist', person=person, items__item=item)
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        for i in il.items.all():
+            if i.item == item:
+                i.delete()
+                print('apagou no item_id!')
+                return Response(status=status.HTTP_202_ACCEPTED)
+        print('n encontrou nada no item id :cc')
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
     # id (request.data) -> item_qty_id
     try:
         item_qty = ItemQuantity.objects.get(pk=request.data)
@@ -295,23 +313,13 @@ def add_address(request): # yet TODO
         a = Address.objects.create(street=street, city=city, code=code, country=country, door=door, person=Person.objects.get(user = request.user))
         return Response(AddressSerializer(a).data, status=status.HTTP_201_CREATED)
 
-    '''
-    if 'POST' in request.method:
-        form = AddressForm(request.POST)
-        if form.is_valid():
-            addr = form.save()
-            if temp_addr:
-                addr.person = None
-                addr.save()
-                #if 'temp_addr' not in request.session: #here
-                request.session['temp_addr'] = []
-                request.session['temp_addr'].append(addr.id)
-                print(request.session['temp_addr'])
-                return redirect('/account/placeorder')
-            return redirect('/account/')
-
-    form = AddressForm()
-    '''
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def check_if_in_wishlist(requests, item_id):
+    if not is_item_in_list('wishlist', Item.objects.get(pk=item_id), Person.objects.get(user=requests.user)):
+        print('vai dar false..')
+        return Response(False)
+    print('vai dar true..')
+    return Response(True)

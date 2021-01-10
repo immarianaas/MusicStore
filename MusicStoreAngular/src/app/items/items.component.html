@@ -1,6 +1,9 @@
 <section>
-  <section class="cards-wrapper">
-    <div class="card-grid-space" *ngFor="let item of items">
+  <section>
+
+  <div class="cards-wrapper">
+    <div class="card-grid-space" *ngFor="let item of activePageDataChunk">
+
       <div class="num">{{ item.instrument.name }}</div>
         <a class="card-instruments" routerLink="/instruments/{{item.id}}"
            style="--bg-img: url({{ item.instrument.image }})">
@@ -13,9 +16,29 @@
         </a>
         <div class="btn-items">
           <button (click)="purchase(item.instrument.id)" class="btn-item btn">Buy</button>
+          <button  *ngIf="!isInWishlist.has(item.id) || !isInWishlist.get(item.id)" (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
+          <button *ngIf="isInWishlist.has(item.id) && isInWishlist.get(item.id)" (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist</button>
+
+          <!--
+          <button (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist</button>
           <button (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
+          -->
         </div>
-      </div>
+    </div>
+
+    </div>
+
+    <div class="container">
+    <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChanged($event)"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+    </div>
   </section>
+
 </section>
 

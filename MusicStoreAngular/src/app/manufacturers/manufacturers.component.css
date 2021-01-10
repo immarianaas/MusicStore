@@ -1,14 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
+@import "../snack-bar.css";
+@import "../paginator.css";
 
-/deep/ .my-snack-bar {
-  background-color: lightsteelblue;
-  color: black;
-
-}
-/deep/ .my-snack-bar button {
-  background-color: palevioletred;
-  color: white;
-}
 
 
 .main {

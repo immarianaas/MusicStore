@@ -16,11 +16,11 @@
       <!--not admin %} -->
       <form action="/instruments/{{ item.id }}" method="post">
         <!-- if wishlist se já estiver lá -->
-        <input class="btn-href" type="submit" name="rem_wishlist" value="Remove from wishlist">
+        <input class="btn-href" *ngIf="isInWishlist" (click)="removeItemFromWishlist()" type="submit" name="rem_wishlist" value="Remove from wishlist">
         <!--{% else %}-->
-        <input class="btn-href" type="submit" name="add_wishlist" value="Add to wishlist">
+        <input class="btn-href" *ngIf="!isInWishlist" (click)="addWishlist()" type="submit" name="add_wishlist" value="Add to wishlist">
         <!--{% endif %}-->
-        <input class="btn-href" type="submit" name="purchase" value="Buy">
+        <input class="btn-href" (click)="purchase()" type="submit" name="purchase" value="Buy">
       </form>
       <!--{% else %}-->
       <a class="btn-href" href="/edit/instruments/{{ item.id }}">edit</a>
