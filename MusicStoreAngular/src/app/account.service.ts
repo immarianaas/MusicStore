@@ -81,10 +81,15 @@ export class AccountService {
     return this.http.get<ItemList>(this.baseURL + 'wishlist', this.getCorrectHeader());
   }
 
+
   removeItemWishlist(item_qty_id: number): Observable<any> {
-    // nota: n faço mm ideia qual dos metodos é aqui...
     const url = this.baseURL + 'wishlist/rem';
     return this.http.put(url,  item_qty_id, this.getCorrectHeader());
+  }
+
+  removeItemWishlistItemId(item_id: number): any {
+    let url = this.baseURL + 'wishlist/rem?item_id=true';
+    return this.http.put(url, item_id, this.getCorrectHeader());
   }
 
   removeItemAtCart(idItemqt: number): Observable<any> {

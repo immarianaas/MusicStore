@@ -21,6 +21,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {MatButtonModule} from '@angular/material/button';
         MatSnackBarModule,
         BrowserAnimationsModule,
         MatButtonModule
+        MatPaginatorModule
     ],
   providers: [
     UserService,
