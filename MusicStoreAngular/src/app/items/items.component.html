@@ -46,7 +46,7 @@
         <button class="btn btn-info">filter by price range</button>
   -->
 
-      <div>
+      <div *ngIf="!manufacturer_id">
         <label>Filter by manufacturer:</label>
       <mat-form-field>
         <mat-select [(value)]="selectedManufacturer" (selectionChange)="applyFilters()">
