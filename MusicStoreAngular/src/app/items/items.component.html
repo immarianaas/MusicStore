@@ -115,15 +115,15 @@
 
     </div>
 
-    <div class="container">
-    <mat-paginator
-      [length]="length"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="onPageChanged($event)"
-      showFirstLastButtons
-    >
-    </mat-paginator>
+    <div class="container" *ngIf="activePageDataChunk.length != 0">
+      <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChanged($event)"
+        showFirstLastButtons
+      >
+      </mat-paginator>
     </div>
   </section>
 

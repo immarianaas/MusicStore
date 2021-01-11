@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.userService.login({username : this.user.username, password: this.user.password, date_joined : ''});
+    this.redirectHome();
   }
 
   redirectHome(): void {
@@ -166,7 +167,7 @@ export class LoginComponent implements OnInit {
     return !is_false;
   }
 
-  isTokenExpired() : boolean {
+  isTokenExpired(): boolean {
     return this.userService.existsButExpired();
   }
 
