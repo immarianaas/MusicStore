@@ -89,5 +89,6 @@ urlpatterns = [
     path('ws/wishlist/rem', wsviews.rem_from_wishlist, name='rem_from_wishlist'),
     path('ws/in-wishlist/<int:item_id>', wsviews.check_if_in_wishlist, name='check_if_in_wishlist'),
     path('ws/orders', wsviews.get_orders, name='get_orders'),
+    path('ws/ordersadmin', wsviews.get_all_orders, name='get_all_orders'),
 
 ]

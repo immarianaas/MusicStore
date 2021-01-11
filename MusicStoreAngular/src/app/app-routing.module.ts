@@ -14,9 +14,10 @@ import {WishlistComponent} from './wishlist/wishlist.component';
 import {PlaceOrderComponent} from './place-order/place-order.component';
 import {OrdersComponent} from './orders/orders.component';
 import {AuthGuardService} from './auth-guard.service';
+import {IndexForAdminComponent} from './index-for-admin/index-for-admin.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/instruments', pathMatch: 'full'},
+  {path: '', component: IndexForAdminComponent, pathMatch: 'full'},
   {path: 'manufacturers', component: ManufacturersComponent},
   {path: 'manufacturers/:id', component: ManufacturerDetailsComponent},
   {path: 'instruments', component: ItemsComponent},

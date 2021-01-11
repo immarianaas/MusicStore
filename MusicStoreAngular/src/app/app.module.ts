@@ -29,6 +29,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import { IndexForAdminComponent } from './index-for-admin/index-for-admin.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {MatIconModule} from '@angular/material/icon';
     WishlistComponent,
     PlaceOrderComponent,
     OrdersComponent,
+    IndexForAdminComponent,
   ],
   imports: [
     BrowserModule,

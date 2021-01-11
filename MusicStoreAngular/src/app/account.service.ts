@@ -104,4 +104,8 @@ export class AccountService {
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.baseURL + 'orders', this.getCorrectHeader());
   }
+
+  getAllOrdersAdmin(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.baseURL + 'ordersadmin', this.getCorrectHeader());
+  }
 }

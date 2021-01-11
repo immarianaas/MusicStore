@@ -432,3 +432,7 @@ def get_orders(request):
 
     return Response(OrderSerializer(orders, many=True).data)
 
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_all_orders(request):
+    return Response(OrderSerializer(Order.objects.all(), many=True).data)

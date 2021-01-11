@@ -8,6 +8,7 @@
           <img style="max-width: 60%; max-height: 60%" class="img-thumbnail" src="{{ manufacturer.logo }}">
         </div>
         <div style="text-align: center; justify-content: center" class="row" *ngIf="isAdmin()">
+          <!-- TODO talvez colocar aqui o botao de edit tmb -->
           <button (click)="delete(manufacturer.id)" >Delete</button>
         </div>
       </div>
