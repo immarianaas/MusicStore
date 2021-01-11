@@ -2,6 +2,17 @@
 @import  "../snack-bar.css";
 @import "../paginator.css";
 
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.listoptions {
+  background-color: #247f6d;
+  border-radius: 7px;
+}
+
+.options1 {
+  text-align: center;
+}
+
 .main {
   margin-top: 1rem;
 }

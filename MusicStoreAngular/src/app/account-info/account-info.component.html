@@ -37,6 +37,8 @@
               </div>
               <div class="col-md-6">
                 <input type="text" [ngClass]="{'input-border': !isEditing('account')}" [readOnly]="!isEditing('account')" [(ngModel)]="account.name">
+                <span style="color: darkred;" *ngFor="let error of errors['name']"> {{error}} </span> <!-- TODO -->
+
               </div>
             </div>
             <div class="row">
@@ -53,6 +55,8 @@
               </div>
               <div class="col-md-6">
                 <input type="text" [ngClass]="{'input-border': !isEditing('account')}" [readOnly]="!isEditing('account')" [(ngModel)]="account.contact">
+                <span style="color: darkred;" *ngFor="let error of errors['contact']"> {{error}} </span> <!-- TODO -->
+
               </div>
             </div>
             <div class="row">
@@ -65,6 +69,8 @@
                   <option value="M">Male</option>
                   <option value="O">Other / Rather not say</option>
                 </select>
+                <span style="color: darkred;" *ngFor="let error of errors['gender']"> {{error}} </span> <!-- TODO -->
+
               </div>
             </div>
             <div class="row">
@@ -96,12 +102,20 @@
       <tbody>
       <tr *ngFor="let add of addrs; index as i">
         <th scope="row">{{i + 1}}</th>
-        <td><input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.street" /></td>
-        <td><input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.city" /></td>
-        <td><input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.code" /></td>
+        <td><input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.street" />
+          <span [hidden]="i != canEdit" style="color: darkred;" *ngFor="let error of errors['street']"> {{error}} </span> <!-- TODO -->
+
+        </td>
+        <td><input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.city" />
+          <span [hidden]="i != canEdit" style="color: darkred;" *ngFor="let error of errors['city']"> {{error}} </span> <!-- TODO -->
+
+        </td>
+        <td><input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.code" />
+          <span [hidden]="i != canEdit" style="color: darkred;" *ngFor="let error of errors['code']"> {{error}} </span> <!-- TODO -->
+        </td>
         <td>
           <select style="color: black" [disabled]="i != canEdit" [(ngModel)]="add.country">
-            <option value="" [selected]="canEdit != -1 && i == canEdit">Select an option</option>
+            <option value="" [selected]="canEdit != -1 && i == canEdit" hidden>Select an option</option>
             <optgroup label="Africa">
               <option *ngFor="let c of COUNTRIES['Africa']" [selected]="add.country == c[0]" value="{{c[0]}}">{{c[1]}}</option>
             </optgroup>
@@ -118,9 +132,13 @@
               <option *ngFor="let c of COUNTRIES['Oceania']" [selected]="add.country == c[0]" value="{{c[0]}}">{{c[1]}}</option>
             </optgroup>
           </select>
+          <span [hidden]="i != canEdit" style="color: darkred;" *ngFor="let error of errors['country']"> {{error}} </span> <!-- TODO -->
+
         </td>
         <td>
           <input class="input-table" type="text" [ngClass]="{'input-border': i != canEdit}" [readOnly]="i != canEdit" [(ngModel)]="add.door" />
+          <span [hidden]="i != canEdit" style="color: darkred;" *ngFor="let error of errors['door']"> {{error}} </span> <!-- TODO -->
+
         </td>
         <td>
           <div *ngIf="canEdit == -1">

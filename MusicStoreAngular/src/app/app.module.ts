@@ -24,6 +24,12 @@ import {MatButtonModule} from '@angular/material/button';
 import { PlaceOrderComponent } from './place-order/place-order.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { OrdersComponent } from './orders/orders.component';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -40,16 +46,21 @@ import { OrdersComponent } from './orders/orders.component';
     PlaceOrderComponent,
     OrdersComponent,
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        MatSnackBarModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatPaginatorModule
-    ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatSliderModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatInputModule,
+    MatIconModule
+  ],
   providers: [
     UserService,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
