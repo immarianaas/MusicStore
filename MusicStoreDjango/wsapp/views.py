@@ -12,9 +12,21 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from wsapp.serializers import *
 from django.contrib.auth import models
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.core.mail import send_mail, EmailMessage
 import json
 # Create your views here.
+
+@api_view(['GET'])
+def send_email_registration(request):
+    email = EmailMessage(
+        subject= 'New account at Music Store!',
+        body='We are sending you this email to confirm that your account was created! You can now purchase items in our store.',
+        from_email='musicstore@null.net',
+        to=['msps.kat@gmail.com']
+    )
+    email.send()
+    return Response(status=status.HTTP_202_ACCEPTED)
+
 
 @api_view(['GET'])
 def get_manufacturers(request):
