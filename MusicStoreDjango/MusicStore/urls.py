@@ -67,6 +67,8 @@ urlpatterns = [
     path('ws/items', wsviews.get_items, name='get_items'),
     path('ws/items/<int:id>', wsviews.get_item_by_id, name='get_item_by_id'),
     path('ws/purchase', wsviews.purchase, name='purchase'),
+    path('ws/deleteitem/<int:id>', wsviews.delete_item, name='delete_item'),
+    path('ws/updateitem', wsviews.update_item, name='update_item'),
 
     # account related:
     path('ws/account', wsviews.get_users_account, name='get_users_account'),

@@ -16,6 +16,7 @@ import {AccountService} from '../account.service';
 export class ItemDetailsComponent implements OnInit {
   item: Item;
   isInWishlist: boolean;
+  editVar: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,11 +25,23 @@ export class ItemDetailsComponent implements OnInit {
     private authService: AuthGuardService,
     private snackBar: MatSnackBar,
     private accService: AccountService
-  ) { }
+  ) {
+    this.editVar = false;
+  }
 
   ngOnInit(): void {
     this.getItem();
-    this.isItemInWishlist();
+    if (this.authService.isLoggedVar()) {
+      this.isItemInWishlist();
+    }
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdminVar();
   }
 
   getItem(): void {
@@ -59,7 +72,7 @@ export class ItemDetailsComponent implements OnInit {
 
   removeItemFromWishlist(): void {
     this.accService.removeItemWishlistItemId(this.item.id).subscribe();
-    this.openSnackBar('Item removed from your wishlist!')
+    this.openSnackBar('Item removed from your wishlist!');
     this.isInWishlist = false;
   }
 
@@ -68,4 +81,22 @@ export class ItemDetailsComponent implements OnInit {
     this.itemService.checkIfInWishlist(item_id).subscribe(data => this.isInWishlist = data);
   }
 
+  edit(): void {
+    this.editVar = true;
+  }
+
+  save(item: Item): void {
+    this.itemService.updateItem(item).subscribe(() => this.editVar = false);
+  }
+
+  cancel(): void {
+    this.itemService.getItem(this.item.id).subscribe( item => {
+      this.item = item;
+      this.editVar = false;
+    });
+  }
+
+  deleteItem(itemId: number): void {
+    this.itemService.deleteItem(itemId).subscribe( () => this.goBack());
+  }
 }

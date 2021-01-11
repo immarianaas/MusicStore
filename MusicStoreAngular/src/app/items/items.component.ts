@@ -84,7 +84,6 @@ export class ItemsComponent implements OnInit {
   isInWishlist: Map<number, boolean> = new Map<number, boolean>();
 
   constructor(private itemService: ItemService,
-              //private instrService: InstrumentService,
               private manuService: ManufacturerService,
               private accService: AccountService,
               private authService: AuthGuardService,
@@ -105,6 +104,10 @@ export class ItemsComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdminVar();
   }
 
   getAllManufacturers(): void {

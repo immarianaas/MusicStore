@@ -62,6 +62,37 @@ def get_item_by_id(request, id):
     print(request.user.is_authenticated)
     return Response(ItemSerializer(item).data)
 
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated, ))
+def delete_item(request, id):
+    try:
+        item = Item.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    item.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
+def update_item(request):
+    id = request.data['id']
+    try:
+        item = Item.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    ser = ItemSerializer(data=request.data)
+    if ser.is_valid():
+        item.price = ser.validated_data['price']
+        item.save()
+
+        instrument = Instrument.objects.get(item=item.instrument.id)
+        instrument.description = request.data['instrument']['description']
+        instrument.save()
+
+        return Response(status=status.HTTP_202_ACCEPTED)
+
+    return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET'])
 def get_instruments_by_manufacturer(request, id):
     items = Item.objects.filter(instrument__manufacturer__pk=id)
@@ -255,7 +286,8 @@ def sendEmailOnCreate(name, email):
 @api_view(['POST'])
 def create_account(request):
     recv = request.data
-    del recv['user']['date_joined']
+    if 'date_joined' in recv:
+        del recv['user']['date_joined']
     try:
         print('here')
 

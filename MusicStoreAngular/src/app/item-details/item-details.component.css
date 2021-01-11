@@ -20,3 +20,20 @@
   background: blue;
   color: white;
 }
+
+.input-fields {
+  background: none;
+  border: none;
+  color: white;
+  width: 70%;
+}
+
+.textarea-field {
+  background: none;
+  border: none;
+  color: white;
+}
+
+.border {
+  border: 1px solid;
+}

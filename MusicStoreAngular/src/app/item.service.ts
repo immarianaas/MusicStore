@@ -71,4 +71,13 @@ export class ItemService {
     return this.http.get<boolean>(this.baseURL+'in-wishlist/'+item_id, this.getCorrectHeader());
   }
 
+  deleteItem(itemId: number): Observable<any> {
+    const url = this.baseURL + 'deleteitem/' + itemId;
+    return this.http.delete(url, this.getCorrectHeader());
+  }
+
+  updateItem(item: Item): Observable<any> {
+    return this.http.put<Item>(this.baseURL + 'updateitem', item, this.getCorrectHeader());
+  }
+
 }

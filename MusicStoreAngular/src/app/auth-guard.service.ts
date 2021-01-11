@@ -7,10 +7,13 @@ import { UserService } from './user.service';
 })
 export class AuthGuardService implements CanActivate{
   private isLoggedIn: boolean;
+  private isAdmin: boolean;
 
   constructor(private userService: UserService, private router: Router) {
     this.isLoggedIn = false;
+    this.isAdmin = false;
     this.userService.loggedInInfo.subscribe(val => this.isLoggedIn = val);
+    this.userService.adminInfo.subscribe(val => this.isAdmin = val);
   }
 
   canActivate(): boolean {
@@ -23,6 +26,10 @@ export class AuthGuardService implements CanActivate{
 
   public isLoggedVar(): boolean {
     return this.isLoggedIn;
+  }
+
+  public isAdminVar(): boolean {
+    return this.isAdmin;
   }
 
   public isLogged(): boolean {
