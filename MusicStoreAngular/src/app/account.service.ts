@@ -17,7 +17,7 @@ export class AccountService {
   constructor(
     private http: HttpClient,
     private userService: UserService
-  ) { }
+  ) {  }
 
   getAccountInfo(): Observable<Account> {
     return this.http.get<Account>(this.baseURL + 'account', this.getCorrectHeader());
