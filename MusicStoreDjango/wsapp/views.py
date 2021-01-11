@@ -353,7 +353,7 @@ def place_order(request):
     prod_list.save()
 
     try:
-        Order.objects.create(
+        order = Order.objects.create(
             person=person,
             delivery_address_id=request.data['address'],
             payment_method=request.data['payment'],
@@ -363,6 +363,15 @@ def place_order(request):
         )
     except Exception:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    # enviar mail para o cliente a confirmar compra
+    email = EmailMessage(
+        subject='Purchase confirmation',
+        body=f'We are sending you this email to confirm that your purchase was made! Your purchase has id {order.id}.\nThanks for trusting us ;)',
+        from_email='musicstore@null.net',
+        to=[request.user]
+    )
+    email.send()
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])

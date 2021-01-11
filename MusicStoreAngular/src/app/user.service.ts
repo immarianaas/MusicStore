@@ -92,7 +92,6 @@ export class UserService {
     // decode the token to read the username
     // and the expiration timestamp
     const tokenParts = this.token.split('.');
-    console.log(tokenParts);
 
     const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
 
