@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
+import {AccountService} from './account.service';
+import {Account} from './account';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -12,6 +14,9 @@ const httpOptions = {
 export class UserService {
 
   private baseURL = 'http://localhost:8000/ws/';
+
+  @Output() loggedInInfo = new EventEmitter<boolean>();
+  @Output() adminInfo = new EventEmitter<boolean>();
 
   // JWT token
   public token: string;
@@ -25,12 +30,32 @@ export class UserService {
   // error messages received from the login attempt
   public errors: any = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
+
+  private getUserAccount(): void {
+    const httpOptWithJWT = {
+      headers : new HttpHeaders(
+        {'Content-Type' : 'application/json',
+                  Authorization: 'JWT ' + this.token}
+      )
+    };
+    this.http.get<Account>(this.baseURL + 'account', httpOptWithJWT).subscribe(
+      account => { if (account.role === 'A') {
+                          this.adminInfo.emit(true);
+                        } else {
+                          this.adminInfo.emit(false);
+                        }
+                   this.loggedInInfo.emit(true);
+      }
+    );
+  }
 
   public login(user: User): void {
     this.http.post(this.baseURL + 'token-auth/', JSON.stringify(user), httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
+        this.getUserAccount();
       },
       err => {
         this.errors = err['error'];

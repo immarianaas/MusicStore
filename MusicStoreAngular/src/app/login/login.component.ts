@@ -3,7 +3,7 @@ import {UserService} from '../user.service';
 import { User } from '../user';
 import { Account } from '../account';
 import { AccountService } from '../account.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.userService.login({username : this.user.username, password: this.user.password, date_joined : ''});
+    this.redirectHome();
   }
 
   redirectHome(): void {
@@ -58,6 +59,7 @@ export class LoginComponent implements OnInit {
     if (this.boolLogin) {
       this.boolLogin = false;
       this.boolCreate = true;
+      this.create_account();
     }
     else {
       this.boolLogin = true;
@@ -99,6 +101,7 @@ export class LoginComponent implements OnInit {
           console.log('account -> ' + res ) ;
           this.account = res;
           this.creating_account = false;
+          this.switch();
         },
         err => {
           console.log('errors -> ' + JSON.stringify(err.error) );
@@ -107,10 +110,10 @@ export class LoginComponent implements OnInit {
           }
           else if ( err.error === 'The given username must be set') {
             this.errors.username = ['this field cannot be empty'];
- }
+          }
           else {
             this.errors = err.error;
- }
+          }
         }
       );
     }
@@ -161,7 +164,7 @@ export class LoginComponent implements OnInit {
     return !is_false;
   }
 
-  isTokenExpired() : boolean {
+  isTokenExpired(): boolean {
     return this.userService.existsButExpired();
   }
 

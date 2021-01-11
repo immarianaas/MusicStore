@@ -26,26 +26,26 @@
           <div class="input-block">
             <label for="login-email">E-mail</label>
             <input id="login-email" type="email" [(ngModel)]="user.username" required>
-            <span *ngFor="let error of userService.errors.username">
+            <span style="color: darkred;" *ngFor="let error of userService.errors.username">
               {{ error }}
             </span> <!-- TODO alterar este erro -->
           </div>
           <div class="input-block">
             <label for="login-password">Password</label>
             <input id="login-password" type="password" [(ngModel)]="user.password" required>
-            <span *ngFor="let error of userService.errors.password">
+            <span style="color: darkred;" *ngFor="let error of userService.errors.password">
               {{ error }}
             </span> <!-- TODO alterar isto tmb -->
           </div>
         </fieldset>
         <button type="submit" class="btn-login" (click)="login()">Login</button>
-        <span *ngFor="let error of userService.errors.non_field_errors">
+        <span style="color: darkred;" *ngFor="let error of userService.errors.non_field_errors">
           {{ error }}
         </span> <!-- TODO mais um -->
       </div>
     </div>
     <div [ngClass]="{'is-active': boolCreate}" class="form-wrapper">
-      <button type="button" (click)="switch()" class="switcher switcher-signup">
+      <button type="button" (click)="switch()"  class="switcher switcher-signup">
         Sign Up
         <span class="underline"></span>
       </button>
@@ -55,17 +55,17 @@
           <div class="input-block">
             <label for="signup-email">E-mail</label>
             <input id="signup-email" type="email" [(ngModel)]="user.username" required>
-            <span *ngFor="let error of errors['username']"> {{error}} </span> <!-- TODO -->
+            <span style="color: darkred;" *ngFor="let error of errors['username']"> {{error}} </span> <!-- TODO -->
           </div>
           <div class="input-block">
             <label for="signup-password">Password</label>
             <input id="signup-password" type="password" [(ngModel)]="user.password" required>
-            <span *ngFor="let error of errors['password']"> {{error}} </span> <!-- TODO -->
+            <span style="color: darkred;" *ngFor="let error of errors['password']"> {{error}} </span> <!-- TODO -->
           </div>
           <div class="input-block">
             <label for="signup-name">Name</label>
             <input id="signup-name" type="text" [(ngModel)]="account.name">
-            <span *ngFor="let error of errors['name']"> {{error}} </span> <!-- TODO -->
+            <span style="color: darkred;" *ngFor="let error of errors['name']"> {{error}} </span> <!-- TODO -->
           </div>
           <div class="input-block">
             <label for="signup-gender">Gender</label>
@@ -75,11 +75,12 @@
               <option value="M">Male</option>
               <option value="O">Other / Rather not say</option>
             </select>
+            <span style="color: darkred;" *ngFor="let error of errors['gender']"> {{error}} </span> <!-- TODO -->
           </div>
           <div class="input-block">
             <label for="signup-contact">Contact</label>
             <input id="signup-contact" type="text" [(ngModel)]="account.contact">
-            <span *ngFor="let error of errors['contact']"> {{error}} </span> <!-- TODO -->
+            <span style="color: darkred;" *ngFor="let error of errors['contact']"> {{error}} </span> <!-- TODO -->
           </div>
         </fieldset>
         <button (click)="save_new_account()" type="submit" class="btn-signup">Sign up</button>

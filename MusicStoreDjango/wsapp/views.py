@@ -14,8 +14,22 @@ from django.contrib.auth import models
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 
+from django.core.mail import send_mail, EmailMessage
+
 import json
 # Create your views here.
+
+@api_view(['GET'])
+def send_email_registration(request):
+    email = EmailMessage(
+        subject= 'New account at Music Store!',
+        body='We are sending you this email to confirm that your account was created! You can now purchase items in our store.',
+        from_email='musicstore@null.net',
+        to=['msps.kat@gmail.com']
+    )
+    email.send()
+    return Response(status=status.HTTP_202_ACCEPTED)
+
 
 @api_view(['GET'])
 def get_manufacturers(request):
@@ -42,6 +56,7 @@ def get_manufacturer_by_id(request, id):
 def get_items(request):
     # na página dos instrumentos são 'items' que vão aparecer
     # porque os instrumentos em si não tem conhecimento, por exemplo, do preço
+
     items = Item.objects.all()
     ser = ItemSerializer(items, many=True)
     if request.user.is_authenticated:
@@ -303,7 +318,7 @@ def update_address(request):
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-def add_address(request): # yet TODO
+def add_address(request):
     recv = request.data
     ser = AddressSerializer(data=recv)
     print(recv)

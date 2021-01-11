@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Account} from './account';
+import {UserService} from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'MusicStore';
+  account: Account;
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+
+  constructor(
+    private userService: UserService
+  ) {
+    this.userService.loggedInInfo.subscribe(val => this.isLoggedIn = val);
+    this.userService.adminInfo.subscribe(val => this.isAdmin = val);
+  }
+
+
+
 }
