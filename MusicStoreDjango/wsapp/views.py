@@ -137,6 +137,7 @@ def get_curr_person_object(request):    #     person = Person.objects.get(user=r
 @api_view(['PUT'])
 def rem_from_wishlist(request):
     person = Person.objects.get(user=request.user)
+    print(request.data)
     item = Item.objects.get(pk=request.data)
     if 'item_id' in request.GET and request.GET['item_id'] == 'true':
         # tenho de ir buscar o item_qty correspondente...

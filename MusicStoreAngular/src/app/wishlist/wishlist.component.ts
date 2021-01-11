@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class WishlistComponent implements OnInit {
   wishlist: ItemList;
+  emptyList: boolean;
   remWhenBought: boolean;
 
   constructor(
@@ -24,6 +25,7 @@ export class WishlistComponent implements OnInit {
   ) {
     /* TODO ver se da para por isto guardado mm... */
     this.remWhenBought = false;
+    this.emptyList = false;
   }
 
   ngOnInit(): void {
@@ -31,27 +33,34 @@ export class WishlistComponent implements OnInit {
   }
 
   getWishlist(): void {
-    this.accService.getWishlist().subscribe( data => this.wishlist = data);
+    this.accService.getWishlist().subscribe( data => {
+                                              if (data) {
+                                                this.wishlist = data;
+                                                this.emptyList = false;
+                                              } else {
+                                                this.emptyList = true;
+                                              }
+    });
   }
 
   removeItem(item_qty_id: number): void {
-    this.accService.removeItemWishlist(item_qty_id).subscribe();
-    this.getWishlist();
-    this.openSnackBar('Item removed from your wishlist!')
+    this.accService.removeItemWishlistItemId(item_qty_id).subscribe( () => { this.getWishlist();
+                                                                             this.openSnackBar('Item removed from your wishlist!');
+    });
   }
 
   addToShoppingCart(item_qty: ItemQuantity): void {
-    this.itemService.purchaseItem(item_qty.item.id).subscribe();
-    if (this.remWhenBought) {
-      this.removeItem(item_qty.id);
-      this.openSnackBar('Item added to shopping cart & removed from your wishlist!');
-    } else {
-      this.openSnackBar('Item added to shopping cart!');
-    }
+    this.itemService.purchaseItem(item_qty.item.id).subscribe(() => {
+      if (this.remWhenBought) {
+        this.removeItem(item_qty.item.id);
+        this.openSnackBar('Item added to shopping cart & removed from your wishlist!');
+      } else {
+        this.openSnackBar('Item added to shopping cart!');
+      }
+    });
   }
 
   openSnackBar(message: string): void {
-    // this.snackBar.open(message, 'Ok', {duration: 5000, panelClass: ['my-snack-bar'], horizontalPosition:'center', verticalPosition: 'top'} );
     this.snackBar.open(message, 'Ok', {duration: 5000, panelClass: ['my-snack-bar']} );
   }
 

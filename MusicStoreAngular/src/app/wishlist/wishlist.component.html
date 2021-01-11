@@ -1,20 +1,23 @@
-<div *ngIf="!wishlist"> <!-- TODO tmb pode querer dizer q n tem nd na wishlist -->
-  ñ logado..
-</div>
-<div *ngIf="wishlist">
-  <h2>wishlist</h2>
+<section *ngIf="emptyList">
+  <h3>First, put some products into your wishlist.</h3>
+  <a routerLink="/">Go to homepage</a>
+</section>
 
-  <!-- ja passa p/ true/false automaticamente assim! -->
-  <input type="checkbox" id="remWhenBought" [(ngModel)]="remWhenBought">
-  <label for="remWhenBought">Remove when added to shopping cart</label>
+<div class="wishlist-div" *ngIf="wishlist">
+  <section class="section-orders">
 
-  <div *ngFor="let w of wishlist.items">
-    <a routerLink="/instruments/{{w.item.id}}">-> {{ w.item.instrument.name }}</a>
-    <button (click)="removeItem(w.id)">remove</button>
-    <button (click)="addToShoppingCart(w)">add to shopping cart</button>
+    <h1>You have {{ wishlist.items.length }} item(s) in your wishlist</h1>
+    <!-- ja passa p/ true/false automaticamente assim! -->
+    <div>
+      <input type="checkbox" id="remWhenBought" [(ngModel)]="remWhenBought">
+      <label for="remWhenBought">Remove when added to shopping cart</label>
+    </div>
 
-  </div>
-  <div *ngIf="wishlist.items.length == 0">
-    <p>This looks empty...</p>
-  </div>
+    <details *ngFor="let i of wishlist.items">
+      <summary>{{ i.item.instrument.name }} (${{ i.item.price }})</summary>
+      <input type="hidden" name="id" value="{{ i.id }}"/>
+      <button (click)="removeItem(i.item.id)">remove</button>
+      <button (click)="addToShoppingCart(i)">add to shopping cart</button>
+    </details>
+  </section>
 </div>
