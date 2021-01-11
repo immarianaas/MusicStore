@@ -41,6 +41,7 @@ def get_manufacturer_by_id(request, id):
 def get_items(request):
     # na página dos instrumentos são 'items' que vão aparecer
     # porque os instrumentos em si não tem conhecimento, por exemplo, do preço
+
     items = Item.objects.all()
     ser = ItemSerializer(items, many=True)
     if request.user.is_authenticated:
@@ -299,7 +300,7 @@ def update_address(request):
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-def add_address(request): # yet TODO
+def add_address(request):
     recv = request.data
     ser = AddressSerializer(data=recv)
     print(recv)
