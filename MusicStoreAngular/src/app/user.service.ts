@@ -88,6 +88,8 @@ export class UserService {
     this.token = null;
     this.tokenExpires = null;
     this.username = null;
+    this.adminInfo.emit(false);
+    this.loggedInInfo.emit(false);
   }
 
   private updateData(token): void {

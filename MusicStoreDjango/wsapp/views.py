@@ -240,15 +240,15 @@ def get_wishlist(request):
 
     return Response(ItemListSerializer(lista).data)
 
-def sendEmailOnCreate(name):
-    body = 'Hello' + name + ', we are very happy to have you associated with us.\n'
+def sendEmailOnCreate(name, email):
+    body = 'Hello ' + name + ', we are very happy to have you associated with us.\n'
     body += 'If you need help don\'t hesitate to contact us on musicstore@null.net, wi\'ll always be there for you.\n'
     body += 'At last, thank you for your trust and good shopping ;)'
     email = EmailMessage(
         subject='New account at Music Store!',
         body=body,
         from_email='musicstore@null.net',
-        to=['msps.kat@gmail.com']
+        to=[email]
     )
     email.send()
 
@@ -269,7 +269,7 @@ def create_account(request):
             role = personser.validated_data['role']
             Person.objects.create(name=name, gender=gen, contact=cont, user=u, role=role)
 
-            sendEmailOnCreate(name)
+            sendEmailOnCreate(name, recv['user']['username'])
             return Response(personser.data, status=status.HTTP_201_CREATED)
 
     except Exception as err:
