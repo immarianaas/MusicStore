@@ -23,11 +23,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import { PlaceOrderComponent } from './place-order/place-order.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { OrdersComponent } from './orders/orders.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import {MatIconModule} from '@angular/material/icon';
     ShoppingCartComponent,
     WishlistComponent,
     PlaceOrderComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

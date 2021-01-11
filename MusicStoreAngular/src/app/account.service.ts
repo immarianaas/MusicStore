@@ -8,6 +8,7 @@ import {Address} from './address';
 import {Item} from './item';
 import {ItemQuantity} from './ItemQuantity';
 import {OrderModel} from './order-model';
+import {Order} from './order';
 
 @Injectable({
   providedIn: 'root'
@@ -98,5 +99,9 @@ export class AccountService {
 
   placeOrder(orderModel: OrderModel): Observable<any> {
     return this.http.post<OrderModel>(this.baseURL + 'placeorder', orderModel, this.getCorrectHeader());
+  }
+
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.baseURL + 'orders', this.getCorrectHeader());
   }
 }

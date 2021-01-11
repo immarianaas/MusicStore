@@ -1,0 +1,27 @@
+<section *ngIf="noOrders">
+  <h3>There are no purchases yet</h3>
+  <a routerLink="/">Go to homepage</a>
+</section>
+<section *ngIf="orders">
+  <div class="orders-div">
+    <section class="section-orders">
+      <h1>Orders</h1>
+      <details *ngFor="let order of orders; index as i">
+        <summary>Order {{ i }}: ({{ order.payment_time }})</summary>
+        <ul class="list-orders">
+          <li>Order identifier: {{ order.id }}</li>
+          <li>Client: {{ order.person.name }}</li>
+          <li>Cellphone: {{ order.person.contact }}</li>
+          <li>Delivery address: {{order.delivery_address.street}}, {{order.delivery_address.door}} - {{order.delivery_address.city}} ({{order.delivery_address.country}})</li>
+          <li>Payment method: {{ order.payment_method }}</li>
+          <li>Order status: {{ order.order_status }}</li>
+        </ul>
+        <p>Product(s): </p>
+        <div class="row" *ngFor="let item of order.list.items">
+          <div class="col"><p>{{ item.item.instrument.name }}</p></div>
+          <div class="col"><p>{{ item.item.price }}&euro; x {{ item.quantity }}</p></div>
+        </div>
+      </details>
+    </section>
+  </div>
+</section>
