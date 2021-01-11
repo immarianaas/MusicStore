@@ -63,6 +63,7 @@ urlpatterns = [
     path('ws/manufacturers', wsviews.get_manufacturers, name='get_manufacturers'),
     path('ws/manufacturers/<int:id>', wsviews.get_manufacturer_by_id, name='get_manufacturers_by_id'),
     path('ws/manufacturers/<int:id>/items', wsviews.get_instruments_by_manufacturer, name='get_instruments_by_manufacturer'),
+    path('ws/deletemanufacturer/<int:id>', wsviews.delete_manufacturer, name='delete_manufacturer'),
 
     path('ws/items', wsviews.get_items, name='get_items'),
     path('ws/items/<int:id>', wsviews.get_item_by_id, name='get_item_by_id'),

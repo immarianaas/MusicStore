@@ -38,6 +38,18 @@ def get_manufacturer_by_id(request, id):
     manu = Manufacturer.objects.get(pk=id)
     return Response(ManufacturerSerializer(manu).data)
 
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated, ))
+def delete_manufacturer(request, id):
+    try:
+        manufacturer = Manufacturer.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    manufacturer.delete()
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
 # -> apenas permite acederes se estiveres autenticado
 # @permission_classes((IsAuthenticated, ))
 @api_view(['GET'])
@@ -419,3 +431,4 @@ def get_orders(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     return Response(OrderSerializer(orders, many=True).data)
+

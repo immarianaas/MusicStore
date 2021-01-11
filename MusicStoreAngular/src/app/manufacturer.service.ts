@@ -4,6 +4,7 @@ import { Manufacturer } from './manufacturer';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Item} from './item';
+import {UserService} from './user.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -14,7 +15,22 @@ const httpOptions = {
 })
 export class ManufacturerService {
   private baseURL = 'http://localhost:8000/ws/';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
+
+  getCorrectHeader(): { headers: HttpHeaders} {
+    if (this.userService.token) {
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'JWT ' + this.userService.token
+        })
+      };
+
+    } // else:
+    return { headers: new HttpHeaders(
+        {'Content-Type': 'application/json'}
+      )};
+  }
 
   getManufacturers(): Observable<Manufacturer[]> {
     return this.http.get<Manufacturer[]>(this.baseURL + 'manufacturers');
@@ -26,5 +42,10 @@ export class ManufacturerService {
 
   getItemsOfManufacturer(id: number): Observable<Item[]> {
     return this.http.get<Item[]>(this.baseURL + 'manufacturers/' + id + '/items');
+  }
+
+  deleteManufacturer(id: number): Observable<any> {
+    const url = this.baseURL + 'deletemanufacturer/' + id;
+    return this.http.delete(url, this.getCorrectHeader());
   }
 }
