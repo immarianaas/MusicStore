@@ -20,18 +20,6 @@ import json
 # Create your views here.
 
 @api_view(['GET'])
-def send_email_registration(request):
-    email = EmailMessage(
-        subject= 'New account at Music Store!',
-        body='We are sending you this email to confirm that your account was created! You can now purchase items in our store.',
-        from_email='musicstore@null.net',
-        to=['msps.kat@gmail.com']
-    )
-    email.send()
-    return Response(status=status.HTTP_202_ACCEPTED)
-
-
-@api_view(['GET'])
 def get_manufacturers(request):
     manus = Manufacturer.objects.all()
     ''' # para o caso de haver argumentos:
@@ -252,10 +240,21 @@ def get_wishlist(request):
 
     return Response(ItemListSerializer(lista).data)
 
+def sendEmailOnCreate(name):
+    body = 'Hello' + name + ', we are very happy to have you associated with us.\n'
+    body += 'If you need help don\'t hesitate to contact us on musicstore@null.net, wi\'ll always be there for you.\n'
+    body += 'At last, thank you for your trust and good shopping ;)'
+    email = EmailMessage(
+        subject='New account at Music Store!',
+        body=body,
+        from_email='musicstore@null.net',
+        to=['msps.kat@gmail.com']
+    )
+    email.send()
+
 @api_view(['POST'])
 def create_account(request):
     recv = request.data
-    print(recv)
     del recv['user']['date_joined']
     try:
         print('here')
@@ -269,6 +268,8 @@ def create_account(request):
             cont = personser.validated_data['contact']
             role = personser.validated_data['role']
             Person.objects.create(name=name, gender=gen, contact=cont, user=u, role=role)
+
+            sendEmailOnCreate(name)
             return Response(personser.data, status=status.HTTP_201_CREATED)
 
     except Exception as err:

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
 import {AccountService} from './account.service';
 import {Account} from './account';
+import {ActivatedRoute, Router} from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -30,7 +31,9 @@ export class UserService {
   // error messages received from the login attempt
   public errors: any = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   private getUserAccount(): void {
@@ -56,6 +59,7 @@ export class UserService {
       data => {
         this.updateData(data['token']);
         this.getUserAccount();
+        this.router.navigate(['/']);
       },
       err => {
         this.errors = err['error'];
