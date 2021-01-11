@@ -7,6 +7,7 @@ import {ItemList} from './itemList';
 import {Address} from './address';
 import {Item} from './item';
 import {ItemQuantity} from './ItemQuantity';
+import {OrderModel} from './order-model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,6 @@ export class AccountService {
   }
 
   createAccount(acc: Account): Observable<any> {
-    console.log('nao?');
     return this.http.post(this.baseURL + 'create-account', acc, this.getCorrectHeader());
   }
 
@@ -88,11 +88,15 @@ export class AccountService {
   }
 
   removeItemWishlistItemId(item_id: number): any {
-    let url = this.baseURL + 'wishlist/rem?item_id=true';
+    const url = this.baseURL + 'wishlist/rem?item_id=true';
     return this.http.put(url, item_id, this.getCorrectHeader());
   }
 
   removeItemAtCart(idItemqt: number): Observable<any> {
     return this.http.put(this.baseURL + 'shoppingcart/rem', idItemqt, this.getCorrectHeader());
+  }
+
+  placeOrder(orderModel: OrderModel): Observable<any> {
+    return this.http.post<OrderModel>(this.baseURL + 'placeorder', orderModel, this.getCorrectHeader());
   }
 }

@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
   constructor(public userService: UserService, private accService: AccountService,
               private route: ActivatedRoute, private router: Router) {
     this.creating_account = false;
-    console.log(userService.toString());
     this.boolLogin = true;
     this.boolCreate = false;
 
@@ -44,7 +43,6 @@ export class LoginComponent implements OnInit {
       contact: null,
       role: 'C' // C for customer
     };
-    console.log(this.account);
   }
 
 
@@ -96,7 +94,6 @@ export class LoginComponent implements OnInit {
 
   save_new_account(): void {
     this.errors = [];
-    console.log(this.account);
     if (this.is_everything_correct()) {
       // this.error = 'All fields must be filled!';
       this.accService.createAccount(this.account).subscribe(
