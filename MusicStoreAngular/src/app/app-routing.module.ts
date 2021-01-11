@@ -13,6 +13,7 @@ import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
 import {WishlistComponent} from './wishlist/wishlist.component';
 import {PlaceOrderComponent} from './place-order/place-order.component';
 import {OrdersComponent} from './orders/orders.component';
+import {AuthGuardService} from './auth-guard.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/instruments', pathMatch: 'full'},
@@ -21,11 +22,11 @@ const routes: Routes = [
   {path: 'instruments', component: ItemsComponent},
   {path: 'instruments/:id', component: ItemDetailsComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'account', component: AccountInfoComponent},
-  {path: 'shoppingcart', component: ShoppingCartComponent},
-  {path: 'wishlist', component: WishlistComponent},
-  {path: 'placeorder', component: PlaceOrderComponent},
-  {path: 'orders', component: OrdersComponent},
+  {path: 'account', component: AccountInfoComponent, canActivate : [AuthGuardService]},
+  {path: 'shoppingcart', component: ShoppingCartComponent, canActivate : [AuthGuardService]},
+  {path: 'wishlist', component: WishlistComponent, canActivate : [AuthGuardService]},
+  {path: 'placeorder', component: PlaceOrderComponent, canActivate : [AuthGuardService]},
+  {path: 'orders', component: OrdersComponent, canActivate : [AuthGuardService]},
 
   {path: '**', component: NoPathExceptionComponent},
 

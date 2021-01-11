@@ -16,6 +16,7 @@ export class UserService {
 
   private baseURL = 'http://localhost:8000/ws/';
 
+  isLoggedIn: boolean;
   @Output() loggedInInfo = new EventEmitter<boolean>();
   @Output() adminInfo = new EventEmitter<boolean>();
 
@@ -34,6 +35,7 @@ export class UserService {
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
               private router: Router) {
+    this.isLoggedIn = false;
   }
 
   private getUserAccount(): void {
@@ -50,6 +52,7 @@ export class UserService {
                           this.adminInfo.emit(false);
                         }
                    this.loggedInInfo.emit(true);
+                   this.isLoggedIn = true;
       }
     );
   }
@@ -90,6 +93,7 @@ export class UserService {
     this.username = null;
     this.adminInfo.emit(false);
     this.loggedInInfo.emit(false);
+    this.isLoggedIn = false;
   }
 
   private updateData(token): void {
