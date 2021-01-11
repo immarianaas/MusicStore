@@ -97,7 +97,9 @@ export class ItemsComponent implements OnInit {
       this.getItems();
     else
       this.getItemsByManufacturer(this.manufacturer_id);
-    this.fillMapIsInWishlist();
+    if (this.authService.isLoggedVar()) {
+      this.fillMapIsInWishlist();
+    }
     this.getAllManufacturers();
   }
 

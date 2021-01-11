@@ -6,15 +6,23 @@ import { UserService } from './user.service';
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate{
+  private isLoggedIn: boolean;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) {
+    this.isLoggedIn = false;
+    this.userService.loggedInInfo.subscribe(val => this.isLoggedIn = val);
+  }
 
   canActivate(): boolean {
-    if (!this.userService.isLoggedIn) {
+    if (!this.isLoggedIn) {
       this.router.navigate(['/']);
       return false;
     }
     return true;
+  }
+
+  public isLoggedVar(): boolean {
+    return this.isLoggedIn;
   }
 
   public isLogged(): boolean {
