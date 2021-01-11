@@ -349,3 +349,15 @@ def place_order(request):
     except Exception:
         return Response(status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_orders(request):
+    person = Person.objects.get(user=request.user)
+
+    try:
+        orders = Order.objects.filter(person=person)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    return Response(OrderSerializer(orders, many=True).data)

@@ -12,6 +12,7 @@ import { AccountInfoComponent } from './account-info/account-info.component';
 import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
 import {WishlistComponent} from './wishlist/wishlist.component';
 import {PlaceOrderComponent} from './place-order/place-order.component';
+import {OrdersComponent} from './orders/orders.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/instruments', pathMatch: 'full'},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'shoppingcart', component: ShoppingCartComponent},
   {path: 'wishlist', component: WishlistComponent},
   {path: 'placeorder', component: PlaceOrderComponent},
+  {path: 'orders', component: OrdersComponent},
 
   {path: '**', component: NoPathExceptionComponent},
 

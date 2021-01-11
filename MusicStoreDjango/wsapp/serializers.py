@@ -53,9 +53,12 @@ class AddressSerializer(serializers.ModelSerializer):
         # fields = ( 'id', 'street', 'city', 'code', 'country', 'door', 'person' )
 
 class OrderSerializer(serializers.ModelSerializer):
+    person = PersonSerializer()
+    list = ItemListSerializer()
     class Meta:
         model = Order
-        fields = ( 'id', 'person', 'delivery_address', 'payment_time', 'order_status', 'list', 'payment_method' )
+        fields = '__all__'
+        depth = 1
 
 
 

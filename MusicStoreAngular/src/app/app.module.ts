@@ -23,6 +23,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import { PlaceOrderComponent } from './place-order/place-order.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ShoppingCartComponent,
     WishlistComponent,
     PlaceOrderComponent,
+    OrdersComponent,
   ],
     imports: [
         BrowserModule,
