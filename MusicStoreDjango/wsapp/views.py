@@ -195,7 +195,7 @@ def get_shopping_cart(request):
     try:
         item_lt = ItemList.objects.get(person=person, type='shoppingcart')
     except ObjectDoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(ItemListSerializer(item_lt).data)
 
@@ -247,7 +247,7 @@ def get_wishlist(request):
     try:
         lista = ItemList.objects.get(person=Person.objects.get(user=request.user), type='wishlist')
     except ObjectDoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(ItemListSerializer(lista).data)
 

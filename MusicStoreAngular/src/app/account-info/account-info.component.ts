@@ -48,8 +48,7 @@ export class AccountInfoComponent implements OnInit {
 
   getAccountAddresses(): void {
     this.accountService.getAccountAddresses().subscribe(addrs => this.addrs = addrs,
-                              err => console.log('ERROR: ' + err),
-                            () => console.log(this.addrs));
+                              err => console.log('ERROR: ' + err));
   }
 
   getAccountDetails(): void {
