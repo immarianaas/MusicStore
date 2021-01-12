@@ -1,0 +1,169 @@
+<div *ngIf="(isLogged() && !isAdmin()) || !isLogged()">
+  <app-items></app-items>
+</div>
+
+<div *ngIf="isAdmin()" class="body">
+  <main class="site-wrapper">
+    <div class="pt-table desktop-768">
+      <div class="pt-tablecell page-home relative">
+        <div class="overlay"></div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+              <div class="hexagon-menu clear">
+                <div class="hexagon-item">
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <a routerLink="/instruments" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="icon">
+                                                    <i class="fas fa-guitar"></i>
+                                                </span>
+                                                <span class="title">Instruments</span>
+                                            </span>
+                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                  </a>
+                </div>
+                <div class="hexagon-item">
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <a routerLink="/newinstrument" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="icon">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                                <span class="title">Add instrument</span>
+                                            </span>
+                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                  </a>
+                </div>
+                <div class="hexagon-item">
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <a routerLink="/manufacturers" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="icon">
+                                                    <i class="fas fa-pen-alt"></i>
+                                                </span>
+                                                <span class="title">Manufacturers</span>
+                                            </span>
+                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                  </a>
+                </div>
+                <div class="hexagon-item">
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <a routerLink="/newmanufacturer" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="icon">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                                <span class="title">Add manufacturer</span>
+                                            </span>
+                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                  </a>
+                </div>
+                <div class="hexagon-item">
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <a routerLink="/orders" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="icon">
+                                                    <i class="far fa-eye"></i>
+                                                </span>
+                                                <span class="title">Recent Orders</span>
+                                            </span>
+                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                  </a>
+                </div>
+                <div class="hexagon-item">
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <a routerLink="/newUsers" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="icon">
+                                                    <i class="fas fa-chart-line"></i>
+                                                </span>
+                                                <span class="title">App growth</span>
+                                            </span>
+                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                  </a>
+                </div>
+                <div class="hexagon-item">
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="hex-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <a routerLink="/moneyspent" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="icon">
+                                                    <i class="fas fa-euro-sign"></i>
+                                                </span>
+                                                <span class="title">Capital growth</span>
+                                            </span>
+                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

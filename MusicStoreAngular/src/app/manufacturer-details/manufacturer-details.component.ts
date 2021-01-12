@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import {Instrument} from '../instrument';
 import {Item} from '../item';
+import {AuthGuardService} from '../auth-guard.service';
 
 @Component({
   selector: 'app-manufacturer-details',
@@ -20,12 +21,21 @@ export class ManufacturerDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private manufacturersService: ManufacturerService
-  ) { }
+    private manufacturersService: ManufacturerService,
+    private authService: AuthGuardService
+  ) {  }
 
   ngOnInit(): void {
     this.getManufacturer();
     this.getItemsOfManufacturer();
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdminVar();
   }
 
   getManufacturer(): void {
@@ -33,10 +43,13 @@ export class ManufacturerDetailsComponent implements OnInit {
     this.manufacturersService.getManufacturer(id).subscribe(manufacturer => this.manufacturer = manufacturer);
   }
 
-
   getItemsOfManufacturer(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.manufacturersService.getItemsOfManufacturer(id).subscribe(instruments => this.instruments = instruments);
+  }
+
+  delete(id: number): void {
+    this.manufacturersService.deleteManufacturer(id).subscribe(() => this.goBack());
   }
 
 }

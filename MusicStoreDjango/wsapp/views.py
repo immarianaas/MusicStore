@@ -20,18 +20,6 @@ import json
 # Create your views here.
 
 @api_view(['GET'])
-def send_email_registration(request):
-    email = EmailMessage(
-        subject= 'New account at Music Store!',
-        body='We are sending you this email to confirm that your account was created! You can now purchase items in our store.',
-        from_email='musicstore@null.net',
-        to=['msps.kat@gmail.com']
-    )
-    email.send()
-    return Response(status=status.HTTP_202_ACCEPTED)
-
-
-@api_view(['GET'])
 def get_manufacturers(request):
     manus = Manufacturer.objects.all()
     ''' # para o caso de haver argumentos:
@@ -49,6 +37,18 @@ def get_manufacturers(request):
 def get_manufacturer_by_id(request, id):
     manu = Manufacturer.objects.get(pk=id)
     return Response(ManufacturerSerializer(manu).data)
+
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated, ))
+def delete_manufacturer(request, id):
+    try:
+        manufacturer = Manufacturer.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    manufacturer.delete()
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 # -> apenas permite acederes se estiveres autenticado
 # @permission_classes((IsAuthenticated, ))
@@ -74,6 +74,37 @@ def get_item_by_id(request, id):
     print(request.user.is_authenticated)
     return Response(ItemSerializer(item).data)
 
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated, ))
+def delete_item(request, id):
+    try:
+        item = Item.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    item.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
+def update_item(request):
+    id = request.data['id']
+    try:
+        item = Item.objects.get(id=id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    ser = ItemSerializer(data=request.data)
+    if ser.is_valid():
+        item.price = ser.validated_data['price']
+        item.save()
+
+        instrument = Instrument.objects.get(item=item.instrument.id)
+        instrument.description = request.data['instrument']['description']
+        instrument.save()
+
+        return Response(status=status.HTTP_202_ACCEPTED)
+
+    return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET'])
 def get_instruments_by_manufacturer(request, id):
     items = Item.objects.filter(instrument__manufacturer__pk=id)
@@ -137,6 +168,7 @@ def get_curr_person_object(request):    #     person = Person.objects.get(user=r
 @api_view(['PUT'])
 def rem_from_wishlist(request):
     person = Person.objects.get(user=request.user)
+    print(request.data)
     item = Item.objects.get(pk=request.data)
     if 'item_id' in request.GET and request.GET['item_id'] == 'true':
         # tenho de ir buscar o item_qty correspondente...
@@ -195,7 +227,7 @@ def get_shopping_cart(request):
     try:
         item_lt = ItemList.objects.get(person=person, type='shoppingcart')
     except ObjectDoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(ItemListSerializer(item_lt).data)
 
@@ -247,15 +279,27 @@ def get_wishlist(request):
     try:
         lista = ItemList.objects.get(person=Person.objects.get(user=request.user), type='wishlist')
     except ObjectDoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     return Response(ItemListSerializer(lista).data)
+
+def sendEmailOnCreate(name, email):
+    body = 'Hello ' + name + ', we are very happy to have you associated with us.\n'
+    body += 'If you need help don\'t hesitate to contact us on musicstore@null.net, wi\'ll always be there for you.\n'
+    body += 'At last, thank you for your trust and good shopping ;)'
+    email = EmailMessage(
+        subject='New account at Music Store!',
+        body=body,
+        from_email='musicstore@null.net',
+        to=[email]
+    )
+    email.send()
 
 @api_view(['POST'])
 def create_account(request):
     recv = request.data
-    print(recv)
-    del recv['user']['date_joined']
+    if 'date_joined' in recv:
+        del recv['user']['date_joined']
     try:
         print('here')
 
@@ -268,6 +312,8 @@ def create_account(request):
             cont = personser.validated_data['contact']
             role = personser.validated_data['role']
             Person.objects.create(name=name, gender=gen, contact=cont, user=u, role=role)
+
+            sendEmailOnCreate(name, recv['user']['username'])
             return Response(personser.data, status=status.HTTP_201_CREATED)
 
     except Exception as err:
@@ -353,7 +399,7 @@ def place_order(request):
     prod_list.save()
 
     try:
-        Order.objects.create(
+        order = Order.objects.create(
             person=person,
             delivery_address_id=request.data['address'],
             payment_method=request.data['payment'],
@@ -363,6 +409,15 @@ def place_order(request):
         )
     except Exception:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    # enviar mail para o cliente a confirmar compra
+    email = EmailMessage(
+        subject='Purchase confirmation',
+        body=f'We are sending you this email to confirm that your purchase was made! Your purchase has id {order.id}.\nThanks for trusting us ;)',
+        from_email='musicstore@null.net',
+        to=[request.user]
+    )
+    email.send()
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
@@ -376,3 +431,8 @@ def get_orders(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     return Response(OrderSerializer(orders, many=True).data)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_all_orders(request):
+    return Response(OrderSerializer(Order.objects.all(), many=True).data)

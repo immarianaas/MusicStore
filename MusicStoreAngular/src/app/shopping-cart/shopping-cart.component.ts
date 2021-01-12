@@ -52,18 +52,16 @@ export class ShoppingCartComponent implements OnInit {
     this.accountService.removeItemAtCart(item.id).subscribe();
   }
 
-  checkNoShoppingCart(responseStatus: number): void {
-    if (responseStatus === 404) {
-      this.emptyShoppingCart = true;
-    } else {
-      this.emptyShoppingCart = false;
-    }
-  }
-
   getShoppingCart(): void {
     this.accountService.getShoppingCart().subscribe(
-      itemList => {this.itemList = itemList; this.total = this.getTotal(itemList); },
-        response => this.checkNoShoppingCart(response.status));
+      itemList => { if (itemList) {
+                          this.itemList = itemList;
+                          this.total = this.getTotal(itemList);
+                          this.emptyShoppingCart = false;
+                        } else {
+                          this.emptyShoppingCart = true;
+                        }
+      });
   }
 
 }

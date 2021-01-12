@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
 import {AccountService} from './account.service';
 import {Account} from './account';
+import {ActivatedRoute, Router} from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -15,6 +16,7 @@ export class UserService {
 
   private baseURL = 'http://localhost:8000/ws/';
 
+  isLoggedIn: boolean;
   @Output() loggedInInfo = new EventEmitter<boolean>();
   @Output() adminInfo = new EventEmitter<boolean>();
 
@@ -30,7 +32,10 @@ export class UserService {
   // error messages received from the login attempt
   public errors: any = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.isLoggedIn = false;
   }
 
   private getUserAccount(): void {
@@ -47,6 +52,7 @@ export class UserService {
                           this.adminInfo.emit(false);
                         }
                    this.loggedInInfo.emit(true);
+                   this.isLoggedIn = true;
       }
     );
   }
@@ -56,6 +62,7 @@ export class UserService {
       data => {
         this.updateData(data['token']);
         this.getUserAccount();
+        this.router.navigate(['/']);
       },
       err => {
         this.errors = err['error'];
@@ -84,6 +91,9 @@ export class UserService {
     this.token = null;
     this.tokenExpires = null;
     this.username = null;
+    this.adminInfo.emit(false);
+    this.loggedInInfo.emit(false);
+    this.isLoggedIn = false;
   }
 
   private updateData(token): void {
@@ -92,7 +102,6 @@ export class UserService {
     // decode the token to read the username
     // and the expiration timestamp
     const tokenParts = this.token.split('.');
-    console.log(tokenParts);
 
     const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
 

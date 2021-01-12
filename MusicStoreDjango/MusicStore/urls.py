@@ -63,10 +63,13 @@ urlpatterns = [
     path('ws/manufacturers', wsviews.get_manufacturers, name='get_manufacturers'),
     path('ws/manufacturers/<int:id>', wsviews.get_manufacturer_by_id, name='get_manufacturers_by_id'),
     path('ws/manufacturers/<int:id>/items', wsviews.get_instruments_by_manufacturer, name='get_instruments_by_manufacturer'),
+    path('ws/deletemanufacturer/<int:id>', wsviews.delete_manufacturer, name='delete_manufacturer'),
 
     path('ws/items', wsviews.get_items, name='get_items'),
     path('ws/items/<int:id>', wsviews.get_item_by_id, name='get_item_by_id'),
     path('ws/purchase', wsviews.purchase, name='purchase'),
+    path('ws/deleteitem/<int:id>', wsviews.delete_item, name='delete_item'),
+    path('ws/updateitem', wsviews.update_item, name='update_item'),
 
     # account related:
     path('ws/account', wsviews.get_users_account, name='get_users_account'),
@@ -86,7 +89,6 @@ urlpatterns = [
     path('ws/wishlist/rem', wsviews.rem_from_wishlist, name='rem_from_wishlist'),
     path('ws/in-wishlist/<int:item_id>', wsviews.check_if_in_wishlist, name='check_if_in_wishlist'),
     path('ws/orders', wsviews.get_orders, name='get_orders'),
+    path('ws/ordersadmin', wsviews.get_all_orders, name='get_all_orders'),
 
-
-    path('ws/sendmail', wsviews.send_email_registration, name='send_email_registration'),
 ]

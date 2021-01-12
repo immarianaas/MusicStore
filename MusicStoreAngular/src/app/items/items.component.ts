@@ -84,7 +84,6 @@ export class ItemsComponent implements OnInit {
   isInWishlist: Map<number, boolean> = new Map<number, boolean>();
 
   constructor(private itemService: ItemService,
-              //private instrService: InstrumentService,
               private manuService: ManufacturerService,
               private accService: AccountService,
               private authService: AuthGuardService,
@@ -97,12 +96,18 @@ export class ItemsComponent implements OnInit {
       this.getItems();
     else
       this.getItemsByManufacturer(this.manufacturer_id);
-    this.fillMapIsInWishlist();
+    if (this.authService.isLoggedVar()) {
+      this.fillMapIsInWishlist();
+    }
     this.getAllManufacturers();
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdminVar();
   }
 
   getAllManufacturers(): void {
@@ -156,16 +161,17 @@ export class ItemsComponent implements OnInit {
 
   remWishList(id: number): void {
     this.accService.removeItemWishlistItemId(id).subscribe();
-    this.openSnackBar('Item removed from your wishlist!')
+    this.openSnackBar('Item removed from your wishlist!');
     this.isInWishlist.set(id, false);
   }
 
   fillMapIsInWishlist(): void {
     // 1o, get wishlist:
     this.accService.getWishlist().subscribe(
-      data => {
-        for (let w of data.items) {
-          this.isInWishlist.set(w.item.id, true);
+      data => { if (data) {
+          for (let w of data.items) {
+            this.isInWishlist.set(w.item.id, true);
+          }
         }
         console.log('map is set');
         //this.wishlist = data;
