@@ -1,6 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
 @import "../snack-bar.css";
 @import "../paginator.css";
+/*
+@import "../../styles.css";
+
+
+::ng-deep .mat-select {
+  background-color: blue;
+  font-weight: bold;
+  font-size: large;
+  color: #d7e7f1;
+}
+::ng-deep .selects {
+  color: #d7e7f1 !important;
+  background-color: #e67e22 ;
+}
+
+::ng-deep .mat-form-field-infix {
+  color: white;
+}
+
+
+ */
+
+
 
 
 

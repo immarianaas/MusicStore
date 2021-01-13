@@ -30,7 +30,13 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { IndexForAdminComponent } from './index-for-admin/index-for-admin.component';
-
+import {SliderModule} from 'primeng/slider';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { FooterComponent } from './footer/footer.component';
+import {ButtonModule} from 'primeng/button';
+import {DialogModule} from 'primeng/dialog';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -47,23 +53,30 @@ import { IndexForAdminComponent } from './index-for-admin/index-for-admin.compon
     PlaceOrderComponent,
     OrdersComponent,
     IndexForAdminComponent,
+    FooterComponent,
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        MatSnackBarModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatPaginatorModule,
-        MatSliderModule,
-        MatSelectModule,
-        MatSlideToggleModule,
-        MatInputModule,
-        MatIconModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatSliderModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    SliderModule,
+    InputSwitchModule,
+    ButtonModule,
+    DialogModule,
+    InputTextModule,
+    InputTextareaModule
+  ],
   providers: [
     UserService,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,

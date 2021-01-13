@@ -1,0 +1,48 @@
+<section class="footer" style="background: black">
+  <h3>Contact us!</h3>
+
+  <button pButton (click)="openModal()" type="button" class="p-button-help p-button-raised" label="click me!"></button>
+
+
+  <p-dialog [modal]="true" header="Contact us!" [(visible)]="modalVisible">
+    <br>
+
+    <form [formGroup]="contactForm">
+    <!--<input type="email" name="email" ngModel email-->
+    <!-- email -->
+    <span class="p-float-label" >
+<!--    <input [class.is-invalid]="contactForm.get('sender').invalid && contactForm.get('sender').touched" id="email" formControlName="sender" type="text" style="width: 100%" pInputText [(ngModel)]="sender" email required /> -->
+    <input [class.is-invalid]="senderVer.invalid && senderVer.touched" id="email" formControlName="sender" type="text" style="width: 100%" pInputText [(ngModel)]="sender" email required />
+    <label for="email">your email</label></span>
+      <div *ngIf="(senderVer.invalid && senderVer.touched) || senderVer.dirty">
+        <small *ngIf="senderVer.errors?.required" class="p-invalid">this looks so empty...</small>
+        <small *ngIf="senderVer.errors?.email" class="p-invalid">hmm.. this seems not look like a valid email address</small>
+      </div>
+    <br>
+
+    <!-- subject -->
+    <span class="p-float-label">
+    <input [class.is-invalid]="subjectVer.invalid && subjectVer.touched" id="subject" formControlName="subject" type="text" pInputText [(ngModel)]="subject" required />
+    <label for="subject">subject</label></span>
+      <div *ngIf="(subjectVer.invalid && subjectVer.touched) || subjectVer.dirty">
+        <small *ngIf="subjectVer.errors?.required" class="p-invalid">this seems so empty...</small>
+      </div>
+
+    <br>
+
+    <!-- message -- import {InputTextareaModule} from 'primeng/inputtextarea'; -->
+    <span class="p-float-label">
+    <textarea [class.is-invalid]="msgVer.invalid && msgVer.touched" id="message" formControlName="message" pInputTextarea [(ngModel)]="message" required ></textarea>
+    <label for="message">message</label></span>
+      <div *ngIf="(msgVer.invalid && msgVer.touched) || msgVer.dirty">
+        <small *ngIf="msgVer.errors?.required" class="p-invalid">this seems so empty...</small>
+      </div>
+
+
+    <button pButton [disabled]="!contactForm.valid" (click)="send();" type="button" class="p-button-help p-button-raised" label="send!"></button>
+    </form>
+
+  </p-dialog>
+
+
+</section>

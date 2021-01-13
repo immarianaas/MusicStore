@@ -24,7 +24,7 @@
         <label><strong>Category:</strong></label>
         <mat-form-field>
           <mat-select [formControl]="categoryFormControl" [disabled]="!editVar && !creating" [(ngModel)]="item.instrument.category">
-            <mat-option  *ngFor="let c of categories" [value]="c" >
+            <mat-option *ngFor="let c of categories" [value]="c" >
               {{c}}
             </mat-option>
           </mat-select>

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
 
+/* para a cor do texto dos selects ser branca */
+:host /deep/ .mat-select-value-text {
+  color: white !important;
+}
+
 .main {
   margin-top: 1rem;
 }

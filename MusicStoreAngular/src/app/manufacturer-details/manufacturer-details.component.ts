@@ -10,6 +10,7 @@ import {AuthGuardService} from '../auth-guard.service';
 import {FormControl, Validators} from '@angular/forms';
 
 import { COUNTRIES } from '../COUNTRIES';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-manufacturer-details',
@@ -29,7 +30,8 @@ export class ManufacturerDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private manufacturersService: ManufacturerService,
-    private authService: AuthGuardService
+    private authService: AuthGuardService,
+    private snackBar: MatSnackBar
   ) {
     this.editing = false;
     this.creating = false;
@@ -101,6 +103,8 @@ export class ManufacturerDetailsComponent implements OnInit {
           data => {
             this.manufacturer = data;
             this.editing = false;
+            this.openSnackBar('Manufacturer edited successfully!')
+
           }, error => {
             console.log(error.error);
           }
@@ -110,14 +114,21 @@ export class ManufacturerDetailsComponent implements OnInit {
           data => {
             this.manufacturer = data;
             this.creating = false;
+            this.openSnackBar('Manufacturer created successfully!')
           },
           error => {
             console.log(error.error);
           }
-        ); // TODO finish
+        );
       }
     }
   }
+
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'Ok', {duration: 5000, panelClass: ['my-snack-bar']} );
+  }
+
+
 
   reset(): void {
     this.manufacturer = new Manufacturer();

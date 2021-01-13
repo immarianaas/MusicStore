@@ -153,11 +153,16 @@ export class ItemDetailsComponent implements OnInit {
     ) {
       console.log('entrou');
       if (!this.creating)
-        this.itemService.updateItem(item).subscribe(() => this.editVar = false);
+        this.itemService.updateItem(item).subscribe(() => {
+          this.editVar = false;
+          this.openSnackBar('Item was edited successfully!');
+        });
       else
         this.itemService.createItem(item).subscribe(data => {
           console.log(JSON.stringify(data));
+          this.openSnackBar('Item was created successfully!');
           this.router.navigate(['/instruments/' + data.id]);
+
 
         });
     }

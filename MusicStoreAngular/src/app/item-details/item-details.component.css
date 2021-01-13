@@ -1,6 +1,10 @@
 @import "../snack-bar.css";
-
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+/* para a cor do texto dos selects ser branca */
+:host /deep/ .mat-select-value-text {
+  color: white !important;
+}
 
 
 .container-instruments {

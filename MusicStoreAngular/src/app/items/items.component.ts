@@ -28,12 +28,21 @@ import { MatIconModule } from '@angular/material/icon';
 
 // import { MatSnackBar } from '@angular/material/snack-bar'
 
+import { SliderModule } from 'primeng/slider';
+import { Slider } from 'primeng/slider';
+
+import { InputSwitch } from 'primeng/inputswitch';
+import { InputSwitchModule } from 'primeng/inputswitch';
+
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
+
+  val: number = 9;
+  priceRange: number[] = null;
 
   optionsVisible: boolean;
 
@@ -88,8 +97,10 @@ export class ItemsComponent implements OnInit {
               private accService: AccountService,
               private authService: AuthGuardService,
               private location: Location,
-              private snackBar: MatSnackBar
-    ) { }
+              private snackBar: MatSnackBar,
+    ) {
+    this.priceRange = [null, null];
+  }
 
   ngOnInit(): void {
     if (!this.manufacturer_id)
@@ -120,6 +131,20 @@ export class ItemsComponent implements OnInit {
         this.items = items;
         this.allItems = items;
         this.setUpFirstPagePaginator(items);
+        /* n sei pq o max n tava a dar bemm...
+        this.maxPrice = items.reduce((max, p) => p.price > max ? p.price : max, items[0].price);
+        this.minPrice = items.reduce((min, p) => p.price < min ? p.price : min, items[0].price);
+        //this.maxPrice = Math.max(this.items.map(d => d.price));
+        */
+        this.minPrice = 0
+        this.maxPrice = 0
+        for (let p of items) {
+          this.minPrice = this.minPrice < p.price ? this.minPrice : p.price;
+          this.maxPrice = this.maxPrice > p.price ? this.maxPrice : p.price;
+        }
+        console.log('max price: ' + this.maxPrice);
+        console.log('min price: ' + this.minPrice);
+
       }
     );
   }
@@ -265,7 +290,9 @@ export class ItemsComponent implements OnInit {
   }
 
   applyPriceRange(): void {
-    this.items = this.items.filter( item => ( !this.minPrice || item.price > this.minPrice ) && ( !this.maxPrice || item.price <= this.maxPrice) );
+    this.priceRange = [this.priceRange[0], this.priceRange[1]]; /* sem isto o slider n da :shurg: */
+    //this.items = this.items.filter( item => ( !this.minPrice || item.price > this.minPrice ) && ( !this.maxPrice || item.price <= this.maxPrice) );
+    this.items = this.items.filter( item => ( !this.priceRange[0] || item.price > this.priceRange[0] ) && ( !this.priceRange[1] || item.price <= this.priceRange[1]) );
   }
 
   filterByKeyword(): void {

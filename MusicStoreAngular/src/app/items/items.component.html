@@ -4,8 +4,15 @@
   <section>
     <br><br><br><br>
 
+    <p>{{minPrice}}-{{maxPrice}}</p>
+    <h4>{{priceRange[0]}} - {{priceRange[1]}}</h4>
+    <p-slider [(ngModel)]="priceRange" [range]="true" [max]="maxPrice" [min]="minPrice" [step]="0.01" ></p-slider>
+
+    <!-- [max]="maxPrice" [min]="minPrice" -->
+    <!-- [max]="10000" [min]="0" -->
     <div class="container  options1">
-    <div>
+
+      <div>
       <label>Search by keyword:</label>
       <mat-form-field>
         <mat-label>Search:</mat-label>
@@ -25,7 +32,8 @@
         <label>Filter by price range:</label>
       <mat-form-field>
         <mat-label>Minimum price:</mat-label>
-        <input matInput (input)="applyFilters()" [(ngModel)]="minPrice" type="number">
+        <!--<input matInput (input)="applyFilters()" [(ngModel)]="minPrice" type="number">-->
+        <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[0]" type="number">
         <button mat-button *ngIf="minPrice" matSuffix mat-icon-button aria-label="Clear" (click)="minPrice=null">
           <mat-icon>clear</mat-icon>
         </button>
@@ -33,7 +41,7 @@
 
       <mat-form-field>
         <mat-label>Maximum price:</mat-label>
-        <input matInput (input)="applyFilters()" [(ngModel)]="maxPrice" type="number">
+        <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[1]" type="number">
         <button mat-button *ngIf="maxPrice" matSuffix mat-icon-button aria-label="Clear" (click)="maxPrice=null">
           <mat-icon>clear</mat-icon>
         </button>
