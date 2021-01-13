@@ -46,7 +46,8 @@ export class UserService {
       )
     };
     this.http.get<Account>(this.baseURL + 'account', httpOptWithJWT).subscribe(
-      account => { if (account.role === 'A') {
+      account => { if (account.role === 'A' || account.role === 'S'  ) {
+        // TODO - alterar? mudar o nome? idk?
                           this.adminInfo.emit(true);
                         } else {
                           this.adminInfo.emit(false);

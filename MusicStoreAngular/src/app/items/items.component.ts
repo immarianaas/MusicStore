@@ -135,12 +135,13 @@ export class ItemsComponent implements OnInit {
   }
 
   getItemsByManufacturer(manufacturer_id: number): void {
+    // só usado nos manufacturers (se n, tinha-se de tirar a ultima linha do subscribe)
     this.itemService.getItemsByManufacturer(manufacturer_id).subscribe(
       items => {
         this.items = items;
         this.length = items.length;
         this.activePageDataChunk = this.items.slice(0, this.pageSize);
-
+        this.allItems = items;
       });
   }
 

@@ -48,4 +48,14 @@ export class ManufacturerService {
     const url = this.baseURL + 'deletemanufacturer/' + id;
     return this.http.delete(url, this.getCorrectHeader());
   }
+
+  updateManufacturer(manu: Manufacturer): Observable<Manufacturer> {
+    const url = this.baseURL + 'editmanufacturer';
+    return this.http.put<Manufacturer>(url, manu, this.getCorrectHeader());
+  }
+
+  createManufacturer(manu: Manufacturer): Observable<Manufacturer> {
+    const url = this.baseURL + 'createmanufacturer';
+    return this.http.post<Manufacturer>(url, manu, this.getCorrectHeader());
+  }
 }

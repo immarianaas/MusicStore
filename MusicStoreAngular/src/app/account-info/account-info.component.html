@@ -114,6 +114,7 @@
           <span [hidden]="i != canEdit" style="color: darkred;" *ngFor="let error of errors['code']"> {{error}} </span> <!-- TODO -->
         </td>
         <td>
+
           <select style="color: black" [disabled]="i != canEdit" [(ngModel)]="add.country">
             <option value="" [selected]="canEdit != -1 && i == canEdit" hidden>Select an option</option>
             <optgroup label="Africa">

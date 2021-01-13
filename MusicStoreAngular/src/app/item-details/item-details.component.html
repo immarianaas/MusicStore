@@ -3,32 +3,122 @@
     <div class="row">
       <div class="col-lg-8 col-md-12 col-sm-12">
         <h2 class="font-weight-bold">{{item.instrument.name}}</h2>
+
+        <div *ngIf="editVar || creating">
+        <label><strong>Name:</strong></label>
+        <mat-form-field style="width: 100%">
+          <!--<mat-label></mat-label>-->
+          <input type="text" [formControl]="nameFormControl" matInput [readonly]="!editVar && !creating" [(ngModel)]="item.instrument.name">
+          <mat-error *ngIf="nameFormControl.hasError('required')">This field can't be left blank.</mat-error>
+          <button [hidden]="!editVar" mat-button *ngIf="item.instrument.name" matSuffix mat-icon-button aria-label="Clear" (click)="item.instrument.name=''">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+        </div>
+        <br>
+        <!--
         <p>category: {{item.instrument.category}}</p>
         <p>manufacturer: {{item.instrument.manufacturer.name}}</p>
+        -->
+
+        <label><strong>Category:</strong></label>
+        <mat-form-field>
+          <mat-select [formControl]="categoryFormControl" [disabled]="!editVar && !creating" [(ngModel)]="item.instrument.category">
+            <mat-option  *ngFor="let c of categories" [value]="c" >
+              {{c}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Must not be left empty.</mat-error>
+
+        </mat-form-field>
+        <br>
+
+        <label><strong>Manufacturer:</strong></label>
+        <mat-form-field>
+        <mat-select [formControl]="manufacturerFormControl" [disabled]="!editVar && !creating" [(ngModel)]="item.instrument.manufacturer.id">
+          <mat-option  *ngFor="let m of manufacturers" [value]="m.id" >
+            {{m.name}}
+          </mat-option>
+        </mat-select>
+          <mat-error>Must not be left empty.</mat-error>
+        </mat-form-field>
+<br>
+
+          <label><strong>Serial number:</strong></label>
+          <mat-form-field>
+            <!--<mat-label></mat-label>-->
+            <input type="text" [formControl]="nameFormControl" matInput [readonly]="!creating" [(ngModel)]="item.instrument.nr_serie">
+            <mat-error *ngIf="nameFormControl.hasError('required')">This field can't be left blank.</mat-error>
+            <button [hidden]="!editVar" mat-button *ngIf="item.instrument.nr_serie" matSuffix mat-icon-button aria-label="Clear" (click)="item.instrument.nr_serie=''">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-form-field>
+
+        <!--
+        <br>
+        <label><strong>Serial number:</strong></label>
+        <mat-form-field>
+          <input type="number" [formControl]="priceFormControl" matInput [readonly]="!creating" [(ngModel)]="item.instrument.nrSerie">
+          <mat-error *ngIf="priceFormControl.hasError('required')">This field can't be left empty.</mat-error>
+        </mat-form-field>
+-->
+        <br>
+
+        <label><strong>Description:</strong></label>
+        <mat-form-field style="width: 100%">
+          <textarea matInput [readonly]="!editVar && !creating" [formControl]="descriptionFormControl" [(ngModel)]="item.instrument.description"></textarea>
+          <mat-error>Must not be left empty.</mat-error>
+        </mat-form-field>
+
+        <br>
+        <!--
         <div class="row"><div class="col-1"><p>description:</p></div>
           <div class="col-11"><textarea class="textarea-field" rows="3" cols="100" [ngClass]="{'border': editVar}" [readOnly]="!editVar" [(ngModel)]="item.instrument.description"></textarea></div>
         </div>
-        <h3>price: $<input class="input-fields" type="number" [ngClass]="{'border': editVar}" [readOnly]="!editVar" [(ngModel)]="item.price"></h3>
+        -->
+
+
+       <!-- <h3>price: $<input class="input-fields" type="number" [ngClass]="{'border': editVar}" [readOnly]="!editVar" [(ngModel)]="item.price"></h3> -->
+        <label><strong>Price $</strong></label>
+        <mat-form-field>
+          <!--<mat-label></mat-label>-->
+            <input type="number" [formControl]="priceFormControl" matInput [readonly]="!editVar && !creating" [(ngModel)]="item.price">
+          <mat-error *ngIf="priceFormControl.hasError('required') || priceFormControl.hasError('min')">Please enter a valid price.</mat-error>
+        </mat-form-field>
+
+        <br>
+        <div *ngIf="editVar || creating">
+        <label><strong>Image:</strong></label>
+        <mat-form-field style="width: 100%">
+          <input type="url" [formControl]="imageFormControl" matInput [readonly]="!editVar && !creating" [(ngModel)]="item.instrument.image">
+          <mat-error *ngIf="imageFormControl.hasError('required')">This field can't be left blank.</mat-error>
+          <button [hidden]="!editVar && !creating" mat-button *ngIf="item.instrument.image" matSuffix mat-icon-button aria-label="Clear" (click)="item.instrument.image=''">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+        </div>
       </div>
       <div class="col-lg-4 col-md-12 col-sm-12">
         <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'>
       </div>
     </div>
     <div class="row" style="margin-top: 0.5rem; width: 100%; justify-content: center; text-align: center">
-      <div *ngIf="!isAdmin()">
+      <div *ngIf="!isAdmin() && !creating">
         <button *ngIf="isInWishlist" (click)="removeItemFromWishlist()">Remove from wishlist</button>
         <button *ngIf="!isInWishlist" (click)="addWishlist()">Add to wishlist</button>
         <button (click)="purchase()">Buy</button>
       </div>
-      <div *ngIf="isAdmin()">
-        <div *ngIf="!editVar">
+      <div *ngIf="!isAdmin()"> <!-- TODO tirar o ! !!! -->
+        <div *ngIf="!editVar && !creating">
           <button (click)="edit()">edit</button>
           <button (click)="deleteItem(item.id)">delete</button>
         </div>
-        <div *ngIf="editVar">
+
+        <div *ngIf="editVar || creating">
           <button (click)="save(item)">save</button>
           <button (click)="cancel()">cancel</button>
         </div>
+        <button *ngIf="creating" (click)="reset()">reset</button>
       </div>
     </div>
   </div>

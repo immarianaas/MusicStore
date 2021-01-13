@@ -6,9 +6,16 @@ export class Item {
   // instrument_object: Instrument;
   price: number;
 
+  /*
   constructor(id: number, instrument: Instrument, price: number) {
     this.id = id;
     this.instrument = instrument;
     this.price = price;
+  }*/
+
+  constructor() {
+    this.id = null;
+    this.instrument = new Instrument();
+    this.price = null;
   }
 }

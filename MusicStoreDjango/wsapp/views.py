@@ -88,6 +88,7 @@ def delete_item(request, id):
 @permission_classes((IsAuthenticated, ))
 def update_item(request):
     id = request.data['id']
+    print(request.data)
     try:
         item = Item.objects.get(id=id)
     except ObjectDoesNotExist:
@@ -95,16 +96,80 @@ def update_item(request):
 
     ser = ItemSerializer(data=request.data)
     if ser.is_valid():
-        item.price = ser.validated_data['price']
-        item.save()
+        print('ser', ser)
+        try:
+            item.price = ser.validated_data['price']
+            instrument = Instrument.objects.get(item=item.instrument.id)
+            # instrument.description = request.data['instrument']['description']
+            request.data['instrument']['manufacturer'] = request.data['instrument']['manufacturer']['id']
+            isntrser = InstrumentSerializer(data=request.data['instrument'])
+            print(isntrser)
+            if isntrser.is_valid():
+                instrument.description = isntrser.validated_data['description']
+                instrument.name = isntrser.validated_data['name']
+                instrument.category = isntrser.validated_data['category']
+                instrument.image = isntrser.validated_data['image']
+                instrument.manufacturer_id = isntrser.validated_data['manufacturer']
+                instrument.save()
+                item.save()
+                return Response(status=status.HTTP_202_ACCEPTED)
+            else:
+                print(isntrser.errors)
 
-        instrument = Instrument.objects.get(item=item.instrument.id)
-        instrument.description = request.data['instrument']['description']
-        instrument.save()
-
-        return Response(status=status.HTTP_202_ACCEPTED)
+        except Exception as e:
+            print(e.with_traceback())
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+# @permission_classes((IsAuthenticated, ))
+def update_manufacturer(request):
+    id = request.data['id']
+    try:
+        manu = Manufacturer.objects.get(pk=id)
+    except Exception:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    ser = ManufacturerSerializer(manu, data=request.data)
+    if ser.is_valid():
+        ser.save()
+        return Response(ser.data, status=status.HTTP_200_OK)
+    return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['POST'])
+# @permission_classes((IsAuthenticated, ))
+def add_item(request):
+    try:
+        request.data['instrument']['manufacturer'] = request.data['instrument']['manufacturer']['id']
+        instrser = InstrumentSerializer(data=request.data['instrument'])
+        if instrser.is_valid():
+            i = instrser.save()
+            item = Item.objects.create(instrument=i, price=request.data['price'])
+            print(item.id)
+            return Response(ItemSerializer(item).data, status=status.HTTP_201_CREATED)
+        else:
+            print(instrser.errors)
+    except Exception as e:
+        pass
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    #if ser.is_valid():
+
+
+@api_view(['POST'])
+# @permission_classes((IsAuthenticated, ))
+def create_manufacturer(request):
+    ser = ManufacturerSerializer(data=request.data)
+    if ser.is_valid():
+        ser.save()
+        return Response(ser.data, status=status.HTTP_201_CREATED)
+    return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 @api_view(['GET'])
 def get_instruments_by_manufacturer(request, id):
     items = Item.objects.filter(instrument__manufacturer__pk=id)

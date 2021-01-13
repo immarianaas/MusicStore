@@ -80,4 +80,8 @@ export class ItemService {
     return this.http.put<Item>(this.baseURL + 'updateitem', item, this.getCorrectHeader());
   }
 
+  createItem(item: Item): Observable<Item> {
+    return this.http.post<Item>(this.baseURL + 'additem', item, this.getCorrectHeader());
+  }
+
 }

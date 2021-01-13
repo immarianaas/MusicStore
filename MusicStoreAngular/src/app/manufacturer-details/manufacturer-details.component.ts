@@ -7,6 +7,9 @@ import { Location } from '@angular/common';
 import {Instrument} from '../instrument';
 import {Item} from '../item';
 import {AuthGuardService} from '../auth-guard.service';
+import {FormControl, Validators} from '@angular/forms';
+
+import { COUNTRIES } from '../COUNTRIES';
 
 @Component({
   selector: 'app-manufacturer-details',
@@ -18,16 +21,45 @@ export class ManufacturerDetailsComponent implements OnInit {
   manufacturer: Manufacturer;
   instruments: Item[];
 
+  editing: boolean;
+  COUNTRIES: any = COUNTRIES;
+  creating: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private manufacturersService: ManufacturerService,
     private authService: AuthGuardService
-  ) {  }
+  ) {
+    this.editing = false;
+    this.creating = false;
+  }
+
+  nameFormControl = new FormControl('', [
+    Validators.required,
+  ])
+
+  imageFormControl = new FormControl('', [
+    Validators.required,
+  ])
+
+  countryFormControl = new FormControl('', [
+    Validators.required,
+  ])
+
 
   ngOnInit(): void {
-    this.getManufacturer();
-    this.getItemsOfManufacturer();
+    this.route.url.subscribe(params => {
+      this.creating = params[0].path == 'create-manufacturer';
+      console.log(this.creating);
+    });
+    if (!this.creating) {
+      this.getManufacturer();
+      this.getItemsOfManufacturer();
+    } else {
+      this.manufacturer = new Manufacturer();
+    }
+
   }
 
   goBack(): void {
@@ -50,6 +82,45 @@ export class ManufacturerDetailsComponent implements OnInit {
 
   delete(id: number): void {
     this.manufacturersService.deleteManufacturer(id).subscribe(() => this.goBack());
+  }
+
+  edit(): void {
+    this.editing = true;
+  }
+
+  save(): void {
+    if (
+      this.manufacturer.country
+      && this.manufacturer.country.trim() != ''
+      && this.manufacturer.name.trim() != ''
+      && this.manufacturer.logo.trim() != ''
+    ) {
+      console.log('entrou aqui');
+      if (this.editing) {
+        this.manufacturersService.updateManufacturer(this.manufacturer).subscribe(
+          data => {
+            this.manufacturer = data;
+            this.editing = false;
+          }, error => {
+            console.log(error.error);
+          }
+        );
+      } else if (this.creating) {
+        this.manufacturersService.createManufacturer(this.manufacturer).subscribe(
+          data => {
+            this.manufacturer = data;
+            this.creating = false;
+          },
+          error => {
+            console.log(error.error);
+          }
+        ); // TODO finish
+      }
+    }
+  }
+
+  reset(): void {
+    this.manufacturer = new Manufacturer();
   }
 
 }

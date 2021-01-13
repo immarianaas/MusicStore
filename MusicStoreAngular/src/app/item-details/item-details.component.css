@@ -1,5 +1,8 @@
 @import "../snack-bar.css";
 
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
 .container-instruments {
   margin-top: 2rem;
 }

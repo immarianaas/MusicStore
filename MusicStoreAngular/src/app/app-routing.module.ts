@@ -22,13 +22,16 @@ const routes: Routes = [
   {path: 'manufacturers/:id', component: ManufacturerDetailsComponent},
   {path: 'instruments', component: ItemsComponent},
   {path: 'instruments/:id', component: ItemDetailsComponent},
+  {path: 'create-instrument', component: ItemDetailsComponent},
+  {path: 'create-manufacturer', component: ManufacturerDetailsComponent},
+
+
   {path: 'login', component: LoginComponent},
   {path: 'account', component: AccountInfoComponent, canActivate : [AuthGuardService]},
   {path: 'shoppingcart', component: ShoppingCartComponent, canActivate : [AuthGuardService]},
   {path: 'wishlist', component: WishlistComponent, canActivate : [AuthGuardService]},
   {path: 'placeorder', component: PlaceOrderComponent, canActivate : [AuthGuardService]},
   {path: 'orders', component: OrdersComponent, canActivate : [AuthGuardService]},
-
   {path: '**', component: NoPathExceptionComponent},
 
 ];

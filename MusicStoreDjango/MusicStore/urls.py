@@ -64,12 +64,15 @@ urlpatterns = [
     path('ws/manufacturers/<int:id>', wsviews.get_manufacturer_by_id, name='get_manufacturers_by_id'),
     path('ws/manufacturers/<int:id>/items', wsviews.get_instruments_by_manufacturer, name='get_instruments_by_manufacturer'),
     path('ws/deletemanufacturer/<int:id>', wsviews.delete_manufacturer, name='delete_manufacturer'),
+    path('ws/editmanufacturer', wsviews.update_manufacturer, name='update_manufacturer'),
+    path('ws/createmanufacturer', wsviews.create_manufacturer, name='create_manufacturer'),
 
     path('ws/items', wsviews.get_items, name='get_items'),
     path('ws/items/<int:id>', wsviews.get_item_by_id, name='get_item_by_id'),
     path('ws/purchase', wsviews.purchase, name='purchase'),
     path('ws/deleteitem/<int:id>', wsviews.delete_item, name='delete_item'),
     path('ws/updateitem', wsviews.update_item, name='update_item'),
+    path('ws/additem', wsviews.add_item, name='add_item'),
 
     # account related:
     path('ws/account', wsviews.get_users_account, name='get_users_account'),

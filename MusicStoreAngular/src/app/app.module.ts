@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ManufacturersComponent } from './manufacturers/manufacturers.component';
@@ -48,21 +48,22 @@ import { IndexForAdminComponent } from './index-for-admin/index-for-admin.compon
     OrdersComponent,
     IndexForAdminComponent,
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatSnackBarModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatSliderModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatInputModule,
-    MatIconModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatSnackBarModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatPaginatorModule,
+        MatSliderModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatInputModule,
+        MatIconModule,
+        ReactiveFormsModule
+    ],
   providers: [
     UserService,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
