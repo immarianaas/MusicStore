@@ -60,6 +60,7 @@
           <!-- TODO talvez colocar aqui o botao de edit tmb -->
           <button *ngIf="!editing && !creating" (click)="edit()">Edit</button>
           <button *ngIf="editing || creating" (click)="save()">Save</button>
+          <button *ngIf="editing || creating" (click)="cancel()">Save</button>
           <button *ngIf="creating" (click)="reset()">Reset</button>
 
           <button (click)="delete(manufacturer.id)" >Delete</button>

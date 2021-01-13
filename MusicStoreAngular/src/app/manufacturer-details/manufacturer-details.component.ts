@@ -123,4 +123,17 @@ export class ManufacturerDetailsComponent implements OnInit {
     this.manufacturer = new Manufacturer();
   }
 
+  cancel(): void {
+    if (!this.creating) {
+      this.getManufacturer();
+    } else {
+      this.goBack();
+    }
+  }
+
+
+
+
+
+
 }
