@@ -1,60 +1,41 @@
 <section>
   <section class="row">
     <div class="col-lg-2 col-md-12 col-sm-12 search-options">
-      <div class="slider">
-        <p>{{minPrice}}-{{maxPrice}}</p>
-        <h4>{{priceRange[0]}} - {{priceRange[1]}}</h4>
+      <div class="container search-item">
+        <div class="row search-keyword">
+          <div class="col-2">
+            <i class="fas fa-search"></i>
+          </div>
+          <div class="col-10" style="font-size: 0.7rem">
+            <mat-form-field>
+              <mat-label>Search:</mat-label>
+              <input matInput (input)="applyFilters()" (change)="applyFilters()" [(ngModel)]="searchWord" type="text">
+              <button mat-button *ngIf="searchWord" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="searchWord=null; applyFilters()">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="slider search-item">
+        <p>Filter by price ({{priceRange[0]}}€ - {{priceRange[1]}}€)</p>
         <div style="width: 90%; margin-left: 10%">
-          <p-slider [(ngModel)]="priceRange" (onChange)="applyFilters()" [range]="true" [max]="maxPrice" [min]="minPrice" [step]="0.01"></p-slider>
+          <p-slider [(ngModel)]="priceRange" (onChange)="applyFilters()" [range]="true" [max]="maxPrice"
+                    [min]="minPrice" [step]="0.01"></p-slider>
         </div>
         <!-- [max]="maxPrice" [min]="minPrice" -->
         <!-- [max]="10000" [min]="0" -->
       </div>
 
-      <div class="container  options1">
-
-        <div>
-          <label>Search by keyword:</label>
-          <mat-form-field>
-            <mat-label>Search:</mat-label>
-            <input matInput (input)="applyFilters()" (change)="applyFilters()" [(ngModel)]="searchWord" type="text">
-            <button mat-button *ngIf="searchWord" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="searchWord=null; applyFilters()">
-              <mat-icon>clear</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-
-      </div>
-      <div class="container listoptions">
-        <div>
-          <label>Filter by price range:</label>
-          <mat-form-field>
-            <mat-label>Minimum price:</mat-label>
-            <!--<input matInput (input)="applyFilters()" [(ngModel)]="minPrice" type="number">-->
-            <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[0]" type="number">
-            <button mat-button *ngIf="minPrice" matSuffix mat-icon-button aria-label="Clear" (click)="minPrice=null">
-              <mat-icon>clear</mat-icon>
-            </button>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Maximum price:</mat-label>
-            <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[1]" type="number">
-            <button mat-button *ngIf="maxPrice" matSuffix mat-icon-button aria-label="Clear" (click)="maxPrice=null">
-              <mat-icon>clear</mat-icon>
-            </button>
-          </mat-form-field>
-
-        </div>
-        <!--
-          <mat-label>Maximum price:</mat-label>
-          <input [(ngModel)]="maxPrice" type="number" required>
-          <button class="btn btn-info">filter by price range</button>
-    -->
-
-        <div *ngIf="!manufacturer_id">
-          <label>Filter by manufacturer:</label>
+      <!--
+        <mat-label>Maximum price:</mat-label>
+        <input [(ngModel)]="maxPrice" type="number" required>
+        <button class="btn btn-info">filter by price range</button>
+  -->
+      <div class="search-item" style="margin-left: 0.4rem"><p>Filter by</p>
+        <div *ngIf="!manufacturer_id" class="search-item-div">
+          <label>manufacturer:</label>
           <mat-form-field>
             <mat-select [(value)]="selectedManufacturer" (selectionChange)="applyFilters()">
               <mat-option [value]="-1">Show all</mat-option>
@@ -66,28 +47,29 @@
         <!-- email: musicstore@null.net
              thisismypassword -->
 
-        <div>
-          <label>Filter by category:</label>
+        <div class="search-item-div">
+          <label>category:</label>
           <mat-form-field>
             <mat-select [(value)]="selectedCategory" (selectionChange)="applyFilters()">
               <mat-option [value]="cat" *ngFor="let cat of categories">{{cat}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <div>
-          <label>Order your results:</label>
+      </div>
 
-          <mat-form-field>
-            <!--<mat-label>Filters:</mat-label>-->
-            <mat-select [(value)]="selectedOrder" (selectionChange)="applyFilters()">
-              <mat-option [value]="opt" *ngFor="let opt of orderOptions">{{opt}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+      <div class="search-item search-item-div">
+        <label>Order your results:</label>
 
-          <mat-slide-toggle [disabled]="selectedOrder=='None / Default'"
-                            [checked]="descendingActive" (change)="toggleDescending()">descending
-          </mat-slide-toggle>
-        </div>
+        <mat-form-field>
+          <!--<mat-label>Filters:</mat-label>-->
+          <mat-select [(value)]="selectedOrder" (selectionChange)="applyFilters()">
+            <mat-option [value]="opt" *ngFor="let opt of orderOptions">{{opt}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-slide-toggle [disabled]="selectedOrder=='None / Default'"
+                          [checked]="descendingActive" (change)="toggleDescending()">descending
+        </mat-slide-toggle>
       </div>
     </div>
 

@@ -218,5 +218,28 @@
   margin-top: 4rem;
   background-color: #34495e;
   border-radius: 1rem;
+  color: white;
 }
 
+mat-label, mat-select, mat-option {
+  color: white;
+}
+
+mat-form-field {
+  font-size: 20px;
+}
+
+.search-keyword i {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  font-size: 1rem;
+}
+
+.search-item {
+  margin-top: 1rem;
+}
+
+.search-item-div {
+  margin-left: 0.4rem;
+}
