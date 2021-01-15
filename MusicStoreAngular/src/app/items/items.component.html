@@ -3,10 +3,10 @@
     <div class="col-lg-2 col-md-12 col-sm-12 search-options">
       <div class="container search-item">
         <div class="row search-keyword">
-          <div class="col-2">
+          <div class="col-1">
             <i class="fas fa-search"></i>
           </div>
-          <div class="col-10" style="font-size: 0.7rem">
+          <div class="col-11" style="font-size: 0.8rem">
             <mat-form-field>
               <mat-label>Search:</mat-label>
               <input matInput (input)="applyFilters()" (change)="applyFilters()" [(ngModel)]="searchWord" type="text">
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="search-item search-item-div">
+      <div class="search-item search-item-div" style="margin-bottom: 1rem">
         <label>Order your results:</label>
 
         <mat-form-field>

@@ -18,28 +18,33 @@
           </mat-form-field>
         </div>
 
-        <label><strong>Country:</strong></label>
-        <mat-form-field>
-          <mat-select [formControl]="countryFormControl" [disabled]="!editing && !creating" [(ngModel)]="manufacturer.country">
-            <mat-optgroup  [label]="'Africa'" >
-              <mat-option *ngFor="let c of COUNTRIES['Africa']" [value]="c[0]">{{c[1]}}</mat-option>
-            </mat-optgroup>
-            <mat-optgroup  [label]="'America'" >
-              <mat-option *ngFor="let c of COUNTRIES['America']" [value]="c[0]">{{c[1]}}</mat-option>
-            </mat-optgroup>
-            <mat-optgroup  [label]="'Asia'" >
-              <mat-option *ngFor="let c of COUNTRIES['Asia']" [value]="c[0]">{{c[1]}}</mat-option>
-            </mat-optgroup>
-            <mat-optgroup  [label]="'Europe'" >
-              <mat-option *ngFor="let c of COUNTRIES['Europe']" [value]="c[0]">{{c[1]}}</mat-option>
-            </mat-optgroup>
-            <mat-optgroup  [label]="'Oceania'" >
-              <mat-option *ngFor="let c of COUNTRIES['Oceania']" [value]="c[0]">{{c[1]}}</mat-option>
-            </mat-optgroup>
-          </mat-select>
-          <mat-error>Must not be left empty.</mat-error>
-
-        </mat-form-field>
+        <div class="row">
+          <div class="col-2">
+            <p style="top: 31%; left: 20%; position: absolute">Country:</p>
+          </div>
+          <div class="col-10">
+            <mat-form-field>
+              <mat-select [formControl]="countryFormControl" [disabled]="!editing && !creating" [(ngModel)]="manufacturer.country">
+                <mat-optgroup  [label]="'Africa'" >
+                  <mat-option *ngFor="let c of COUNTRIES['Africa']" [value]="c[0]">{{c[1]}}</mat-option>
+                </mat-optgroup>
+                <mat-optgroup  [label]="'America'" >
+                  <mat-option *ngFor="let c of COUNTRIES['America']" [value]="c[0]">{{c[1]}}</mat-option>
+                </mat-optgroup>
+                <mat-optgroup  [label]="'Asia'" >
+                  <mat-option *ngFor="let c of COUNTRIES['Asia']" [value]="c[0]">{{c[1]}}</mat-option>
+                </mat-optgroup>
+                <mat-optgroup  [label]="'Europe'" >
+                  <mat-option *ngFor="let c of COUNTRIES['Europe']" [value]="c[0]">{{c[1]}}</mat-option>
+                </mat-optgroup>
+                <mat-optgroup  [label]="'Oceania'" >
+                  <mat-option *ngFor="let c of COUNTRIES['Oceania']" [value]="c[0]">{{c[1]}}</mat-option>
+                </mat-optgroup>
+              </mat-select>
+              <mat-error>Must not be left empty.</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
         <!--<h5>Country: {{ manufacturer.country }}</h5>-->
 
         <div *ngIf="editing || creating"> <!-- imagem/logo input -->

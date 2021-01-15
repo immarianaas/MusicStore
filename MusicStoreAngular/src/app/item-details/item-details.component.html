@@ -102,23 +102,23 @@
         <img src="{{ item.instrument.image }}" style='width :100%; height:100%; object-fit:contain;'>
       </div>
     </div>
-    <div class="row" style="margin-top: 0.5rem; width: 100%; justify-content: center; text-align: center">
+    <div class="row btn-items" style="margin-top: 0.5rem; width: 100%; justify-content: center; text-align: center">
       <div *ngIf="!isAdmin() && !creating">
-        <button *ngIf="isInWishlist" (click)="removeItemFromWishlist()">Remove from wishlist</button>
-        <button *ngIf="!isInWishlist" (click)="addWishlist()">Add to wishlist</button>
-        <button (click)="purchase()">Buy</button>
+        <button class="btn-item btn" (click)="purchase()">Buy</button>
+        <button class="btn-item btn" *ngIf="isInWishlist" (click)="removeItemFromWishlist()">Remove from wishlist</button>
+        <button class="btn-item btn" *ngIf="!isInWishlist" (click)="addWishlist()">Add to wishlist</button>
       </div>
       <div *ngIf="isAdmin()">
         <div *ngIf="!editVar && !creating">
-          <button (click)="edit()">edit</button>
-          <button (click)="deleteItem(item.id)">delete</button>
+          <button class="btn-item btn" (click)="edit()">edit</button>
+          <button class="btn-item btn" (click)="deleteItem(item.id)">delete</button>
         </div>
 
         <div *ngIf="editVar || creating">
-          <button (click)="save(item)">save</button>
-          <button (click)="cancel()">cancel</button>
+          <button class="btn-item btn" (click)="save(item)">save</button>
+          <button class="btn-item btn" (click)="cancel()">cancel</button>
         </div>
-        <button *ngIf="creating" (click)="reset()">reset</button>
+        <button class="btn-item btn" *ngIf="creating" (click)="reset()">reset</button>
       </div>
     </div>
   </div>
