@@ -1,126 +1,127 @@
-
-
 <section>
-  <section>
-    <br><br><br><br>
-
-    <p>{{minPrice}}-{{maxPrice}}</p>
-    <h4>{{priceRange[0]}} - {{priceRange[1]}}</h4>
-    <p-slider [(ngModel)]="priceRange" [range]="true" [max]="maxPrice" [min]="minPrice" [step]="0.01" ></p-slider>
-
-    <!-- [max]="maxPrice" [min]="minPrice" -->
-    <!-- [max]="10000" [min]="0" -->
-    <div class="container  options1">
-
-      <div>
-      <label>Search by keyword:</label>
-      <mat-form-field>
-        <mat-label>Search:</mat-label>
-        <input matInput  (input)="applyFilters()" (change)="applyFilters()" [(ngModel)]="searchWord" type="text">
-        <button  mat-button *ngIf="searchWord" matSuffix mat-icon-button aria-label="Clear" (click)="searchWord=null; applyFilters()">
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
-
-    <button class="btn btn-light" *ngIf="!optionsVisible" (click)="optionsVisible=true">Show search options.</button>
-    <!--<button *ngIf="optionsVisible" (click)="optionsVisible=false">Close search options.</button>-->
-
-    </div>
-    <div *ngIf="optionsVisible" class="container listoptions">
-      <div>
-        <label>Filter by price range:</label>
-      <mat-form-field>
-        <mat-label>Minimum price:</mat-label>
-        <!--<input matInput (input)="applyFilters()" [(ngModel)]="minPrice" type="number">-->
-        <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[0]" type="number">
-        <button mat-button *ngIf="minPrice" matSuffix mat-icon-button aria-label="Clear" (click)="minPrice=null">
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Maximum price:</mat-label>
-        <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[1]" type="number">
-        <button mat-button *ngIf="maxPrice" matSuffix mat-icon-button aria-label="Clear" (click)="maxPrice=null">
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-form-field>
-
-      </div>
-      <!--
-        <mat-label>Maximum price:</mat-label>
-        <input [(ngModel)]="maxPrice" type="number" required>
-        <button class="btn btn-info">filter by price range</button>
-  -->
-
-      <div *ngIf="!manufacturer_id">
-        <label>Filter by manufacturer:</label>
-      <mat-form-field>
-        <mat-select [(value)]="selectedManufacturer" (selectionChange)="applyFilters()">
-          <mat-option [value]="-1">Show all</mat-option>
-          <mat-option [value]="manu.id" *ngFor="let manu of manufacturers">{{manu.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <section class="row">
+    <div class="col-lg-2 col-md-12 col-sm-12 search-options">
+      <div class="slider">
+        <p>{{minPrice}}-{{maxPrice}}</p>
+        <h4>{{priceRange[0]}} - {{priceRange[1]}}</h4>
+        <div style="width: 90%; margin-left: 10%">
+          <p-slider [(ngModel)]="priceRange" (onChange)="applyFilters()" [range]="true" [max]="maxPrice" [min]="minPrice" [step]="0.01"></p-slider>
+        </div>
+        <!-- [max]="maxPrice" [min]="minPrice" -->
+        <!-- [max]="10000" [min]="0" -->
       </div>
 
-      <!-- email: musicstore@null.net
-           thisismypassword -->
+      <div class="container  options1">
 
-      <div>
-        <label>Filter by category:</label>
-      <mat-form-field>
-        <mat-select [(value)]="selectedCategory" (selectionChange)="applyFilters()">
-          <mat-option [value]="cat" *ngFor="let cat of categories">{{cat}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      </div>
-      <div>
-        <label>Order your results:</label>
-
-        <mat-form-field>
-      <!--<mat-label>Filters:</mat-label>-->
-      <mat-select [(value)]="selectedOrder" (selectionChange)="applyFilters()">
-        <mat-option [value]="opt" *ngFor="let opt of orderOptions">{{opt}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-      <mat-slide-toggle [disabled]="selectedOrder=='None / Default'"
-        [checked]="descendingActive" (change)="toggleDescending()" >descending
-      </mat-slide-toggle>
-      </div>
-
-      <div class="options1">
-      <button (click)="optionsVisible=false" style="margin-bottom: 7px;" class="btn btn-dark">close search options</button>
-      </div>
-    </div>
-
-
-    <div class="cards-wrapper">
-    <div class="card-grid-space" *ngFor="let item of activePageDataChunk">
-
-      <div class="num">{{ item.instrument.name }}</div>
-        <a class="card-instruments" routerLink="/instruments/{{item.id}}"
-           style="--bg-img: url({{ item.instrument.image }})">
         <div>
-          <h1>{{ item.price }}$</h1>
-          <p>Description : {{ item.instrument.description }}</p>
-          <div class="tags">
+          <label>Search by keyword:</label>
+          <mat-form-field>
+            <mat-label>Search:</mat-label>
+            <input matInput (input)="applyFilters()" (change)="applyFilters()" [(ngModel)]="searchWord" type="text">
+            <button mat-button *ngIf="searchWord" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="searchWord=null; applyFilters()">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div class="container listoptions">
+        <div>
+          <label>Filter by price range:</label>
+          <mat-form-field>
+            <mat-label>Minimum price:</mat-label>
+            <!--<input matInput (input)="applyFilters()" [(ngModel)]="minPrice" type="number">-->
+            <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[0]" type="number">
+            <button mat-button *ngIf="minPrice" matSuffix mat-icon-button aria-label="Clear" (click)="minPrice=null">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Maximum price:</mat-label>
+            <input matInput (input)="applyFilters()" [(ngModel)]="priceRange[1]" type="number">
+            <button mat-button *ngIf="maxPrice" matSuffix mat-icon-button aria-label="Clear" (click)="maxPrice=null">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-form-field>
+
+        </div>
+        <!--
+          <mat-label>Maximum price:</mat-label>
+          <input [(ngModel)]="maxPrice" type="number" required>
+          <button class="btn btn-info">filter by price range</button>
+    -->
+
+        <div *ngIf="!manufacturer_id">
+          <label>Filter by manufacturer:</label>
+          <mat-form-field>
+            <mat-select [(value)]="selectedManufacturer" (selectionChange)="applyFilters()">
+              <mat-option [value]="-1">Show all</mat-option>
+              <mat-option [value]="manu.id" *ngFor="let manu of manufacturers">{{manu.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- email: musicstore@null.net
+             thisismypassword -->
+
+        <div>
+          <label>Filter by category:</label>
+          <mat-form-field>
+            <mat-select [(value)]="selectedCategory" (selectionChange)="applyFilters()">
+              <mat-option [value]="cat" *ngFor="let cat of categories">{{cat}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <label>Order your results:</label>
+
+          <mat-form-field>
+            <!--<mat-label>Filters:</mat-label>-->
+            <mat-select [(value)]="selectedOrder" (selectionChange)="applyFilters()">
+              <mat-option [value]="opt" *ngFor="let opt of orderOptions">{{opt}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-slide-toggle [disabled]="selectedOrder=='None / Default'"
+                            [checked]="descendingActive" (change)="toggleDescending()">descending
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-10 col-md-12 col-sm-12">
+      <div class="cards-wrapper">
+        <div class="card-grid-space" *ngFor="let item of activePageDataChunk">
+
+          <div class="num">{{ item.instrument.name }}</div>
+          <a class="card-instruments" routerLink="/instruments/{{item.id}}"
+             style="--bg-img: url({{ item.instrument.image }})">
+            <div>
+              <h1>{{ item.price }}$</h1>
+              <p>Description : {{ item.instrument.description }}</p>
+              <div class="tags">
+              </div>
+            </div>
+          </a>
+          <div class="btn-items" *ngIf="!isAdmin()">
+            <button (click)="purchase(item.instrument.id)" class="btn-item btn">Buy</button>
+            <button *ngIf="!isInWishlist.has(item.id) || !isInWishlist.get(item.id)"
+                    (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist
+            </button>
+            <button *ngIf="isInWishlist.has(item.id) && isInWishlist.get(item.id)"
+                    (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist
+            </button>
+
+            <!--
+            <button (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist</button>
+            <button (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
+            -->
           </div>
         </div>
-        </a>
-        <div class="btn-items" *ngIf="!isAdmin()">
-          <button (click)="purchase(item.instrument.id)" class="btn-item btn">Buy</button>
-          <button  *ngIf="!isInWishlist.has(item.id) || !isInWishlist.get(item.id)" (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
-          <button *ngIf="isInWishlist.has(item.id) && isInWishlist.get(item.id)" (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist</button>
 
-          <!--
-          <button (click)="remWishList(item.instrument.id)" class="btn-item btn">Remove from Wishlist</button>
-          <button (click)="addWishlist(item.instrument.id)" class="btn-item btn">Add to Wishlist</button>
-          -->
-        </div>
-    </div>
-
+      </div>
     </div>
 
     <div class="container" *ngIf="activePageDataChunk.length != 0">

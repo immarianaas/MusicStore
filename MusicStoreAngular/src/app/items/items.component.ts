@@ -136,12 +136,14 @@ export class ItemsComponent implements OnInit {
         this.minPrice = items.reduce((min, p) => p.price < min ? p.price : min, items[0].price);
         //this.maxPrice = Math.max(this.items.map(d => d.price));
         */
-        this.minPrice = 0
-        this.maxPrice = 0
-        for (let p of items) {
+        this.minPrice = 0;
+        this.maxPrice = 0;
+        for (const p of items) {
           this.minPrice = this.minPrice < p.price ? this.minPrice : p.price;
           this.maxPrice = this.maxPrice > p.price ? this.maxPrice : p.price;
         }
+        this.maxPrice++;
+        this.priceRange = [this.minPrice, this.maxPrice - 1];
         console.log('max price: ' + this.maxPrice);
         console.log('min price: ' + this.minPrice);
 

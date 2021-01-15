@@ -19,10 +19,14 @@
   <a *ngIf="isLoggedIn && !isAdmin" routerLink="/shoppingcart">Shopping Cart</a>
   <a *ngIf="isLoggedIn && !isAdmin" routerLink="/wishlist">Wishlist</a>
   <a *ngIf="isLoggedIn" routerLink="/login">Log out</a>
-  
+
   <div class="animation start-home"></div>
 </nav>
 
-<router-outlet></router-outlet>
+<section class="main-content">
+  <router-outlet></router-outlet>
+</section>
 
-<app-footer></app-footer>
+<div class="footer">
+  <app-footer></app-footer>
+</div>

@@ -7,16 +7,6 @@
 @import '../../../node_modules/primeng/resources/themes/saga-blue/theme.css';
 @import '../../../node_modules/primeng/resources/primeng.min.css';
 
-
-.listoptions {
-  background-color: #247f6d;
-  border-radius: 7px;
-}
-
-.options1 {
-  text-align: center;
-}
-
 .main {
   margin-top: 1rem;
 }
@@ -218,3 +208,15 @@
     max-width: calc(100vw - 4rem);
   }
 }
+
+.slider {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.search-options {
+  margin-top: 4rem;
+  background-color: #34495e;
+  border-radius: 1rem;
+}
+
