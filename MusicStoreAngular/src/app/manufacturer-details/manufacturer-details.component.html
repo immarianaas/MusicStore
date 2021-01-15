@@ -8,7 +8,7 @@
 
 
         <div *ngIf="editing || creating"> <!-- nome input -->
-          <label><strong>Name:</strong></label>
+          <label>Name:</label>
           <mat-form-field style="width: 100%">
             <input type="text" [formControl]="nameFormControl" matInput [readonly]="!editing && !creating" [(ngModel)]="manufacturer.name">
             <mat-error *ngIf="nameFormControl.hasError('required')">This field can't be left blank.</mat-error>
@@ -48,7 +48,7 @@
         <!--<h5>Country: {{ manufacturer.country }}</h5>-->
 
         <div *ngIf="editing || creating"> <!-- imagem/logo input -->
-          <label><strong>Logo:</strong></label>
+          <label>Logo:</label>
           <mat-form-field style="width: 100%">
             <input type="text" [formControl]="imageFormControl" matInput [readonly]="!editing && !creating" [(ngModel)]="manufacturer.logo">
             <mat-error *ngIf="imageFormControl.hasError('required')">This field can't be left blank.</mat-error>
@@ -63,12 +63,12 @@
         </div>
         <div style="text-align: center; justify-content: center" class="row" *ngIf="isAdmin()">
           <!-- TODO talvez colocar aqui o botao de edit tmb -->
-          <button *ngIf="!editing && !creating" (click)="edit()">Edit</button>
-          <button *ngIf="editing || creating" (click)="save()">Save</button>
-          <button *ngIf="editing || creating" (click)="cancel()">Save</button>
-          <button *ngIf="creating" (click)="reset()">Reset</button>
+          <button class="btn-item btn" *ngIf="!editing && !creating" (click)="edit()">Edit</button>
+          <button class="btn-item btn" *ngIf="editing || creating" (click)="save()">Save</button>
+          <button class="btn-item btn" *ngIf="editing || creating" (click)="cancel()">Cancel</button>
+          <button class="btn-item btn" *ngIf="creating" (click)="reset()">Reset</button>
 
-          <button (click)="delete(manufacturer.id)" >Delete</button>
+          <button class="btn-item btn" *ngIf="!creating && !editing" (click)="delete(manufacturer.id)" >Delete</button>
         </div>
 
 

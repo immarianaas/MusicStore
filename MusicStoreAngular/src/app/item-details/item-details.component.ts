@@ -43,6 +43,10 @@ export class ItemDetailsComponent implements OnInit {
     Validators.required,
   ]);
 
+  serialNumberFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+
   imageFormControl = new FormControl('', [
     Validators.required,
   ]);
