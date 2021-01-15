@@ -95,6 +95,7 @@ export class UserService {
     this.adminInfo.emit(false);
     this.loggedInInfo.emit(false);
     this.isLoggedIn = false;
+    this.router.navigate(['/']);
   }
 
   private updateData(token): void {

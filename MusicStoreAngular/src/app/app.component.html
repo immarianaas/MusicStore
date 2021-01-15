@@ -18,7 +18,7 @@
 
   <a *ngIf="isLoggedIn && !isAdmin" routerLink="/shoppingcart">Shopping Cart</a>
   <a *ngIf="isLoggedIn && !isAdmin" routerLink="/wishlist">Wishlist</a>
-  <a *ngIf="isLoggedIn" routerLink="/login">Log out</a>
+  <a *ngIf="isLoggedIn" (click)="userService.logout()">Log out</a>
 
   <div class="animation start-home"></div>
 </nav>
