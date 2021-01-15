@@ -108,7 +108,7 @@
         <button *ngIf="!isInWishlist" (click)="addWishlist()">Add to wishlist</button>
         <button (click)="purchase()">Buy</button>
       </div>
-      <div *ngIf="!isAdmin()"> <!-- TODO tirar o ! !!! -->
+      <div *ngIf="isAdmin()">
         <div *ngIf="!editVar && !creating">
           <button (click)="edit()">edit</button>
           <button (click)="deleteItem(item.id)">delete</button>
