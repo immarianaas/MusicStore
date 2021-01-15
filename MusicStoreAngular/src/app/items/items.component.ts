@@ -103,10 +103,12 @@ export class ItemsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.manufacturer_id)
+    if (!this.manufacturer_id) {
       this.getItems();
-    else
+    }
+    else {
       this.getItemsByManufacturer(this.manufacturer_id);
+    }
     if (this.authService.isLoggedVar()) {
       this.fillMapIsInWishlist();
     }

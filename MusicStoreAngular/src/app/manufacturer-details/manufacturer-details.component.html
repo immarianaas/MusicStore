@@ -70,13 +70,7 @@
 
           <button class="btn-item btn" *ngIf="!creating && !editing" (click)="delete(manufacturer.id)" >Delete</button>
         </div>
-
-
-
       </div>
-
-
-
 
       <div *ngIf="!creating" class="col-lg-10 col-md-9 col-sm-12">
         <app-items [manufacturer_id]="manufacturer.id"></app-items>
