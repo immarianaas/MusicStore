@@ -1,3 +1,12 @@
+<div class="wrapper">
+  <button (click)="goBack()">
+    <i class="far fa-arrow-alt-circle-left"></i>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
 <nav>
   <a routerLink="/">Home</a>
   <a *ngIf="!isAdmin" routerLink="/manufacturers">Manufacturers</a>
