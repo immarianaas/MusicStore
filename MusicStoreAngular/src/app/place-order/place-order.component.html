@@ -40,7 +40,7 @@
         <div class="alert alert-danger" role="alert" *ngIf="errors.has('address')">
           {{errors.get('address')}}
         </div>
-        <a class="badge badge-pill badge-info" routerLink="/account">Associate new address</a>
+        <a class="badge badge-pill badge-info" style="font-size: 12px; width: 10rem" routerLink="/account">Associate new address</a>
         <div>
           <h3 class="title">Payment options</h3>
           <input type="radio" name="pay" id="pay1" value="PayPal" [(ngModel)]="orderModel.payment">
@@ -52,7 +52,9 @@
             {{errors.get('payment')}}
           </div>
         </div>
-        <button class="btn-form" (click)="placeOrder()">Finish</button>
+      </div>
+      <div style="text-align: center; justify-content: center">
+        <button class="btn-item btn btn-finish" (click)="placeOrder()">Finish</button>
       </div>
     </div>
   </div>

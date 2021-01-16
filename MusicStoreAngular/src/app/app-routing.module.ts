@@ -15,6 +15,8 @@ import {PlaceOrderComponent} from './place-order/place-order.component';
 import {OrdersComponent} from './orders/orders.component';
 import {AuthGuardService} from './auth-guard.service';
 import {IndexForAdminComponent} from './index-for-admin/index-for-admin.component';
+import {GrowthComponent} from './growth/growth.component';
+import {CapitalChartComponent} from './capital-chart/capital-chart.component';
 
 const routes: Routes = [
   {path: '', component: IndexForAdminComponent, pathMatch: 'full'},
@@ -32,6 +34,9 @@ const routes: Routes = [
   {path: 'wishlist', component: WishlistComponent, canActivate : [AuthGuardService]},
   {path: 'placeorder', component: PlaceOrderComponent, canActivate : [AuthGuardService]},
   {path: 'orders', component: OrdersComponent, canActivate : [AuthGuardService]},
+  {path: 'growth', component: GrowthComponent, canActivate : [AuthGuardService]},
+  {path: 'capitalgrowth', component: CapitalChartComponent, canActivate : [AuthGuardService]},
+
   {path: '**', component: NoPathExceptionComponent},
 
 ];

@@ -9,6 +9,7 @@ import {Item} from './item';
 import {ItemQuantity} from './ItemQuantity';
 import {OrderModel} from './order-model';
 import {Order} from './order';
+import {GrowthChart} from './growthChart';
 
 @Injectable({
   providedIn: 'root'
@@ -107,5 +108,13 @@ export class AccountService {
 
   getAllOrdersAdmin(): Observable<Order[]> {
     return this.http.get<Order[]>(this.baseURL + 'ordersadmin', this.getCorrectHeader());
+  }
+
+  getUserAppGrowth(): Observable<GrowthChart[]> {
+    return this.http.get<GrowthChart[]>(this.baseURL + 'userappgrowth', this.getCorrectHeader());
+  }
+
+  getCapitalChart(): Observable<GrowthChart[]> {
+    return this.http.get<GrowthChart[]>(this.baseURL + 'capitalgrowth', this.getCorrectHeader());
   }
 }
