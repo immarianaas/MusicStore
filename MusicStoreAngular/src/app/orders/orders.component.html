@@ -19,7 +19,7 @@
         <p>Product(s): </p>
         <div class="row" *ngFor="let item of order.list.items">
           <div class="col"><p>{{ item.item.instrument.name }}</p></div>
-          <div class="col"><p>{{ item.item.price }}&euro; x {{ item.quantity }}</p></div>
+          <div class="col"><p>{{ item.item.price }}$ x {{ item.quantity }}</p></div>
         </div>
       </details>
     </section>

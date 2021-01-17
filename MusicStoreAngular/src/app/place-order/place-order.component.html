@@ -8,10 +8,10 @@
       <div class="products">
         <h3 class="title">Checkout</h3>
         <div class="item" *ngFor="let item of itemList.items">
-          <span class="price">{{item.item.price}} &euro;</span>
+          <span class="price">{{item.item.price}} $</span>
           <p class="item-name">{{item.item.instrument.name}} (x{{item.quantity}})</p>
         </div>
-        <div class="total">Total<span class="price">{{total}} &euro;</span></div>
+        <div class="total">Total<span class="price">{{total}} $</span></div>
       </div>
       <div class="card-details">
         <h3 class="title">Delivery address</h3>

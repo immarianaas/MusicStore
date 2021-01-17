@@ -1,6 +1,6 @@
 <section>
   <section class="row">
-    <div class="col-lg-2 col-md-12 col-sm-12 search-options" *ngIf="!manufacturer_id">
+    <div class="col-lg-2 col-md-12 col-sm-12 search-options"> <!-- *ngIf="!manufacturer_id"> -->
       <div class="container search-item">
         <div class="row search-keyword">
           <div class="col-1">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="slider search-item">
-        <p>Filter by price ({{priceRange[0]}}€ - {{priceRange[1]}}€)</p>
+        <p>Filter by price ({{priceRange[0]}}$ - {{priceRange[1]}}$)</p>
         <div style="width: 90%; margin-left: 10%">
           <p-slider [(ngModel)]="priceRange" (onChange)="applyFilters()" [range]="true" [max]="maxPrice"
                     [min]="minPrice" [step]="0.01"></p-slider>

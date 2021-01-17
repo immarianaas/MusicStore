@@ -62,7 +62,6 @@
           <img style="max-width: 60%; max-height: 60%" class="img-thumbnail" src="{{ manufacturer.logo }}">
         </div>
         <div style="text-align: center; justify-content: center" class="row" *ngIf="isAdmin()">
-          <!-- TODO talvez colocar aqui o botao de edit tmb -->
           <button class="btn-item btn" *ngIf="!editing && !creating" (click)="edit()">Edit</button>
           <button class="btn-item btn" *ngIf="editing || creating" (click)="save()">Save</button>
           <button class="btn-item btn" *ngIf="editing || creating" (click)="cancel()">Cancel</button>

@@ -55,17 +55,17 @@
           <div class="input-block">
             <label for="signup-email">E-mail</label>
             <input id="signup-email" type="email" [(ngModel)]="user.username" required>
-            <span style="color: darkred;" *ngFor="let error of errors['username']"> {{error}} </span> <!-- TODO -->
+            <span style="color: darkred;" *ngFor="let error of errors['username']"> {{error}} </span>
           </div>
           <div class="input-block">
             <label for="signup-password">Password</label>
             <input id="signup-password" type="password" [(ngModel)]="user.password" required>
-            <span style="color: darkred;" *ngFor="let error of errors['password']"> {{error}} </span> <!-- TODO -->
+            <span style="color: darkred;" *ngFor="let error of errors['password']"> {{error}} </span>
           </div>
           <div class="input-block">
             <label for="signup-name">Name</label>
             <input id="signup-name" type="text" [(ngModel)]="account.name">
-            <span style="color: darkred;" *ngFor="let error of errors['name']"> {{error}} </span> <!-- TODO -->
+            <span style="color: darkred;" *ngFor="let error of errors['name']"> {{error}} </span>
           </div>
           <div class="input-block">
             <label for="signup-gender">Gender</label>
