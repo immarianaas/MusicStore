@@ -350,7 +350,7 @@ def get_wishlist(request):
 
 def sendEmailOnCreate(name, email):
     body = 'Hello ' + name + ', we are very happy to have you associated with us.\n'
-    body += 'If you need help don\'t hesitate to contact us on musicstore@null.net, wi\'ll always be there for you.\n'
+    body += 'If you need help don\'t hesitate to contact us on musicstore@null.net, we\'ll always be there for you.\n'
     body += 'At last, thank you for your trust and good shopping ;)'
     email = EmailMessage(
         subject='New account at Music Store!',
@@ -483,6 +483,30 @@ def place_order(request):
         to=[request.user]
     )
     email.send()
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def contact_us(request):
+    print(request.data)
+
+    # enviar confirmacao
+    email = EmailMessage(
+        subject='Your message was sent!',
+        body="""
+        Hello!
+        
+        The following message: '""" + request.data['message'] + """' with the subject: '""" + request.data['subject'] + """' was received and will be answered as soon as possible.
+        
+        We hope to hear from you again,
+        Music Store
+        """,
+        from_email='musicstore@null.net',
+        to=[request.data['sender']]
+    )
+    try:
+        email.send()
+    except Exception as e:
+        return Response("Email is invalid." , status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])

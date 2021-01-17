@@ -96,4 +96,6 @@ urlpatterns = [
     path('ws/userappgrowth', wsviews.user_app_growth, name='user_app_growth'),
     path('ws/capitalgrowth', wsviews.capital_growth, name='capital_growth'),
 
+    path('ws/contact_us', wsviews.contact_us, name='contact_us'),
+
 ]
