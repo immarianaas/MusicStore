@@ -39,6 +39,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { GrowthComponent } from './growth/growth.component';
 import { CapitalChartComponent } from './capital-chart/capital-chart.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -79,10 +81,13 @@ import { CapitalChartComponent } from './capital-chart/capital-chart.component';
     ButtonModule,
     DialogModule,
     InputTextModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ConfirmDialogModule
   ],
   providers: [
     UserService,
+    ConfirmationService,
+    MessageService,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
     useValue: { appearance: 'fill' } }
   ],

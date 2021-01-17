@@ -141,8 +141,9 @@ export class ItemsComponent implements OnInit {
         this.minPrice = 0;
         this.maxPrice = 0;
         for (const p of items) {
-          this.minPrice = this.minPrice < p.price ? this.minPrice : p.price;
-          this.maxPrice = this.maxPrice > p.price ? this.maxPrice : p.price;
+          this.minPrice = this.minPrice < +p.price ? this.minPrice : +p.price;
+          this.maxPrice = this.maxPrice > +p.price ? this.maxPrice : +p.price;
+          // console.log('price: ' + p.price + '; max: ' + this.maxPrice + '; min: ' + this.minPrice + '; price > max? ' + (+p.price > this.maxPrice));
         }
         this.maxPrice++;
         this.priceRange = [this.minPrice, this.maxPrice - 1];

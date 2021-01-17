@@ -11,6 +11,7 @@ import {FormControl, Validators} from '@angular/forms';
 
 import { COUNTRIES } from '../COUNTRIES';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-manufacturer-details',
@@ -31,7 +32,9 @@ export class ManufacturerDetailsComponent implements OnInit {
     private location: Location,
     private manufacturersService: ManufacturerService,
     private authService: AuthGuardService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.editing = false;
     this.creating = false;
@@ -82,7 +85,10 @@ export class ManufacturerDetailsComponent implements OnInit {
   }
 
   delete(id: number): void {
-    this.manufacturersService.deleteManufacturer(id).subscribe(() => this.goBack());
+    this.manufacturersService.deleteManufacturer(id).subscribe(() => {
+      this.openSnackBar('Manufacturer deleted successfully!');
+      this.goBack();
+    });
   }
 
   edit(): void {
@@ -142,6 +148,19 @@ export class ManufacturerDetailsComponent implements OnInit {
     }
   }
 
+
+  confirmDelete(id: number) {
+    this.confirmationService.confirm({
+      message: 'Do you really want to delete this manufacturer, and all of its items?',
+      header: 'Are you sure?',
+      accept: () => {
+        this.delete(id);
+      },
+      reject: () => {
+        console.log('not to delete after all');
+      }
+    })
+  }
 
 
 

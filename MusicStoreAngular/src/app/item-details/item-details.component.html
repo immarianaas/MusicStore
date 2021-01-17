@@ -124,7 +124,11 @@
       <div *ngIf="isAdmin()">
         <div *ngIf="!editVar && !creating">
           <button class="btn-item btn" (click)="edit()">edit</button>
-          <button class="btn-item btn" (click)="deleteItem(item.id)">delete</button>
+          <!--<button class="btn-item btn" (click)="deleteItem(item.id)">delete</button>-->
+          <button class="btn-item btn" (click)="confirmDelete(item.id)">delete</button>
+          <!--<p-confirmDialog [style]="{width: '50vw'}" key="bottom-left" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined" header="Are you sure?" icon="pi pi-exclamation-triangle"></p-confirmDialog>-->
+          <p-confirmDialog rejectButtonStyleClass="p-button-outlined" [position]="'bottom-left'" rejectButtonStyleClass="p-button-outlined" header="Are you sure?" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
         </div>
 
         <div *ngIf="editVar || creating">

@@ -68,7 +68,11 @@
           <button class="btn-item btn" *ngIf="editing || creating" (click)="cancel()">Cancel</button>
           <button class="btn-item btn" *ngIf="creating" (click)="reset()">Reset</button>
 
-          <button class="btn-item btn" *ngIf="!creating && !editing" (click)="delete(manufacturer.id)" >Delete</button>
+          <!--<button class="btn-item btn" *ngIf="!creating && !editing" (click)="delete(manufacturer.id)" >Delete</button>-->
+          <button class="btn-item btn" (click)="confirmDelete(manufacturer.id)">Delete</button>
+          <!--<p-confirmDialog [style]="{width: '50vw'}" key="bottom-left" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined" header="Are you sure?" icon="pi pi-exclamation-triangle"></p-confirmDialog>-->
+          <p-confirmDialog rejectButtonStyleClass="p-button-outlined" [position]="'bottom-left'" rejectButtonStyleClass="p-button-outlined" header="Are you sure?" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
         </div>
       </div>
 

@@ -14,6 +14,10 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import {Manufacturer} from '../manufacturer';
 import {ManufacturerService} from '../manufacturer.service';
 
+
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService, MessageService} from 'primeng/api';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,6 +25,8 @@ import { Router } from '@angular/router';
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.css']
 })
+
+
 export class ItemDetailsComponent implements OnInit {
   item: Item;
   isInWishlist: boolean;
@@ -68,7 +74,9 @@ export class ItemDetailsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private accService: AccountService,
     private manuSerivce: ManufacturerService,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
     this.editVar = false;
   }
@@ -188,6 +196,25 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   deleteItem(itemId: number): void {
-    this.itemService.deleteItem(itemId).subscribe( () => this.goBack());
+    this.itemService.deleteItem(itemId).subscribe( () => {
+      this.openSnackBar('Item was deleted successfully!');
+      this.goBack();
+    });
+
   }
+
+  confirmDelete(itemId: number) {
+    this.confirmationService.confirm({
+      message: 'Do you really want to delete this item?',
+      header: 'Are you sure?',
+      accept: () => {
+        this.deleteItem(itemId);
+      },
+      reject: () => {
+        console.log('not to delete after all');
+      }
+    })
+  }
+
+
 }
