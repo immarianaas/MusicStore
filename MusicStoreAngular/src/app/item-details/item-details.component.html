@@ -103,6 +103,7 @@
             <input type="url" [formControl]="imageFormControl" matInput [readonly]="!editVar && !creating"
                    [(ngModel)]="item.instrument.image">
             <mat-error *ngIf="imageFormControl.hasError('required')">This field can't be left blank.</mat-error>
+            <mat-error *ngIf="imageFormControl.hasError('pattern')">This is not a valid URL.</mat-error>
             <button [hidden]="!editVar && !creating" mat-button *ngIf="item.instrument.image" matSuffix mat-icon-button
                     aria-label="Clear" (click)="item.instrument.image=''">
               <mat-icon>clear</mat-icon>

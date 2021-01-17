@@ -49,12 +49,15 @@ export class ItemDetailsComponent implements OnInit {
     Validators.required,
   ]);
 
+  urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+
   serialNumberFormControl = new FormControl('', [
     Validators.required,
   ]);
 
   imageFormControl = new FormControl('', [
     Validators.required,
+    Validators.pattern(this.urlRegex),
   ]);
 
   categoryFormControl = new FormControl('', [
@@ -162,6 +165,7 @@ export class ItemDetailsComponent implements OnInit {
       && this.item.instrument.manufacturer.name != null
       && this.item.instrument.category
       && this.item.instrument.nr_serie.trim().length != 0
+      && !(this.imageFormControl.invalid)
     ) {
       console.log('entrou');
       if (!this.creating)
