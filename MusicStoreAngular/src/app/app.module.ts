@@ -37,6 +37,8 @@ import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { GrowthComponent } from './growth/growth.component';
+import { CapitalChartComponent } from './capital-chart/capital-chart.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     OrdersComponent,
     IndexForAdminComponent,
     FooterComponent,
+    GrowthComponent,
+    CapitalChartComponent,
   ],
   imports: [
     BrowserModule,

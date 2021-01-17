@@ -363,7 +363,7 @@ def sendEmailOnCreate(name, email):
 @api_view(['POST'])
 def create_account(request):
     recv = request.data
-    if 'date_joined' in recv:
+    if 'date_joined' in recv['user']:
         del recv['user']['date_joined']
     try:
         print('here')
@@ -501,3 +501,44 @@ def get_orders(request):
 @permission_classes((IsAuthenticated, ))
 def get_all_orders(request):
     return Response(OrderSerializer(Order.objects.all(), many=True).data)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def user_app_growth(request):
+    users = models.User.objects.all();
+    # [{x, y}, {x, y}]
+    dates = {}
+    for user in users:
+        date = str(user.date_joined.date())
+        if not date in dates:
+            dates[date] = { 'x' : date, 'y' : 1}
+        else:
+            dates[date]['y'] += 1
+
+        if len(dates) > 29:
+            break
+
+    return Response([val for val in dates.values()], status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def capital_growth(request):
+    orders = Order.objects.all()
+
+    dates = {}
+    for order in orders:
+        date = str(order.payment_time.date())
+
+        total = 0
+        for item in order.list.items.all():
+            total += item.quantity * item.item.price
+
+        if date in dates:
+            dates[date]['y'] += total
+        else:
+            dates[date] = { 'x' : date, 'y' : total}
+
+        if len(dates) > 29:
+            break
+
+    return Response([val for val in dates.values()],status.HTTP_200_OK)

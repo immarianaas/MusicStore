@@ -39,21 +39,20 @@ export class ManufacturerDetailsComponent implements OnInit {
 
   nameFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
 
   imageFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
 
   countryFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
 
 
   ngOnInit(): void {
     this.route.url.subscribe(params => {
-      this.creating = params[0].path == 'create-manufacturer';
-      console.log(this.creating);
+      this.creating = params[0].path === 'create-manufacturer';
     });
     if (!this.creating) {
       this.getManufacturer();
@@ -93,17 +92,16 @@ export class ManufacturerDetailsComponent implements OnInit {
   save(): void {
     if (
       this.manufacturer.country
-      && this.manufacturer.country.trim() != ''
-      && this.manufacturer.name.trim() != ''
-      && this.manufacturer.logo.trim() != ''
+      && this.manufacturer.country.trim() !== ''
+      && this.manufacturer.name.trim() !== ''
+      && this.manufacturer.logo.trim() !== ''
     ) {
-      console.log('entrou aqui');
       if (this.editing) {
         this.manufacturersService.updateManufacturer(this.manufacturer).subscribe(
           data => {
             this.manufacturer = data;
             this.editing = false;
-            this.openSnackBar('Manufacturer edited successfully!')
+            this.openSnackBar('Manufacturer edited successfully!');
 
           }, error => {
             console.log(error.error);
@@ -114,7 +112,7 @@ export class ManufacturerDetailsComponent implements OnInit {
           data => {
             this.manufacturer = data;
             this.creating = false;
-            this.openSnackBar('Manufacturer created successfully!')
+            this.openSnackBar('Manufacturer created successfully!');
           },
           error => {
             console.log(error.error);
@@ -136,8 +134,10 @@ export class ManufacturerDetailsComponent implements OnInit {
 
   cancel(): void {
     if (!this.creating) {
+      this.editing = false;
       this.getManufacturer();
     } else {
+      this.creating = false;
       this.goBack();
     }
   }

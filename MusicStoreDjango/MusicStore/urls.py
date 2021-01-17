@@ -93,5 +93,7 @@ urlpatterns = [
     path('ws/in-wishlist/<int:item_id>', wsviews.check_if_in_wishlist, name='check_if_in_wishlist'),
     path('ws/orders', wsviews.get_orders, name='get_orders'),
     path('ws/ordersadmin', wsviews.get_all_orders, name='get_all_orders'),
+    path('ws/userappgrowth', wsviews.user_app_growth, name='user_app_growth'),
+    path('ws/capitalgrowth', wsviews.capital_growth, name='capital_growth'),
 
 ]

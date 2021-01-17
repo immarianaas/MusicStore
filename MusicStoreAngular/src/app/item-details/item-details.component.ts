@@ -33,27 +33,31 @@ export class ItemDetailsComponent implements OnInit {
   priceFormControl = new FormControl('', [
     Validators.required,
     Validators.min(0),
-  ])
+  ]);
 
   descriptionFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
 
   nameFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
+
+  serialNumberFormControl = new FormControl('', [
+    Validators.required,
+  ]);
 
   imageFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
 
   categoryFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
 
   manufacturerFormControl = new FormControl('', [
     Validators.required,
-  ])
+  ]);
 
 
   constructor(
@@ -72,7 +76,7 @@ export class ItemDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.url.subscribe(params => {
-      this.creating = params[0].path == 'create-instrument';
+      this.creating = params[0].path === 'create-instrument';
       console.log(this.creating);
     });
 

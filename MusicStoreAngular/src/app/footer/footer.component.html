@@ -1,48 +1,86 @@
-<section class="footer" style="background: black">
-  <h3>Contact us!</h3>
-
-  <button pButton (click)="openModal()" type="button" class="p-button-help p-button-raised" label="click me!"></button>
-
-
+<section>
   <p-dialog [modal]="true" header="Contact us!" [(visible)]="modalVisible">
     <br>
 
     <form [formGroup]="contactForm">
-    <!--<input type="email" name="email" ngModel email-->
-    <!-- email -->
-    <span class="p-float-label" >
+      <!--<input type="email" name="email" ngModel email-->
+      <!-- email -->
+      <span class="p-float-label">
 <!--    <input [class.is-invalid]="contactForm.get('sender').invalid && contactForm.get('sender').touched" id="email" formControlName="sender" type="text" style="width: 100%" pInputText [(ngModel)]="sender" email required /> -->
-    <input [class.is-invalid]="senderVer.invalid && senderVer.touched" id="email" formControlName="sender" type="text" style="width: 100%" pInputText [(ngModel)]="sender" email required />
+    <input [class.is-invalid]="senderVer.invalid && senderVer.touched" id="email" formControlName="sender" type="text"
+           style="width: 100%" pInputText [(ngModel)]="sender" email required/>
     <label for="email">your email</label></span>
       <div *ngIf="(senderVer.invalid && senderVer.touched) || senderVer.dirty">
         <small *ngIf="senderVer.errors?.required" class="p-invalid">this looks so empty...</small>
-        <small *ngIf="senderVer.errors?.email" class="p-invalid">hmm.. this seems not look like a valid email address</small>
+        <small *ngIf="senderVer.errors?.email" class="p-invalid">hmm.. this seems not look like a valid email
+          address</small>
       </div>
-    <br>
+      <br>
 
-    <!-- subject -->
-    <span class="p-float-label">
-    <input [class.is-invalid]="subjectVer.invalid && subjectVer.touched" id="subject" formControlName="subject" type="text" pInputText [(ngModel)]="subject" required />
+      <!-- subject -->
+      <span class="p-float-label">
+    <input [class.is-invalid]="subjectVer.invalid && subjectVer.touched" id="subject" formControlName="subject"
+           type="text" pInputText [(ngModel)]="subject" required/>
     <label for="subject">subject</label></span>
       <div *ngIf="(subjectVer.invalid && subjectVer.touched) || subjectVer.dirty">
         <small *ngIf="subjectVer.errors?.required" class="p-invalid">this seems so empty...</small>
       </div>
 
-    <br>
+      <br>
 
-    <!-- message -- import {InputTextareaModule} from 'primeng/inputtextarea'; -->
-    <span class="p-float-label">
-    <textarea [class.is-invalid]="msgVer.invalid && msgVer.touched" id="message" formControlName="message" pInputTextarea [(ngModel)]="message" required ></textarea>
+      <!-- message -- import {InputTextareaModule} from 'primeng/inputtextarea'; -->
+      <span class="p-float-label">
+    <textarea [class.is-invalid]="msgVer.invalid && msgVer.touched" id="message" formControlName="message"
+              pInputTextarea [(ngModel)]="message" required></textarea>
     <label for="message">message</label></span>
       <div *ngIf="(msgVer.invalid && msgVer.touched) || msgVer.dirty">
         <small *ngIf="msgVer.errors?.required" class="p-invalid">this seems so empty...</small>
       </div>
 
 
-    <button pButton [disabled]="!contactForm.valid" (click)="send();" type="button" class="p-button-help p-button-raised" label="send!"></button>
+      <button pButton [disabled]="!contactForm.valid" (click)="send();" type="button"
+              class="p-button-help p-button-raised btn-color" label="send!"></button>
     </form>
 
   </p-dialog>
+  <footer>
+    <div class="row my-5 justify-content-center py-5">
+      <div class="col-11">
+        <div class="row ">
+          <div class="col-xl-8 col-md-4 col-sm-4 col-12 my-auto mx-auto a">
+            <h3 class="text-muted mb-md-0 mb-5 bold-text">Music Store</h3>
+          </div>
+          <div class="col-xl-2 col-md-4 col-sm-4 col-12">
+            <h6 class="mb-3 mb-lg-4 bold-text "><b>MENU</b></h6>
+            <ul class="list-unstyled">
+              <li><a routerLink="/">Home</a></li>
+              <li><a routerLink="/manufacturers">Manufacturers</a></li>
+            </ul>
+          </div>
+          <div class="col-xl-2 col-md-4 col-sm-4 col-12">
+            <h6 class="mb-3 mb-lg-4 text-muted bold-text mt-sm-0 mt-5"><b>ADDRESS</b></h6>
+            <p class="mb-1">77700, Boulevard de Parc</p>
+            <p>COUPVRAY FRANCE</p>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-xl-8 col-md-6 col-sm-6 col-auto my-md-0 mt-5 order-sm-1 order-3 align-self-end">
+            <p class="social text-muted mb-0 pb-0 bold-text"><span class="mx-2"><i class="fa fa-facebook"
+                                                                                   aria-hidden="true"></i></span> <span
+              class="mx-2"><i class="fa fa-linkedin-square" aria-hidden="true"></i></span> <span class="mx-2"><i
+              class="fa fa-twitter" aria-hidden="true"></i></span> <span class="mx-2"><i class="fa fa-instagram"
+                                                                                         aria-hidden="true"></i></span>
+            </p><small class="rights"><span>&#174;</span> Music Store All Rights Reserved.</small>
+          </div>
+          <div class="col-xl-4 col-md-6 col-sm-6 col-auto order-1 align-self-end ">
+            <h6 class="mt-55 mt-2 text-muted bold-text"><b>Send us some feedback</b></h6>
+            <button pButton (click)="openModal()" type="button" class="p-button-help p-button-raised btn-color"
+                    label="click me"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 
 </section>
