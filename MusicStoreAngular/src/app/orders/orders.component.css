@@ -106,3 +106,7 @@
   transform-origin: bottom left;
   transform: rotate(45deg);
 }
+
+div {
+  overflow: auto;
+}

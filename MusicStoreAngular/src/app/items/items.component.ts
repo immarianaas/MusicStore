@@ -172,6 +172,15 @@ export class ItemsComponent implements OnInit {
         this.length = items.length;
         this.activePageDataChunk = this.items.slice(0, this.pageSize);
         this.allItems = items;
+
+        this.minPrice = 0;
+        this.maxPrice = 0;
+        items.forEach(item => {
+          this.maxPrice = this.maxPrice > +item.price ? this.maxPrice : +item.price;
+        });
+        this.maxPrice++;
+
+        this.priceRange = [this.minPrice, this.maxPrice - 1];
       });
   }
 
