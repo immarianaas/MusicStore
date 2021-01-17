@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -40,6 +41,7 @@ def get_manufacturer_by_id(request, id):
 
 @api_view(['DELETE'])
 @permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def delete_manufacturer(request, id):
     try:
         manufacturer = Manufacturer.objects.get(id=id)
@@ -76,6 +78,7 @@ def get_item_by_id(request, id):
 
 @api_view(['DELETE'])
 @permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def delete_item(request, id):
     try:
         item = Item.objects.get(id=id)
@@ -86,6 +89,7 @@ def delete_item(request, id):
 
 @api_view(['PUT'])
 @permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def update_item(request):
     id = request.data['id']
     print(request.data)
@@ -123,7 +127,8 @@ def update_item(request):
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
-# @permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def update_manufacturer(request):
     id = request.data['id']
     try:
@@ -140,7 +145,8 @@ def update_manufacturer(request):
 
 
 @api_view(['POST'])
-# @permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def add_item(request):
     try:
         request.data['instrument']['manufacturer'] = request.data['instrument']['manufacturer']['id']
@@ -156,11 +162,10 @@ def add_item(request):
         pass
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    #if ser.is_valid():
-
 
 @api_view(['POST'])
-# @permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def create_manufacturer(request):
     ser = ManufacturerSerializer(data=request.data)
     if ser.is_valid():
@@ -175,11 +180,11 @@ def get_instruments_by_manufacturer(request, id):
     items = Item.objects.filter(instrument__manufacturer__pk=id)
     return Response(ItemSerializer(items, many=True).data)
 
+
+
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def purchase(request):
-    if not request.user.is_authenticated:
-        # retornar um http de erro
-        pass
 
     person = Person.objects.get(user=request.user)
     item = Item.objects.get(pk=request.data)
@@ -408,6 +413,7 @@ def delete_address(request, id):
 
     address.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
 @api_view(['PUT'])
 @permission_classes((IsAuthenticated, ))
 def update_address(request):
@@ -428,7 +434,9 @@ def update_address(request):
         return Response(ser.data, status=status.HTTP_202_ACCEPTED)
     return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def add_address(request):
     recv = request.data
     ser = AddressSerializer(data=recv)
@@ -523,11 +531,13 @@ def get_orders(request):
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def get_all_orders(request):
     return Response(OrderSerializer(Order.objects.all(), many=True).data)
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True)
 def user_app_growth(request):
     users = models.User.objects.all();
     # [{x, y}, {x, y}]
@@ -546,6 +556,7 @@ def user_app_growth(request):
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
+@permission_required('app.delete_instrument', raise_exception=True) # so os admins e staff...
 def capital_growth(request):
     orders = Order.objects.all()
 
