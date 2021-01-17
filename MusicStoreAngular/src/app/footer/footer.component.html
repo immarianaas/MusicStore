@@ -1,5 +1,6 @@
 <section>
-  <p-dialog [modal]="true" header="Contact us!" [(visible)]="modalVisible">
+
+  <p-dialog [modal]="true" [draggable]="false" [style]="{width: '550px'}" header="Contact us!" [(visible)]="modalVisible">
     <br>
 
     <form [formGroup]="contactForm">
@@ -19,7 +20,7 @@
 
       <!-- subject -->
       <span class="p-float-label">
-    <input [class.is-invalid]="subjectVer.invalid && subjectVer.touched" id="subject" formControlName="subject"
+    <input style="width: 100%" [class.is-invalid]="subjectVer.invalid && subjectVer.touched" id="subject" formControlName="subject"
            type="text" pInputText [(ngModel)]="subject" required/>
     <label for="subject">subject</label></span>
       <div *ngIf="(subjectVer.invalid && subjectVer.touched) || subjectVer.dirty">
@@ -30,7 +31,7 @@
 
       <!-- message -- import {InputTextareaModule} from 'primeng/inputtextarea'; -->
       <span class="p-float-label">
-    <textarea [class.is-invalid]="msgVer.invalid && msgVer.touched" id="message" formControlName="message"
+    <textarea style="width: 100%" [class.is-invalid]="msgVer.invalid && msgVer.touched" id="message" formControlName="message"
               pInputTextarea [(ngModel)]="message" required></textarea>
     <label for="message">message</label></span>
       <div *ngIf="(msgVer.invalid && msgVer.touched) || msgVer.dirty">
@@ -40,9 +41,14 @@
 
       <button pButton [disabled]="!contactForm.valid" (click)="send();" type="button"
               class="p-button-help p-button-raised btn-color" label="send!"></button>
+      <small style="margin-left: 10px; " class="p-invalid" *ngIf="error">{{error}}</small>
     </form>
 
   </p-dialog>
+
+
+  <!-- fim do contact form -->
+
   <footer>
     <div class="row my-5 justify-content-center py-5">
       <div class="col-11">
@@ -73,7 +79,7 @@
             </p><small class="rights"><span>&#174;</span> Music Store All Rights Reserved.</small>
           </div>
           <div class="col-xl-4 col-md-6 col-sm-6 col-auto order-1 align-self-end ">
-            <h6 class="mt-55 mt-2 text-muted bold-text"><b>Send us some feedback</b></h6>
+            <h6 class="mt-55 mt-2 text-muted bold-text"><b>Send us your questions or feedback!</b></h6>
             <button pButton (click)="openModal()" type="button" class="p-button-help p-button-raised btn-color"
                     label="click me"></button>
           </div>

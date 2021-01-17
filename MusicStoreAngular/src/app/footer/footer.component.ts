@@ -5,6 +5,8 @@ import { DialogModule } from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ContactService} from '../contact.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class FooterComponent implements OnInit {
   sender: string;
   subject: string;
   message: string;
-
+  error: string;
   contactForm: FormGroup;
   /*
   contactForm = new FormGroup({
@@ -38,6 +40,7 @@ export class FooterComponent implements OnInit {
     this.sender= null;
     this.subject= null;
     this.message= null;
+    this.error = null;
 
     this.contactForm = new FormGroup({
       sender: new FormControl('', [
@@ -54,7 +57,10 @@ export class FooterComponent implements OnInit {
   }
 
 
-  constructor() { this.resetData(); }
+  constructor(
+    private contactService: ContactService,
+    private snackBar: MatSnackBar
+  ) { this.resetData(); }
 
   ngOnInit(): void {
   }
@@ -65,10 +71,24 @@ export class FooterComponent implements OnInit {
 
   send(): void {
     console.log(' --> message sent? (qdo isto tiver implementado sim i hope)');
-    this.modalVisible = false;
-    this.resetData();
-
+    const msg = {'sender': this.sender, 'subject': this.subject, 'message': this.message};
+    this.contactService.sendMessage(msg).subscribe(() => {
+      this.openSnackBar('Your message was successfully sent!')
+      this.modalVisible = false;
+      this.resetData();
+    },
+      err => {
+      console.log(err.error);
+      this.error = err.error;
+      }
+      );
   }
+
+
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'Ok', {duration: 5000, panelClass: ['my-snack-bar']} );
+  }
+
 
   openModal(): void {
     this.modalVisible = true;
