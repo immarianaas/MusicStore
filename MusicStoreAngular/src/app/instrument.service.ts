@@ -14,7 +14,7 @@ const httpOptions = {
 })
 
 export class InstrumentService {
-  private baseURL = 'http://orlandop.pythonanywhere.com/ws/';
+  private baseURL = 'https://orlandop.pythonanywhere.com/ws/';
 
   constructor(private http: HttpClient) { }
 

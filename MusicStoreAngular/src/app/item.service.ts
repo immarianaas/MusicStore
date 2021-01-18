@@ -18,7 +18,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ItemService {
-  private baseURL = 'http://orlandop.pythonanywhere.com/ws/';
+  private baseURL = 'https://orlandop.pythonanywhere.com/ws/';
 
   constructor(
     private http: HttpClient,

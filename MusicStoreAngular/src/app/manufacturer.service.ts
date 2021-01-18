@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ManufacturerService {
-  private baseURL = 'http://orlandop.pythonanywhere.com/ws/';
+  private baseURL = 'https://orlandop.pythonanywhere.com/ws/';
   constructor(private http: HttpClient, private userService: UserService) { }
 
   getCorrectHeader(): { headers: HttpHeaders} {

@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class UserService {
 
-  private baseURL = 'http://orlandop.pythonanywhere.com/ws/';
+  private baseURL = 'https://orlandop.pythonanywhere.com/ws/';
 
   isLoggedIn: boolean;
   @Output() loggedInInfo = new EventEmitter<boolean>();
