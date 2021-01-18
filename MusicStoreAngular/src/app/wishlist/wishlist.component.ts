@@ -43,16 +43,16 @@ export class WishlistComponent implements OnInit {
     });
   }
 
-  removeItem(item_qty_id: number): void {
-    this.accService.removeItemWishlistItemId(item_qty_id).subscribe( () => { this.getWishlist();
-                                                                             this.openSnackBar('Item removed from your wishlist!');
+  removeItem(itemQtyId: number): void {
+    this.accService.removeItemWishlistItemId(itemQtyId).subscribe( () => { this.getWishlist();
+                                                                           this.openSnackBar('Item removed from your wishlist!');
     });
   }
 
-  addToShoppingCart(item_qty: ItemQuantity): void {
-    this.itemService.purchaseItem(item_qty.item.id).subscribe(() => {
+  addToShoppingCart(itemQty: ItemQuantity): void {
+    this.itemService.purchaseItem(itemQty.item.id).subscribe(() => {
       if (this.remWhenBought) {
-        this.removeItem(item_qty.item.id);
+        this.removeItem(itemQty.item.id);
         this.openSnackBar('Item added to shopping cart & removed from your wishlist!');
       } else {
         this.openSnackBar('Item added to shopping cart!');

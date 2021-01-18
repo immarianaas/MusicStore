@@ -32,7 +32,7 @@ export class CapitalChartComponent implements OnInit {
         text: 'Money spent by day'
       },
       axisY: {
-        interval : 100.01,
+        interval : 500.01,
         title : '$',
         maximum : Math.max.apply(Math, data.map(value => value.y)) + 300
       },

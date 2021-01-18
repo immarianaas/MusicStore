@@ -14,7 +14,7 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(
     private accountService: AccountService
-  ) { this.emptyShoppingCart = false;}
+  ) { this.emptyShoppingCart = false; }
 
   ngOnInit(): void {
     this.getShoppingCart();

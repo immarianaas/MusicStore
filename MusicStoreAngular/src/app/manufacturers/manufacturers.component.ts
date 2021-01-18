@@ -16,22 +16,22 @@ export class ManufacturersComponent implements OnInit {
   manufacturers: Manufacturer[];
 
   // MapPaginator inputs
-  length: number;//  = 100;
+  length: number; //  = 100;
   pageSize = 6;
   pageSizeOptions: number[] = [6, 12, 18, 24];
 
   pageEvent: PageEvent;
-  activePageDataChunk = []
+  activePageDataChunk = [];
 
-  setPageSizeOptions(setPageSizeOptionsInput: string){
-    //if (setPageSizeOptionsInput) {
+  setPageSizeOptions(setPageSizeOptionsInput: string): void{
+    // if (setPageSizeOptionsInput) {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-    //}
+    // }
   }
 
-  onPageChanged(e) {
-    let firstCut = e.pageIndex * e.pageSize;
-    let secondCut = firstCut+ e.pageSize;
+  onPageChanged(e): void {
+    const firstCut = e.pageIndex * e.pageSize;
+    const secondCut = firstCut + e.pageSize;
     this.activePageDataChunk = this.manufacturers.slice(firstCut, secondCut);
   }
 
@@ -56,7 +56,8 @@ export class ManufacturersComponent implements OnInit {
   }
 
   openSnackBar(): void {
-    this.snackBar.open('pls?', 'Ok', {duration: 5000, panelClass: ['my-snack-bar'], verticalPosition: 'bottom', horizontalPosition: 'center'} );
+    this.snackBar.open('pls?', 'Ok',
+      {duration: 5000, panelClass: ['my-snack-bar'], verticalPosition: 'bottom', horizontalPosition: 'center'} );
   }
 
 }

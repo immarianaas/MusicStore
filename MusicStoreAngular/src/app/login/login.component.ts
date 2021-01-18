@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   /* object representing user */
   public user: User;
-  public creating_account: boolean;
+  public creatingAccount: boolean;
   public account: Account;
   public errors: any = [];
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public userService: UserService, private accService: AccountService,
               private route: ActivatedRoute, private router: Router) {
-    this.creating_account = false;
+    this.creatingAccount = false;
     this.boolLogin = true;
     this.boolCreate = false;
 
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
 
   create_account(): void {
     this.errors = [];
-    this.creating_account = true;
+    this.creatingAccount = true;
     this.user = {
       username: '',
       password: '', date_joined : ''
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
         res => {
           console.log('account -> ' + res ) ;
           this.account = res;
-          this.creating_account = false;
+          this.creatingAccount = false;
           this.switch();
         },
         err => {
@@ -119,7 +119,7 @@ export class LoginComponent implements OnInit {
   }
 
   cancel(): void {
-    this.creating_account = false;
+    this.creatingAccount = false;
     this.user = {
       username: '',
       password: '', date_joined : ''
@@ -127,40 +127,40 @@ export class LoginComponent implements OnInit {
   }
 
   is_everything_correct(): boolean {
-    let is_false = false;
+    let isFalse = false;
 
     if (!this.user.username || this.user.username.trim().length === 0) {
       this.errors.username = ['this field cannot be empty'];
-      is_false = true;
+      isFalse = true;
     }
 
     if (!this.user.password || this.user.password.trim().length === 0) {
       this.errors.password = ['this field cannot be empty'];
-      is_false = true;
+      isFalse = true;
     } else if (this.user.password.trim().length <= 6) {
       this.errors.password = ['password has to be more than 6 characters long'];
-      is_false = true;
+      isFalse = true;
     }
 
     if (!this.account.name || this.account.name.trim().length === 0) {
       this.errors.name = ['this field cannot be empty'];
-      is_false = true;
+      isFalse = true;
     }
 
     if (!this.account.contact) {
       this.errors.contact = ['this field cannot be empty'];
-      is_false = true;
+      isFalse = true;
       // } else if (!(typeof this.account.contact == "number")){
       } else if (isNaN(this.account.contact)){
       this.errors.contact = ['this field must contain only digits'];
-      is_false = true;
+      isFalse = true;
     }
 
     if (!this.account.gender) {
       this.errors.gender = ['an option must be chosen'];
-      is_false = true;
+      isFalse = true;
     }
-    return !is_false;
+    return !isFalse;
   }
 
   isTokenExpired(): boolean {

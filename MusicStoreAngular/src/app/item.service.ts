@@ -32,8 +32,8 @@ export class ItemService {
     return this.http.get<Item[]>(url, this.getCorrectHeader());
   }
 
-  getItemsByManufacturer(manu_id: number): Observable<Item[]> {
-    const url = this.baseURL + 'manufacturers/' + manu_id + '/items';
+  getItemsByManufacturer(manuId: number): Observable<Item[]> {
+    const url = this.baseURL + 'manufacturers/' + manuId + '/items';
     return this.http.get<Item[]>(url, this.getCorrectHeader());
   }
 
@@ -63,12 +63,12 @@ export class ItemService {
     return this.http.post(url, id, this.getCorrectHeader());
   }
 
-  addToWishList(item_id: number): any {
-    return this.http.post(this.baseURL+'add-to-wishlist', item_id, this.getCorrectHeader());
+  addToWishList(itemId: number): any {
+    return this.http.post(this.baseURL + 'add-to-wishlist', itemId, this.getCorrectHeader());
   }
 
-  checkIfInWishlist(item_id: number): Observable<boolean> {
-    return this.http.get<boolean>(this.baseURL+'in-wishlist/'+item_id, this.getCorrectHeader());
+  checkIfInWishlist(itemId: number): Observable<boolean> {
+    return this.http.get<boolean>(this.baseURL + 'in-wishlist/' + itemId, this.getCorrectHeader());
   }
 
   deleteItem(itemId: number): Observable<any> {

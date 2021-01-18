@@ -149,7 +149,7 @@ export class ManufacturerDetailsComponent implements OnInit {
   }
 
 
-  confirmDelete(id: number) {
+  confirmDelete(id: number): void {
     this.confirmationService.confirm({
       message: 'Do you really want to delete this manufacturer, and all of its items?',
       header: 'Are you sure?',
@@ -159,7 +159,7 @@ export class ManufacturerDetailsComponent implements OnInit {
       reject: () => {
         console.log('not to delete after all');
       }
-    })
+    });
   }
 
 

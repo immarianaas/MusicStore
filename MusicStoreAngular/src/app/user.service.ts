@@ -77,7 +77,7 @@ export class UserService {
     this.http.post(this.baseURL + 'token-refresh/', JSON.stringify({token: this.token}), httpOptions).subscribe(
       data => {
         this.updateData(data['token']);
-        console.log('DATA: '+data);
+        console.log('DATA: ' + data);
       },
       err => {
         this.errors = err['error'];
@@ -112,7 +112,9 @@ export class UserService {
   }
 
   existsButExpired(): boolean {
-    if (!this.tokenExpires) return false;
+    if (!this.tokenExpires) {
+      return false;
+    }
     const now = new Date();
     return now.getTime() > this.tokenExpires.getTime();
   }

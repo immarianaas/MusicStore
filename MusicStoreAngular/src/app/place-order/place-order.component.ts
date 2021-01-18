@@ -35,7 +35,7 @@ export class PlaceOrderComponent implements OnInit {
 
   getItems(): void {
     this.accountService.getShoppingCart().subscribe(
-      itemList => { this.itemList = itemList; this.total = this.getTotal(this.itemList);}
+      itemList => { this.itemList = itemList; this.total = this.getTotal(this.itemList); }
     );
   }
 

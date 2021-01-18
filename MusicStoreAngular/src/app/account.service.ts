@@ -84,14 +84,14 @@ export class AccountService {
   }
 
 
-  removeItemWishlist(item_qty_id: number): Observable<any> {
+  removeItemWishlist(itemQtyId: number): Observable<any> {
     const url = this.baseURL + 'wishlist/rem';
-    return this.http.put(url,  item_qty_id, this.getCorrectHeader());
+    return this.http.put(url,  itemQtyId, this.getCorrectHeader());
   }
 
-  removeItemWishlistItemId(item_id: number): any {
+  removeItemWishlistItemId(itemId: number): any {
     const url = this.baseURL + 'wishlist/rem?item_id=true';
-    return this.http.put(url, item_id, this.getCorrectHeader());
+    return this.http.put(url, itemId, this.getCorrectHeader());
   }
 
   removeItemAtCart(idItemqt: number): Observable<any> {
