@@ -7,6 +7,14 @@ import {UserService} from './user.service';
   providedIn: 'root'
 })
 export class ContactService {
+
+  constructor(
+    private userService: UserService,
+    private http: HttpClient
+  ) { }
+
+  private baseUrl = 'http://orlandop.pythonanywhere.com/ws/';
+
   getCorrectHeader(): { headers: HttpHeaders} {
     if (this.userService.token) {
       return {
@@ -21,13 +29,6 @@ export class ContactService {
         {'Content-Type': 'application/json'}
       )};
   }
-
-  private baseUrl = 'http://localhost:8000/ws/'
-
-  constructor(
-    private userService: UserService,
-    private http: HttpClient
-  ) { }
 
   sendMessage(content: any): any {
     const url = this.baseUrl + 'contact_us';

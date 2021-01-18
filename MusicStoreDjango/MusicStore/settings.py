@@ -25,7 +25,7 @@ SECRET_KEY = 'p%fk*gs+5kf3ik1w(184fy6wqs_sbjjijb-qy74!x=x3!f!881'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '127.0.0.1','localhost','Orlandop.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost','Orlandop.pythonanywhere.com']
 
 
 
