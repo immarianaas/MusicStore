@@ -13,7 +13,8 @@ export class ContactService {
     private http: HttpClient
   ) { }
 
-  private baseUrl = 'https://orlandop.pythonanywhere.com/ws/';
+  private baseUrl = 'http://localhost:8000/ws/';
+  // private baseUrl = 'https://orlandop.pythonanywhere.com/ws/';
 
   getCorrectHeader(): { headers: HttpHeaders} {
     if (this.userService.token) {

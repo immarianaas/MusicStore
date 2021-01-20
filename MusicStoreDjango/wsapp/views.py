@@ -355,12 +355,12 @@ def get_wishlist(request):
 
 def sendEmailOnCreate(name, email):
     body = 'Hello ' + name + ', we are very happy to have you associated with us.\n'
-    body += 'If you need help don\'t hesitate to contact us on musicstore@null.net, we\'ll always be there for you.\n'
+    body += 'If you need help don\'t hesitate to contact us on tpw.musicstore@gmail.com, we\'ll always be there for you.\n'
     body += 'At last, thank you for your trust and good shopping ;)'
     email = EmailMessage(
         subject='New account at Music Store!',
         body=body,
-        from_email='musicstore@null.net',
+        from_email='tpw.musicstore@gmail.com',
         to=[email]
     )
     email.send()
@@ -487,7 +487,7 @@ def place_order(request):
     email = EmailMessage(
         subject='Purchase confirmation',
         body=f'We are sending you this email to confirm that your purchase was made! Your purchase has id {order.id}.\nThanks for trusting us ;)',
-        from_email='musicstore@null.net',
+        from_email='tpw.musicstore@gmail.com',
         to=[request.user]
     )
     email.send()
@@ -508,7 +508,7 @@ def contact_us(request):
         We hope to hear from you again,
         Music Store
         """,
-        from_email='musicstore@null.net',
+        from_email='tpw.musicstore@gmail.com',
         to=[request.data['sender']]
     )
     try:

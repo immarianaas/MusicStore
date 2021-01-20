@@ -15,7 +15,7 @@ import {GrowthChart} from './growthChart';
   providedIn: 'root'
 })
 export class AccountService {
-  private baseURL = 'https://orlandop.pythonanywhere.com/ws/';
+  private baseURL = 'http://localhost:8000/ws/';
 
   constructor(
     private http: HttpClient,

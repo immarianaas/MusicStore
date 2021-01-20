@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class UserService {
 
-  private baseURL = 'https://orlandop.pythonanywhere.com/ws/';
+  private baseURL = 'http://localhost:8000/ws/';
 
   isLoggedIn: boolean;
   @Output() loggedInInfo = new EventEmitter<boolean>();
@@ -47,7 +47,6 @@ export class UserService {
     };
     this.http.get<Account>(this.baseURL + 'account', httpOptWithJWT).subscribe(
       account => { if (account.role === 'A' || account.role === 'S'  ) {
-        // TODO - alterar? mudar o nome? idk?
                           this.adminInfo.emit(true);
                         } else {
                           this.adminInfo.emit(false);
